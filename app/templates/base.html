@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Flask React</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" crossorigin="anonymous">
+    
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"> -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div id="headerRow" class="row">
+        <div class="col-xs-12 col-lg-5">
+            <h1>React Project</h1>
+        </div>
+        <div class="col-xs-12 col-lg-5">
+            <h3>Projectprojectprojectproject</h3>
+        </div>
+    </div>
+    <br />
+    <div id="navigationRow" class="row">
+        <ul class="nav nav-tabs">
+            <li class="active" role="presentation"><a href="index.html">Homepage</a></li>
+            <li role="presentation"><a href="#">Model Type 1</a></li>
+            <li role="presentation"><a href="#">Model Type 2</a></li>
+            <li role="presentation"><a href="#">Model Type 3</a></li>
+            <li role="presentation"><a href="#">Admin Panel</a></li>
+        </ul>
+    </div>
+    <br />
+    <div id="contentRow" class="row">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+</div>
+
+<!-- React looks fuckin' weiiiird but I'm excited to learn it
+<script type="text/jsx">
+
+    /*** @jsx React.DOM */
+
+    var realPython = React.createClass({
+        render: function () {
+            return (<h2>Greetings, from Real Python!</h2>);
+        }
+    });
+
+    ReactDOM.render(
+        React.createElement(realPython, null),
+        document.getElementById('content')
+    );
+</script>
+--> 
+
+<!-- Load these at the bottom to improve page load-time -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+</body>
+</html>
