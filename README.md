@@ -6,10 +6,19 @@ Due on Thursday, 23 Mar 2017 at 10pm
 NOTE: Python version is 3.4 because that is what works with the server  
 From Collin:
 ```
-so to install all of the packages and stuff look up
-install with virtual env 
-there's this file requirements.txt that has the python packages the project needs
-I'm not super familiar with how to create an environment off of the requierments.txt cause I created the environment first and then added packages and then exported to requirements.
+1. to install first create a virtual env
+2. next activate the virtual environment
+3. find this projects (meaning the idb repo's) requirements.txt and install it using pip
+   virtualenv my_project
+
+4. finally run the application.py
+In the prompt:
+
+virtualenv my_project_env
+source my_project_env/bin/activate
+pip install -r requirements.txt
+python application.py
+
 ```
 
 ### How to Run
