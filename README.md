@@ -8,8 +8,7 @@ From Collin:
 ```
 1. to install first create a virtual env
 2. next activate the virtual environment
-3. find this projects (meaning the idb repo's) requirements.txt and install it using pip
-   virtualenv my_project
+3. find this projects (meaning the idb repo's) requirements.txt and install it
 
 4. finally run the application.py
 In the prompt:
