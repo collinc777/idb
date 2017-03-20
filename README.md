@@ -27,3 +27,4 @@ python application.py
 [Collin Caram](https://github.com/collinc777)
 [Greg McDonald](https://github.com/gregorymcdonald)
 [William Connolly](https://github.com/ibly31ut)
+[Tim Gianitsos](https://github.com/timgianitsos)
