@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row text-center">
+	<h1>House - {{ house.name }}</h1>
+	<br />
+</div>
+<div class="row">
+	<h3>Current Lord - {{ house.currentLord }}</h3>
+	<h3>Region - {{ house.region }}</h3>
+	<h3>Coat of Arms - {{ house.coatOfArms }}</h3>
+	<h3>Founded - {{ house.founded }}</h3>
+	<h3>Overlord - {{ house.overlord }}</h3>
+	<h3>Excinct - {% if house.isExtinct %}Yes{% else %}No{% endif %}</h3>
+	<h3>Words - {{ house.words }}</h3>
+	<img src="https://api.got.show/{{ house.imageLink }}">
+</div>
+{% endblock %}

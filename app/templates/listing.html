@@ -16,7 +16,11 @@
   	{% for val in listing.data %}
     <tr>
       {% for property in listing.properties %}
-        <td>{{ val[property[1]] }}</td>
+        {% if loop.index0 == 0 %}
+      <td><a href="{{ val.link }}">{{ val[property[1]] }}</a></td>
+        {% else %}
+      <td>{{ val[property[1]] }}</td>
+        {% endif %}  
       {% endfor %}
     </tr>
     {% endfor %}

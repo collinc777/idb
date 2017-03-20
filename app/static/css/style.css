@@ -1,1 +1,6 @@
 /* custom styles */
+
+/* workaround for the navbar-fixed-top so it doesn't overlap content */
+body {
+	padding-top: 50px;
+}

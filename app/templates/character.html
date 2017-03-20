@@ -6,7 +6,7 @@
 </div>
 <div class="row">
 	<h3>House - {{ character.house }}</h3>
-	<h3>Age - {{ character.age }}</h3>
-	<h3>Status - {{ character.status }}</h3>
+	<h3>Culture - {{ character.culture }}</h3>
+	<h3>Gender - {% if character.male %}Male{% else %}Female{% endif %}</h3>
 </div>
 {% endblock %}
