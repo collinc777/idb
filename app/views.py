@@ -4,7 +4,7 @@ from flask import render_template, flash, redirect
 from app import application
 import json
 
-navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"}, {"url": "/houses", "name": "Houses"}, {"url": "/regions", "name": "Regions"}, {"url": "/books", "name": "Books"}]
+navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"}, {"url": "/houses", "name": "Houses"}, {"url": "/regions", "name": "Regions"}, {"url": "/books", "name": "Books"}, {"urll":"/devnotes","name":"Dev Notes"}]
 names = ["Catelyn Tully", "Tyrion Lannister", "Eddard Stark"]
 houses = ["House Tully", "House Lannister", "House Stark"]
 ages = [16, 45, 60]
@@ -14,6 +14,7 @@ HL_CHARACTERS = 1
 HL_HOUSES = 2
 HL_REGIONS = 3
 HL_BOOKS = 4
+HL_DEVNOTES = 5
 
 def loadListing(filename):
     with open(filename) as data_file:
@@ -95,4 +96,9 @@ def regions():
 @application.route('/books', methods=['GET', 'POST'])
 def books():
     context = createContext(HL_BOOKS, listing=character_listing)
+    return render_template('listing.html', **context)
+
+@appliction.route('/devnotes', methods=['GET', 'POST'])
+def devnotes():
+    context = createContext(HL_DEVNOTES, listing=character_listing)#listing is prob wrong
     return render_template('listing.html', **context)
