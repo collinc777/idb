@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row text-center">
+<h1>{{ listing.title }}</h1>
+<br />
+</div>
+<table class="table">
+  <thead>
+    <tr>
+    {% for property in listing.properties %}
+      <th>{{ property[0] }}</th>
+    {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+  	{% for val in listing.data %}
+    <tr>
+      {% for property in listing.properties %}
+        <td>{{ val[property[1]] }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
