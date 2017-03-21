@@ -98,7 +98,7 @@ def books():
     context = createContext(HL_BOOKS, listing=character_listing)
     return render_template('listing.html', **context)
 
-@appliction.route('/devnotes', methods=['GET', 'POST'])
+@application.route('/devnotes', methods=['GET', 'POST'])
 def devnotes():
     context = createContext(HL_DEVNOTES, listing=character_listing)#listing is prob wrong
     return render_template('listing.html', **context)
