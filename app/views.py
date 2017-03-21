@@ -4,7 +4,7 @@ from flask import render_template, flash, redirect
 from app import application
 import json
 
-navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"}, {"url": "/houses", "name": "Houses"}, {"url": "/regions", "name": "Regions"}, {"url": "/books", "name": "Books"}, {"urll":"/devnotes","name":"Dev Notes"}]
+navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"}, {"url": "/houses", "name": "Houses"}, {"url": "/regions", "name": "Regions"}, {"url": "/books", "name": "Books"}, {"url":"/devnotes","name":"Dev Notes"}]
 names = ["Catelyn Tully", "Tyrion Lannister", "Eddard Stark"]
 houses = ["House Tully", "House Lannister", "House Stark"]
 ages = [16, 45, 60]
