@@ -28,3 +28,4 @@ python application.py
 [Greg McDonald](https://github.com/gregorymcdonald)
 [William Connolly](https://github.com/ibly31ut)
 [Adam Levi Poncher](http://github.com/alp3246)
+[Tim Gianitsos](https://github.com/timgianitsos)
