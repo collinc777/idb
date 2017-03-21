@@ -23,12 +23,11 @@ def loadListing(filename):
 # properties are simply 2-element arrays of a human readable name and a dictionary key
 # e.g. ["Image", "imageLink"] -> Image (for table header) and house["imageLink"] when accessed
 
-
-character_listing = {"title": "Characters", "properties": [["Name", "name"], ["Gender", "male"], ["Culture", "culture"], ["House", "house"]]}
+character_listing = {"title": "Characters", "url": "/characters", "properties": [["Name", "name"], ["Gender", "male"], ["Culture", "culture"], ["House", "house"]]}
 character_listing["data"] = loadListing("data/trimmed_characters.json")
 
-house_listing = {"title": "Houses", "properties": [["Name", 'name'], ["Image",'imageLink'], ["Current Lord", 'currentLord'], ["Region", 'region'], ["Coat of Arms", 'coatOfArms'], ["Founded", 'founded'], ["Overlord", 'overlord'], ["Extinct?", 'isExtinct'], ["Words", 'words']]}
-house_listing["data"] = loadListing("data/trimmed_houses.json")
+house_listing = {"title": "Houses", "url": "/houses", "properties": [["Name", 'name'], ["Image",'imageLink'], ["Current Lord", 'currentLord'], ["Region", 'region'], ["Coat of Arms", 'coatOfArms'], ["Founded", 'founded'], ["Overlord", 'overlord'], ["Extinct?", 'isExtinct'], ["Words", 'words']]}
+house_listing["data"] = loadListing("data/api_got_show/trimmed_houses.json")
 
 # Build a base "context" dictionary for passing to any given template
 def createContext(nav_highlight=-1, **kwargs):

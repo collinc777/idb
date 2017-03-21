@@ -17,7 +17,7 @@
     <tr>
       {% for property in listing.properties %}
         {% if loop.index0 == 0 %}
-      <td><a href="{{ val.link }}">{{ val[property[1]] }}</a></td>
+      <td><a href="{{ listing.url }}/{{ val.id }}">{{ val[property[1]] }}</a></td>
         {% else %}
       <td>{{ val[property[1]] }}</td>
         {% endif %}  
