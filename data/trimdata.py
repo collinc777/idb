@@ -92,7 +92,76 @@ def ice_and_fire_trim_books():
     with open("api_ice_and_fire/trimmed_books.json", 'w') as trimmed_books_file:
         json.dump(trimmed_books, trimmed_books_file)
 
+def ice_and_fire_trim_houses():
+    iaf_houses = None
+    with open("api_ice_and_fire/houses.json") as iaf_houses_file:
+        iaf_houses = json.load(iaf_houses_file)
+
+    trimmed_houses = list()
+    for house in iaf_houses:
+        trimmed = house.copy()
+        trimmed["id"] = int(trimmed["url"].rsplit("/")[-1])
+        trimmed.pop("url")
+        if len(trimmed["overlord"]):
+            trimmed["overlord"] = int(trimmed["overlord"].rsplit("/")[-1])
+        if len(trimmed["currentLord"]):
+            trimmed["currentLord"] = int(trimmed["currentLord"].rsplit("/")[-1])
+        if len(trimmed["heir"]):
+            trimmed["heir"] = int(trimmed["heir"].rsplit("/")[-1])
+        if len(trimmed["founder"]):
+            trimmed["founder"] = int(trimmed["founder"].rsplit("/")[-1])
+
+        cadets = list()
+        for cadet in trimmed["cadetBranches"]:
+            cadets.append(int(cadet.rsplit("/")[-1]))
+        trimmed["cadetBranches"] = cadets
+
+        sworns = list()
+        for sworn in trimmed["swornMembers"]:
+            sworns.append(int(sworn.rsplit("/")[-1]))
+        trimmed["swornMembers"] = sworns
+        trimmed_houses.append(trimmed)
+
+    with open("api_ice_and_fire/trimmed_houses.json", 'w') as trimmed_houses_file:
+        json.dump(trimmed_houses, trimmed_houses_file)
+
 ### Both
+
+def find_intersecting_houses():
+    # Find houses that appear in both and append the imageLink from got_show to ice_and_fire's house
+
+    gs_houses = None
+    with open("api_got_show/trimmed_houses.json") as gs_houses_file:
+        gs_houses = json.load(gs_houses_file)
+
+    iaf_houses = None
+    with open("api_ice_and_fire/trimmed_houses.json") as iaf_houses_file:
+        iaf_houses = json.load(iaf_houses_file)
+
+    iaf_houses_by_name = dict()
+    for house in iaf_houses:
+        iaf_houses_by_name[house["name"]] = house
+
+    trimmed_houses = list()
+    for house in gs_houses:
+        name = house["name"]
+
+        # couldn't do a simple "if name in iaf_houses_by_name" because
+        # there are houses like "House X of Y" where they appear as "House X"
+        # in one dataset. So I check if the name is a substring of the other's name
+        # by doing "if name in iaf_name"... "House Stark" IS in "House Stark of Winterfell"
+        # this bumped the number of intersecting houses from 44 to 179.
+        
+        for iaf_name in iaf_houses_by_name.keys():
+            if name in iaf_name:
+                iaf_houses_by_name[iaf_name]["imageLink"] = house["imageLink"]
+                trimmed_houses.append(iaf_houses_by_name[iaf_name])
+                break
+
+    print("Found ", len(trimmed_houses), " houses in common")
+    with open("trimmed_houses.json", 'w') as trimmed_houses_file:
+        json.dump(trimmed_houses, trimmed_houses_file)
+
 
 # Only keep characters that appear in both APIs?
 def find_intersecting_characters():
@@ -149,6 +218,17 @@ def find_intersecting_characters():
     with open("trimmed_characters.json", 'w') as characters_file:
         json.dump(trimmed_characters, characters_file)
 
+#  Alliances
+# Head leader
+# Military strength (by number of sworn characters)
+# Military strength (by access to ancestral weapons)
+# Military strength (by number of seats it has access to)
+# Regions it encompasses
+# Cultures it encompasses
+
+# Characters in it
+# Houses in it
+
 def find_distinct_cultures():
     gs_characters = None
     with open("api_got_show/trimmed_characters.json") as gs_characters_file:
@@ -170,7 +250,8 @@ def find_distinct_cultures():
     cultures = gs_cultures.union(iaf_cultures)
     print(cultures)
 
-ice_and_fire_trim_books()
+find_intersecting_houses()
+#ice_and_fire_trim_houses()
 #got_show_filter_characters()
 #find_intersecting_characters()
 #ice_and_fire_get_entity("books")

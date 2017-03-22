@@ -29,8 +29,8 @@ character_listing = {"title": "Characters", "url": "/characters", "properties": 
 character_listing["data"] = loadListing("data/trimmed_characters.json")
 character_links = {character["id"]: {"name": character["name"], "link": "/characters/" + str(character["id"])} for character in character_listing["data"]}
 
-house_listing = {"title": "Houses", "url": "/houses", "properties": [["Name", 'name'], ["Image",'imageLink'], ["Current Lord", 'currentLord'], ["Region", 'region'], ["Coat of Arms", 'coatOfArms'], ["Founded", 'founded'], ["Overlord", 'overlord'], ["Extinct?", 'isExtinct'], ["Words", 'words']]}
-house_listing["data"] = loadListing("data/api_got_show/trimmed_houses.json")
+house_listing = {"title": "Houses", "url": "/houses", "properties": [["Name", 'name'], ["Current Lord", 'currentLord'], ["Region", 'region'], ["Coat of Arms", 'coatOfArms'], ["Founded", 'founded'], ["Overlord", 'overlord'], ["Extinct?", 'isExtinct'], ["Words", 'words']]}
+house_listing["data"] = loadListing("data/trimmed_houses.json")
 house_links = {house["id"]: {"name": house["name"], "link": "/houses/" + str(house["id"])} for house in house_listing["data"]}
 
 book_listing = {"title": "Books", "url": "/books", "properties": [["Name", "name"], ["Publisher", "publisher"], ["Country", "country"], ["Release Date", "released"], ["Media Type", "mediaType"]]}
