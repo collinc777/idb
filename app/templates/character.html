@@ -4,9 +4,28 @@
 	<h1>Character - {{ character.name }}</h1>
 	<br />
 </div>
-<div class="row">
+<div class="row text-center">
 	<h3>House - {{ character.house }}</h3>
 	<h3>Culture - {{ character.culture }}</h3>
 	<h3>Gender - {% if character.male %}Male{% else %}Female{% endif %}</h3>
+	<h3>Titles</h3>
+	{% for title in character.titles %}
+		<h4>{{ title }}</h4>
+	{% else %}
+		<h4>This character has no titles</h4>
+	{% endfor %}
+
+	{% if character.died %}
+	<h3>Died - {{ character.died }}</h3>
+	{% else %}
+	<h3>Died? - Still alive!</h3>
+	{% endif %}
+
+	<h3>Books this character appears in:</h3>
+	{% for book in character.books %}
+		<h4><a href="{{ book_links[book].link }}">{{ book_links[book].name }}</a></h4>
+	{% else %}
+		<h4>This character appears in no books</h4>
+	{% endfor %}
 </div>
 {% endblock %}

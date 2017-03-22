@@ -65,6 +65,32 @@ def ice_and_fire_get_entity(entity):
     with open("api_ice_and_fire/" + entity + ".json", 'w') as data_file:
         json.dump(entities, data_file)
 
+def ice_and_fire_trim_books():
+    iaf_books = None
+    with open("api_ice_and_fire/books.json") as iaf_books_file:
+        iaf_books = json.load(iaf_books_file)
+
+    trimmed_books = list()
+    for book in iaf_books:
+        trimmed = book.copy()
+        trimmed["id"] = int(trimmed["url"].rsplit("/")[-1])
+        trimmed.pop("url")
+        trimmed["author"] = "George R. R. Martin"
+        trimmed.pop("authors")
+
+        chars = list()
+        for character in trimmed["characters"]:
+            chars.append(int(character.rsplit("/")[-1]))
+        trimmed["characters"] = chars
+
+        pov_chars = list()
+        for character in trimmed["povCharacters"]:
+            pov_chars.append(int(character.rsplit("/")[-1]))
+        trimmed["povCharacters"] = pov_chars
+        trimmed_books.append(trimmed)
+
+    with open("api_ice_and_fire/trimmed_books.json", 'w') as trimmed_books_file:
+        json.dump(trimmed_books, trimmed_books_file)
 
 ### Both
 
@@ -144,6 +170,7 @@ def find_distinct_cultures():
     cultures = gs_cultures.union(iaf_cultures)
     print(cultures)
 
-got_show_filter_characters()
-find_intersecting_characters()
+ice_and_fire_trim_books()
+#got_show_filter_characters()
+#find_intersecting_characters()
 #ice_and_fire_get_entity("books")
