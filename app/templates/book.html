@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row text-center">
+	<h1>Book - {{ book.name }}</h1>
+	<br />
+</div>
+<div class="row text-center">
+	<h3>Author - {{ book.author }}</h3>
+	<h3>Publisher - {{ book.publisher }}</h3>
+	<h3>Publishing Country - {{ book.country }}</h3>
+	<h3>ISBN - {{ book.isbn }}</h3>
+	<h3>Media Type - {{ book.mediaType }}</h3>
+	<h3>Number of Pages - {{ book.numberOfPages }}</h3>
+	<h3>Release Date - {{ book.released }}</h3>
+	<h3>POV Characters</h3>
+	{% for char in book.povCharacters %}
+		{% if char in character_links %}
+		<h4><a href="{{ character_links[char].link }}">{{ character_links[char].name }}</a></h4>
+		{% endif %}
+	{% else %}
+		<h4>This book has no POV characters</h4>
+	{% endfor %}
+
+	<h3>Characters</h3>
+	{% for char in book.characters %}
+		{% if char in character_links %}
+		<h4><a href="{{ character_links[char].link }}">{{ character_links[char].name }}</a></h4>
+		{% endif %}
+	{% else %}
+		<h4>This book has no characters</h4>
+	{% endfor %}
+</div>
+{% endblock %}
