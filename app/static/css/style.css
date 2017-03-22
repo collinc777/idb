@@ -4,3 +4,7 @@
 body {
 	padding-top: 50px;
 }
+
+img {
+	max-height: 400px;
+}

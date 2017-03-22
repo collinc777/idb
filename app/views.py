@@ -36,6 +36,9 @@ house_links = {house["id"]: {"name": house["name"], "link": "/houses/" + str(hou
 book_listing = {"title": "Books", "url": "/books", "properties": [["Name", "name"], ["Publisher", "publisher"], ["Country", "country"], ["Release Date", "released"], ["Media Type", "mediaType"]]}
 book_listing["data"] = loadListing("data/api_ice_and_fire/trimmed_books.json")
 book_links = {book["id"]: {"name": book["name"], "link": "/books/" + str(book["id"])} for book in book_listing["data"]}
+book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswords.jpg", 4: "thehedgeknight.jpg", 5: "afeastforcrows.jpg", 6: "theswornsword.jpg", 7: "themysteryknight.jpg", 8: "adancewithdragons.jpg", 9: "theprincessandthequeen.jpg", 10: "therogueprince.jpg", 11: "theworldoficeandfire.png", 12: "aknightofthesevenkingdoms.jpg"}
+# book_images is a total hack right now. Ideally this would be a field inside the book data/model
+# but for now we'll just do this. Theres only 12 books so it'll be easy to add it in manually later
 
 # Build a base "context" dictionary for passing to any given template
 def createContext(nav_highlight=-1, **kwargs):
@@ -100,7 +103,7 @@ def book(bookid):
         context = createContext(HL_BOOKS, entity="Book", entity_id=bookid)
         return render_template('notfound.html', **context)
     else:
-        context = createContext(HL_HOUSES, book=book, character_links=character_links)
+        context = createContext(HL_HOUSES, book=book, character_links=character_links, book_images=book_images)
         return render_template('book.html', **context)
 
 @application.route('/characters', methods=['GET', 'POST'])
