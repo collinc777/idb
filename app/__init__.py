@@ -3,7 +3,7 @@
 # which we define down below
 
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+import SQLAlchemy  # this is was the only way i could get it to work. :/
 
 application = Flask(__name__)
 # Update this to the URI of our database in IDB2
