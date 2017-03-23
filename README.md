@@ -10,8 +10,12 @@ NOTE: Python version must be 3.4 because that is what works with the server
 3. Find this project's (idb) requirements.txt and install it: ```pip install -r requirements.txt```
 
 ### How to Run
-To run the application execute the command: ```python application.py```
+Navigate to the parent directory (by default it is "idb").  
+Execute the command: ```python application.py```
   
+### How to Test
+Navigate to the parent directory (by default it is "idb").  
+Execute the command: ```python -m app.test```  
 
 ### Members
 [Collin Caram](https://github.com/collinc777)  
