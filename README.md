@@ -29,3 +29,4 @@ python application.py
 [William Connolly](https://github.com/ibly31ut)
 [Adam Levi Poncher](http://github.com/alp3246)
 [Tim Gianitsos](https://github.com/timgianitsos)
+[Brian Zhu](https://github.com/BrianZhu1)
