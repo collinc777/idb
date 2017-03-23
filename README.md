@@ -15,7 +15,7 @@ Execute the command: ```python application.py```
   
 ### How to Test
 Navigate to the parent directory (by default it is "idb").  
-Execute the command: ```python -m app.test```  
+Execute the command: ```python -m app.tests```
 
 ### Members
 [Collin Caram](https://github.com/collinc777)  
