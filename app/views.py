@@ -4,13 +4,14 @@ from flask import render_template, flash, redirect
 from app import application
 import json
 
-navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"}, {"url": "/houses", "name": "Houses"}, {"url": "/regions", "name": "Regions"}, {"url": "/books", "name": "Books"}, {"url":"/devnotes","name":"Dev Notes"}]
+navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"}, {"url": "/houses", "name": "Houses"}, {"url": "/regions", "name": "Regions"}, {"url": "/books", "name": "Books"}, {"url":"/devnotes","name":"Dev Notes"}, {"url":"/about","name":"About"}]
 
 HL_CHARACTERS = 1
 HL_HOUSES = 2
 HL_REGIONS = 3
 HL_BOOKS = 4
 HL_DEVNOTES = 5
+HL_ABOUT = 6
 
 def loadListing(filename):
     with open(filename) as data_file:
@@ -130,3 +131,8 @@ def books():
 def devnotes():
     context = createContext(HL_DEVNOTES)
     return render_template('devnotes.html', **context)
+
+@application.route('/about', methods=['GET'])
+def about():
+    context = createContext(HL_ABOUT)
+    return render_template('about.html', **context)
