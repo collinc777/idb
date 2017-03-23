@@ -135,3 +135,24 @@ class House(database.Model):
         self.swornMembers = swornMembers
         self.region = region
         self.ancestralWeapons = ancestralWeapons
+
+# Foreign key relationships are alternative for headLeader, members, 
+# weapons, seats (need consult for IDB2)
+
+
+class Alliances(database.Model):
+    id = database.Column(database.Integer, primary_key=True)
+    headLeader = database.Column(database.Integer)
+    members = database.Column(database.ARRAY(database.Integer))
+    weapons = database.Column(database.ARRAY(database.String(80)))
+    seats = database.Column(database.ARRAY(database.String(80)))
+    regions = database.Column(database.ARRAY(database.String(80)))
+    cultures = database.Column(database.ARRAY(database.String(80)))
+
+    def __init__(self, headLeader, members, weapons, seats, regions, cultures):
+        self.headLeader = headLeader
+        self.members = members
+        self.weapons = weapons
+        self.seats = seats
+        self.regions = regions
+        self.cultures = cultures
