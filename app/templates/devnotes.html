@@ -19,6 +19,8 @@
       <h3>Houses Model:</h3>
       <p> Houses contain attributes ID, current lord, founder, heir, cadet branches, founded, died out, titles, coat of arms, words, seats, overlord, name, sworn members, region, and ancestral weapons. </p>
       <p>The House Model creates groups of characters and assigns them group attributes like lord they owe allegiance to, or family motto ("words"). Many characters can be sworn to a house, and an entire house can be sworn to another house (i.e. Karstark -> Stark). This allows us to create  complex models like an Alliance Model that groups houses/characters into trees of allegiance. In addition, we can define relationships between houses such as rivalries/wars, debts, etc through  models like events that use house id as foreign keys. This would allow users to visualize the complex relationships between the houses in Game of Thrones. Houses also have attributes for coat of arms and words which are displayed on each houses page as static media. This functionality can be extended to include media linked to castles("seats") or ancestral weapons. </p>
+      <h3>Alliances Model:</h3>
+      <p></p>
 	<h2>Tools</h2>
 	<h3>Front-End Tools</h3>
 	<p>Our front-end is run on flask templates that build static HTML pages. We have a base html page that includes the navigation bar and headers that all other pages extend. This way we can expand our front-end dynamically and always maintain consistency across pages. We also include a context function that highlights the navigation entry coresponding with the currently active page. This tiny detail nonetheless adds style and sophistication to the UI.</p>
