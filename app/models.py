@@ -3,6 +3,7 @@ from app import database
 # Foreign key relationships are alternative for povCharacter and characters (need consult for IDB2)
 # povCharacters = database.relationship('Character')
 # See link: http://docs.sqlalchemy.org/en/latest/orm/join_conditions.html
+# See link: http://flask-sqlalchemy.pocoo.org/2.1/models/
 class Book(database.Model):
 	id = database.Column(database.Integer, primary_key=True)
 	numberOfPages = database.Column(database.Integer)
