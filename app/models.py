@@ -42,7 +42,7 @@ class Character(database.Model):
 	born = database.Column(database.String(80))
 	gender = database.Column(database.String(80))
 	father = database.Column(database.String(80))
-	allegiances = database.Column(database.ARRAY(database.String))
+	allegiances = database.Column(database.ARRAY(database.String(80)))
 	povBooks = database.Column(database.ARRAY(database.Integer))
 	playedBy = database.Column(database.ARRAY(database.Integer))
 	books = database.Column(database.ARRAY(database.Integer))
@@ -69,3 +69,39 @@ class Character(database.Model):
 		self.tvSeries = tvSeries
 		self.mother = mother
 		self.male = male
+
+# Foreign key relationships are alternative for currentLord, founder, heir, overlord, swornMembers (need consult for IDB2)
+class House(database.Model):
+	id = database.Column(database.Integer, primary_key=True)
+	currentLord = database.Column(database.Integer)
+	founder = database.Column(database.Integer)
+	heir = database.Column(database.Integer)
+	cadetBranches = database.Column(database.ARRAY(database.String(80)))
+	founded = database.Column(database.String(80))
+	diedOut = database.Column(database.String(80))
+	titles = database.Column(database.ARRAY(database.String(80)))
+	coatOfArms = database.Column(database.String(80))
+	words = database.Column(database.String(80))
+	seats = database.Column(database.ARRAY(database.String(80)))
+	overlord = database.Column(database.Integer)
+	name = database.Column(database.String(80))
+	swornMembers = database.Column(database.ARRAY(database.Integer))
+	region = database.Column(database.String(80))
+	ancestralWeapons = database.Column(database.ARRAY(database.String(80)))
+
+	def __init__(self, currentLord, founder, heir, cadetBranches, founded, diedOut, titles, coatOfArms, words, seats, overlord, name, swornMembers, region, ancestralWeapons):
+		self.currentLord = currentLord
+		self.founder = founder
+		self.heir = heir
+		self.cadetBranches = cadetBranches
+		self.founded = founded
+		self.diedOut = diedOut
+		self.titles = titles
+		self.coatOfArms = coatOfArms
+		self.words = words
+		self.seats = seats
+		self.overlord = overlord
+		self.name = name
+		self.swornMembers = swornMembers
+		self.region = region
+		self.ancestralWeapons = ancestralWeapons
