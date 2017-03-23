@@ -10,16 +10,21 @@
 	<h2>RESTful API</h2>
 	<p>Two APIs are scraped to create the tables and relations. An API of Ice and Fire, and GOT API, these APIs have detailed information on each character, house, book, and location. This allows for the basic models for Character, House, and Book; the relationships between these datasets allow us to construct more complex models like alliances between houses. The GOT API also has models for events, continents, cultures, etc. These models could be used to extend our functionality. We can create models for major events like wars which travers many characters, houses, regions, books, etc.</p>
 	<h2>Models</h2>
-	<h3>Books</h3>
+	<h3>Books Model:</h3>
 	<p>Books contain attributes ID, number of pages, ISBN number, title, publisher, country of origin, list of pov characters, author, media type, release date, list of all characters.
       This model allows our website to give the end user all pertinent data regarding any given book. The functionality of our books model can be extended by adding foreign keys for new and complex models. Each book covers a massive amount of characters, places, and events that can be linked to the book using our other models. Currently the basic behavior of linking this model to all of the characters that appear in the book allows our end users to examine each character in detail. We can even differentiate main characters from supporting roles due to the separation of POV and all character sets. Each row in the books table shares several attributes including author and media type, however the unique constraints on ID, name, and ISBN allow us to link complex models back to the book model and sort in a number of ways.</p>
-      <h3>Characters</h3>
+      <h3>Characters Model:</h3>
       <p>Characters contain attributes ID, house, culture, title(s), spouse, died, aliases, date of death, name, born, gender, father, allegiances, pov books, played by, books, tv series, mother, male
       There are some redundant attributes due to the combination of two separate APIs.  This explains the presence of both male and gender attributes in the same mode. Even so, this model allows us to search for characters by blood line, allegiance, books appeared in, or actor. Furthermore it links to the Books, Houses, and Alliances models so that users can switch back and forth between examining specific character data and more general groups of data. Characters are the simplest of our models. While many models contain lists of characters, the character model itself links to only one house and/or alliance. Each character is linked in some way to the rest of the DB because by definition they must be a member of a house and have appeared in one or more books. Additionally we can create complex models to model the relationship between characters like a family or employer model. the Character model can be easily extended to add foreign keys to link to models like major events or covert plots.</p>
-      <h3>Houses</h3>
+      <h3>Houses Model:</h3>
       <p> Houses contain attributes ID, current lord, founder, heir, cadet branches, founded, died out, titles, coat of arms, words, seats, overlord, name, sworn members, region, and ancestral weapons. 
       The House Model creates groups of characters and assigns them group attributes like lord they owe allegiance to, or family motto ("words"). Many characters can be sworn to a house, and an entire house can be sworn to another house (i.e. Karstark -> Stark). This allows us to create  complex models like an Alliance Model that groups houses/characters into trees of allegiance. In addition, we can define relationships between houses such as rivalries/wars, debts, etc through  models like events that use house id as foreign keys. This would allow users to visualize the complex relationships between the houses in Game of Thrones. Houses also have attributes for coat of arms and words which are displayed on each houses page as static media. This functionality can be extended to include media linked to castles("seats") or ancestral weapons. </p>
 	<h2>Tools</h2>
+	<h3>Front-End Tools</h3>
+	<p></p>
+	<h3>Back-End Tools</h3>
+	<p></p>
+	<h3>Embedding-Media Tools:</h3>
 	<p></p>
 	<h2>Hosting</h2>
 	<p>E</p>
