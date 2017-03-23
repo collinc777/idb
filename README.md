@@ -3,30 +3,20 @@ Due on Thursday, 23 Mar 2017 at 10pm
 [Project Description](http://www.cs.utexas.edu/users/downing/cs373/projects/IDB1.html)
 
 ### Setup
-NOTE: Python version is 3.4 because that is what works with the server  
-From Collin:
-```
-1. to install first create a virtual env
-2. next activate the virtual environment
-3. find this projects (meaning the idb repo's) requirements.txt and install it
+NOTE: Python version must be 3.4 because that is what works with the server  
 
-4. finally run the application.py
-In the prompt:
-
-virtualenv my_project_env
-source my_project_env/bin/activate
-pip install -r requirements.txt
-python application.py
-
-```
+1. First create a virtual environment: ```virtualenv my_project_env```  
+2. Next, activate the virtual environment: ```source my_project_env/bin/activate```  
+3. Find this project's (idb) requirements.txt and install it: ```pip install -r requirements.txt```
 
 ### How to Run
-1. Lorem ipsum
+To run the application execute the command: ```python application.py```
+  
 
 ### Members
-[Collin Caram](https://github.com/collinc777)
-[Greg McDonald](https://github.com/gregorymcdonald)
-[William Connolly](https://github.com/ibly31ut)
-[Adam Levi Poncher](http://github.com/alp3246)
-[Tim Gianitsos](https://github.com/timgianitsos)
-[Brian Zhu](https://github.com/BrianZhu1)
+[Collin Caram](https://github.com/collinc777)  
+[Greg McDonald](https://github.com/gregorymcdonald)  
+[William Connolly](https://github.com/ibly31ut)  
+[Adam Levi Poncher](http://github.com/alp3246)  
+[Tim Gianitsos](https://github.com/timgianitsos)  
+[Brian Zhu](https://github.com/BrianZhu1)  
