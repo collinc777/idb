@@ -65,40 +65,40 @@ class TestModels (TestCase):
 
     def test_Character_house(self):
         c = models.Character("Night's Watch", "", [], "", "", ["Sam"], False,
-                             "Samwell Tarly", "", "Male", "", [], [], [], [], [], "", True)
+                             "Samwell Tarly", "", "Male", "", [], [], [], [], [], [], "", True)
         self.assertEqual(c.house, "Night's Watch")
 
     def test_Character_name(self):
         c = models.Character("Night's Watch", "", [], "", "", ["Sam"], False,
-                             "Samwell Tarly", "", "Male", "", [], [], [], [], [], "", True)
+                             "Samwell Tarly", "", "Male", "", [], [], [], [], [], [], "", True)
         self.assertEqual(c.name, "Samwell Tarly")
 
     def test_Character_aliases(self):
         c = models.Character("Night's Watch", "", [], "", "", ["Sam"], False,
-                             "Samwell Tarly", "", "Male", "", [], [], [], [], [], "", True)
+                             "Samwell Tarly", "", "Male", "", [], [], [], [], [], [], "", True)
         self.assertEqual(c.aliases, ["Sam"])
 
     def test_Character_titles_empty(self):
         c = models.Character("Night's Watch", "", [], "", "", ["Sam"], False,
-                             "Samwell Tarly", "", "Male", "", [], [], [], [], [], "", True)
+                             "Samwell Tarly", "", "Male", "", [], [], [], [], [], [], "", True)
         self.assertEqual(c.titles, [])
 
     # -----
     # House
     # -----
 
-    def test_House_currentLord(self):
+    def test_House_currentLord_id(self):
         h = models.House(848, "", "", [], "", "", [],
                          "Three brass buckles, on a blue field(Azure, three buckles or)", "",
                          ["Bronzegate"], 17, "House Buckler of Bronzegate", [234, 848], "The Stormlands", [])
-        self.assertEqual(h.currentLord, 848)
+        self.assertEqual(h.currentLord_id, 848)
 
-    def test_House_founder(self):
+    def test_House_founder_id(self):
         h = models.House("", 1272, "", [], "", "", ["Ser"],
                          "Three dogs on a yellow field(Or, three dogs courant in pale sable)",
                          "", ["Clegane's Keep"], 229, "House Clegane",
                          [955, 1270, 1272, 1350, 1356, 1442, 1568, 1814, 1852, 1994, 2012], "The Westerlands", [])
-        self.assertEqual(h.founder, 1272)
+        self.assertEqual(h.founder_id, 1272)
 
     def test_House_name(self):
         h = models.House("", 1272, "", [], "", "", ["Ser"],
@@ -107,13 +107,13 @@ class TestModels (TestCase):
                          [955, 1270, 1272, 1350, 1356, 1442, 1568, 1814, 1852, 1994, 2012], "The Westerlands", [])
         self.assertEqual(h.name, "House Clegane")
 
-    def test_House_swornMembers(self):
+    def test_House_swornMember_ids(self):
         h = models.House("", 1272, "", [], "", "", ["Ser"],
                          "Three dogs on a yellow field(Or, three dogs courant in pale sable)",
                          "", ["Clegane's Keep"], 229, "House Clegane",
                          [955, 1270, 1272, 1350, 1356, 1442, 1568, 1814, 1852, 1994, 2012], "The Westerlands", [])
         self.assertEqual(
-            h.swornMembers, [955, 1270, 1272, 1350, 1356, 1442, 1568, 1814, 1852, 1994, 2012])
+            h.swornMember_ids, [955, 1270, 1272, 1350, 1356, 1442, 1568, 1814, 1852, 1994, 2012])
 
 # ----
 # main
