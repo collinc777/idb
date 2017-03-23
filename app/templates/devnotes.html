@@ -23,7 +23,7 @@
 	<h3>Front-End Tools</h3>
 	<p></p>
 	<h3>Back-End Tools</h3>
-	<p></p>
+	<p>Our application uses the standard requests and JSON library to query the APIs we use to populate our models. After we have received the JSON data dumps we use trim scripts to format the data into the desired input format. Firstly we determine which entity we are dealing with which defines which attributes are required. Then we break the data into its required fields which allows us to populate our models fully while throwing out unneeded data. The complexity comes in when you take into account the differences between the two API data sets. For example in GOT API a name may be listed as Eddard Stark while on the Song of Ice and FIre API the name would be listed as Eddard Stark, Lord of Winterfel. In order to resolve this issue we search for names as sub strings so Eddard Stark would be returned because it is a sub string of both listed names. Unfortunately this creates a source of error that can only be controlled by creating a very specific script/method to handle each data set. </p>
 	<h3>Embedding-Media Tools:</h3>
 	<p></p>
 	<h2>Hosting</h2>
