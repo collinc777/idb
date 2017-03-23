@@ -29,16 +29,16 @@
 	<h2>Hosting</h2>
 	<p>For hosting we decided to use AWS. AWS’s Elastic Beanstalk became the perfect hosting platform for our project. Firstly, it supported the flask framework. Elastic Beanstalk (EB for short) does not support everything and that’s why it is key that it supports flask.  Elastic beanstalk not only acts as a host environment, but it adds some nice extra functionality on top of it, such as giving itself a URL right off the start. The next reason we chose to use it is that the applications deployment process across machines can easily be replicated due to the aws elastic beanstalk cli. Beanstalk also reduces the management complexity for our application by handling capacity provisioning, load balancing, scaling. It also offers application health monitoring.  Beanstalk also has a nice versioning system so that we can easily roll back our application upon failed deployment, or because of deploying bad code. </p>
 	<p>The step by step setup of the project goes as follows. (Prerequisite: you must have Python3.4, pip, virtualenv, and the awsebcli installed to perform the next steps. You must also have the idb repo locally)</p>
-	<h3>Create a virtualenv</h3>
-	<p>virtualenv ~/eb-virt</p>
-	<h3>Activate virtualenv</h3>
-	<p>source ~/eb-virt/bin/activate</p>
-	<h3>Navigate to IDB and install requirment</h3>
-	<p>pip install -r idb/requirment.txt</p>
-	<h3>Initialize eb clie repo</h3>
-	<p>eb init -p python2.7 flask tutorial</p>
-	<h3>Create an eb environment to deploy application into</h3>
-	<p>eb create flask-env</p>
+	<h4>Create a virtualenv</h4>
+	<p style="margin-left: 40px">    virtualenv ~/eb-virt</p>
+	<h4>Activate virtualenv</h4>
+	<p style="margin-left: 40px">    source ~/eb-virt/bin/activate</p>
+	<h4>Navigate to IDB and install requirment</h4>
+	<p style="margin-left: 40px">    pip install -r idb/requirment.txt</p>
+	<h4>Initialize eb clie repo</h4>
+	<p style="margin-left: 40px">    eb init -p python2.7 flask tutorial</p>
+	<h4>Create an eb environment to deploy application into</h4>
+	<p style="margin-left: 40px">    eb create flask-env</p>
 	<p>To make deployment to beanstalk even simpler and to make development more streamlined, we used Pycharm’s built in Elastic Beanstalk plugin to handle deployment as a run configuration. This plugin syncs with your aws account. Allows you to select and environment to deploy to and streamlines deployment whenever the user is ready to deploy by selecting the Elastic Beanstalk run configuration. </p>
 </div>
 {% endblock %}
