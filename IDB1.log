@@ -1,0 +1,663 @@
+commit 4d9c45c6777e155bea5541cdba7b71a4af11a8a2
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 23 22:07:02 2017 -0500
+
+    a little refactoring
+
+commit 8805d6ae8002ed4f03f18f9a7e6f480bfcb50c13
+Merge: 6a1549e 5549e62
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 23 22:01:28 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+
+commit 6a1549e4fb9c81ac77254bbb775e781fd38dc311
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 23 22:01:14 2017 -0500
+
+    add some fake data and basic strucutre for alliances
+
+commit 5549e62e06ff61e2a1a5ffc926956eafa53a5c3e
+Author: BrianZhu1 <brian.zhu@utexas.edu>
+Date:   Thu Mar 23 21:48:50 2017 -0500
+
+    imported unittests to fix bug
+
+commit 6b786a43b4485f50f5c237bf31f995e5c452432d
+Author: BrianZhu1 <brian.zhu@utexas.edu>
+Date:   Thu Mar 23 21:44:16 2017 -0500
+
+    ignored some tests to get Travis passing (since we dont use database yet)
+
+commit 37612f7335f25eefeea8d4fe2a07eef8df86bfce
+Author: BrianZhu1 <brian.zhu@utexas.edu>
+Date:   Thu Mar 23 21:35:22 2017 -0500
+
+    add alliances to the splash page
+
+commit 0e61aa53f89e17b7123d0bec6b9a9885b4cf6dda
+Author: BrianZhu1 <brian.zhu@utexas.edu>
+Date:   Thu Mar 23 21:28:54 2017 -0500
+
+    changed the font color back to white (so its more visible)
+
+commit 8e000c2031c8e862970b0f03725d3ed34a43c768
+Merge: 7c96139 0998435
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 23 21:16:40 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+
+commit 0998435b3a5f925626cf0935867f36814d21040e
+Author: BrianZhu1 <brian.zhu@utexas.edu>
+Date:   Thu Mar 23 21:16:49 2017 -0500
+
+    added about page
+
+commit 7c9613955e181fb0feefeaea60e32b4bac56a39f
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 23 21:16:25 2017 -0500
+
+    add alchemy stuff
+
+commit 6954270448f027c627d6431247de30292730cc2d
+Author: ibly31UT <willc@Williams-MacBook-Pro.local>
+Date:   Thu Mar 23 20:39:35 2017 -0500
+
+    Updated to bootstrap v4, enriched static pages
+    
+    Made listing a grid layout. Made trimmed_characters_houses which makes
+    all characters have an ID link for house instead of a string link.
+    Threw out any characters without a valid house link
+
+commit 0ff1d48b08fd6fea650615c6b4bd074a9e325541
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 20:04:26 2017 -0500
+
+    added UML to dev notes
+
+commit fbdb25fa5767e91ed1815fe6796cfb767a651bb1
+Merge: 27d7843 7a8f0a3
+Author: Tim Gianitsos <timgianitsos@users.noreply.github.com>
+Date:   Thu Mar 23 19:49:05 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+
+commit 27d784368a8f2096b049d775242c348b09c86641
+Author: Tim Gianitsos <timgianitsos@users.noreply.github.com>
+Date:   Thu Mar 23 19:48:58 2017 -0500
+
+    Updated yUML fix #17
+
+commit 7a8f0a3b8a6609ebb2ab35c8c0caff3db34b8c82
+Merge: 1784257 5c63093
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 19:31:29 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+    fix
+
+commit 1784257fb797c193af57071bbaaa9a23ff0ef8bb
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 19:31:25 2017 -0500
+
+    touch up
+
+commit 5c63093366495e86721ce4cb911f2f6b9f11017f
+Author: Tim Gianitsos <timgianitsos@users.noreply.github.com>
+Date:   Thu Mar 23 19:16:26 2017 -0500
+
+    yUML code to generate diagram
+
+commit 8d5b545a8e83b97db595febe4cb38d2630e1efe5
+Author: Tim Gianitsos <timgianitsos@users.noreply.github.com>
+Date:   Thu Mar 23 19:11:19 2017 -0500
+
+    Latest yUML diagram
+
+commit 2dcda410b9aa94178a705add29a7b6a8097f728a
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 18:50:26 2017 -0500
+
+    reformat
+
+commit fb0488ad4ccd3b8db71b18b120a8e6f23a603b90
+Merge: ddbc311 0d96eae
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 18:48:50 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+    merge conflict
+
+commit ddbc3114efc0106d54b6eb5bb8ee01cd89c82fa0
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 18:48:43 2017 -0500
+
+    hot fix for hosts section - from collin
+
+commit 0d96eae85a7a61b9885d28bed88124aea81be658
+Merge: 90bdd9d b9bdb6a
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Thu Mar 23 18:43:29 2017 -0500
+
+    Resolved merge conflict.
+
+commit 90bdd9d0e07e0227dc45debf3f9f743ef657a7ac
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Thu Mar 23 18:41:53 2017 -0500
+
+    Expanded models discussion section.
+
+commit b9bdb6a3c5ce4baf91f2643e7211861cb696b6fe
+Merge: e7fadfa e831b92
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 18:35:45 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+    merge conflict
+
+commit e7fadfa6640adc56d12f1e0f86d8e4cac5314857
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 18:35:35 2017 -0500
+
+    fixed a bunch of spelling
+
+commit 1375f2c196ee8f471fa30ae5a386522e0a682b88
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 18:30:31 2017 -0500
+
+    added trimdata.py explination
+
+commit 3158838b4aa75fc6eadac623b649e3f386931ea4
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 18:28:07 2017 -0500
+
+    spurced up front-end
+
+commit e831b9245852fe7bd7e95e43ea9437b2ab2ee6e1
+Merge: 3d31cc0 e7a154d
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Thu Mar 23 18:09:34 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+
+commit 3d31cc0e60f939181a54c6fc8febcd804153c341
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Thu Mar 23 18:09:31 2017 -0500
+
+    Added SQLAlchemy tests, and Alliance model tests. Can't be run yet.
+
+commit e7a154d08b821db99f388063a618ded968e536d5
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 18:06:41 2017 -0500
+
+    add blurb about virtue of allianced module
+
+commit 876fbef569c17bad387c93bf070410eac986e0f4
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 18:00:37 2017 -0500
+
+    add alliances module
+
+commit a5ccace91327eb4b0e0f395fb3a7dd035624f85c
+Merge: 9eab776 c121f29
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Thu Mar 23 17:35:20 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+
+commit 9eab77657e4aaf37cea6fd07d5c8afa29dd2e4a3
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Thu Mar 23 17:35:17 2017 -0500
+
+    Added relationships to models. Adjusted tests to match new constructors.
+
+commit c121f293b303a531fa9fb2e814edbac8a2dd03f7
+Author: BrianZhu1 <brian.zhu@utexas.edu>
+Date:   Thu Mar 23 17:06:11 2017 -0500
+
+    added an About page
+
+commit 827395230f8a7d3d89736de70821a8b2be73f367
+Merge: 607b40e 82faf3a
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Thu Mar 23 16:22:11 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+
+commit 607b40e3f9203163555d965e8a8b5f80a04f6617
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Thu Mar 23 16:21:54 2017 -0500
+
+    Added Alliances model.
+
+commit 82faf3a63ebd06b638f8648436ae952878bcfa78
+Merge: 38d44bf 9402491
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 16:20:42 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+    fix merge conflicts
+
+commit 38d44bf6cc5fd5098745e1b219e6101d58b609a2
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 16:20:14 2017 -0500
+
+    spruced up back-end
+
+commit abf4ef31b002f4530e0de7f0843a83a132c3c06f
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 16:14:32 2017 -0500
+
+    add front-end tools
+
+commit fe2f9862e74bf79f0ff40b9e9d80a602bf4857db
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 15:59:54 2017 -0500
+
+    add pargraph
+
+commit 940249171ebe133a50d560f78cbd8cebc212992f
+Author: Collin Caram <collinc777@aol.com>
+Date:   Thu Mar 23 15:58:59 2017 -0500
+
+    Transferring API Description file from Apiary.io
+
+commit 957809b76748075b7c8e076f42688cc0113313c4
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 15:58:09 2017 -0500
+
+    spruced up API
+
+commit 249ae503a948225ae115d6aa443bc1426ebcdb8b
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 15:50:56 2017 -0500
+
+    spruced up use cases
+
+commit 30abae26b8a22927fa671ec56a2d479941647776
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 15:41:36 2017 -0500
+
+    added back end tools fix
+
+commit 73bdb1d1a038df188a4f1be8ad37e688b23b46cc
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 15:28:24 2017 -0500
+
+    added tabs
+
+commit 1fb63ac697fb7bb79a0d5556da6c62a321bf1f8d
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 23 15:03:16 2017 -0500
+
+    change it in the README too
+
+commit b2b1e2cfd8cc113851628dcdff643bc1b16485c4
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 23 15:02:55 2017 -0500
+
+    fix sqlalchemy and change name of tests file to spec
+
+commit b1861c7bcb8254d591e3a48459a36b4a759561c9
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 13:04:03 2017 -0500
+
+    add hosts
+
+commit d01b902f8b4f98c12bcbd7486a1230f47d340196
+Merge: 3af4854 f55e1b3
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 12:37:40 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+    temp
+
+commit 3af48548e720a9da91e62ae1be3fa3e2f043f9fe
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 12:30:06 2017 -0500
+
+    add tools headers
+
+commit f7befe082c151f5b49b7956c4a37096dca820816
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 12:26:37 2017 -0500
+
+    add Houses model
+
+commit 66f7601e225c390721bae5e637b22198aec98acc
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 12:25:36 2017 -0500
+
+    add characters model
+
+commit e91fedf356ecf1967f0941dadad805c7fdc0704b
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 12:24:38 2017 -0500
+
+    add books model
+
+commit 92383dda2a6435d283f70f528f7408debd7faf6e
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 11:38:19 2017 -0500
+
+    fix merge conflict
+
+commit 5cbc2a183fdac7571eaf244787b2f4a532e49da0
+Merge: 79e9539 b6abed2
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Thu Mar 23 11:36:43 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+    fix merge conflict
+
+commit f55e1b37658b0e1745d925757913ec5a8aab8601
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 23 17:35:33 2017 +0100
+
+    grabbed some images for our characters. not all characters have images. from what i can tell google makes it very difficult to scrape images from them so instead i took whatever images were available on the api.got.show, still need to grab some images for our characters
+
+commit b6abed21cb3ca51de8d224209e5bd352a34c74d3
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 23 15:58:33 2017 +0100
+
+    fix minor import issue with sqlalghemy
+
+commit 0dcd980e6b7b34f7a8c5412a705464798fbcd0b4
+Author: Brian Zhu <brianzhu@Brians-MacBook-Pro.local>
+Date:   Thu Mar 23 01:11:32 2017 -0500
+
+    Created the splash page and carousel
+
+commit 4ced09a35afc77094393fa768cb28a6cc6b4204e
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Thu Mar 23 00:11:55 2017 -0500
+
+    Cleaned models.py and test.py with autopep8 and pylint.
+
+commit 57367a91147a05334e94aa4a891890f74f274f5f
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Thu Mar 23 00:00:43 2017 -0500
+
+    Added >10 unit tests for models.
+
+commit 58c676e6cfa2d9095a0b81e79f44e6dcd201f8c7
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Wed Mar 22 23:46:09 2017 -0500
+
+    Added House model.
+
+commit f36d015ae16cb279e95eaea390991d0feb489419
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Wed Mar 22 23:21:01 2017 -0500
+
+    Added model test outlines.
+
+commit bea9465009d7bec1e2465fede92a97e4d39cc43b
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Wed Mar 22 22:34:38 2017 -0500
+
+    Added Book and Character models.
+
+commit d727e9d31eaf7e4a10a9fbea6c6e37e093332939
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Wed Mar 22 21:51:26 2017 -0500
+
+    Cleaned up Markdown formatting in README.
+
+commit 06eea765d9e3ec0ffc0101a70b187d6e5034cced
+Merge: 1c58f1a d4adcd0
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Wed Mar 22 21:46:07 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+
+commit 1c58f1ac4cdd1f1538dbb240b2f82248bbf79b8d
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Wed Mar 22 21:46:05 2017 -0500
+
+    Added Flask-SQLAlchemy.
+
+commit d4adcd05eb3c7f63c7cc3e590d1c8f204558e1c3
+Author: Brian Zhu <brianzhu@wireless-10-145-18-180.public.utexas.edu>
+Date:   Wed Mar 22 21:44:52 2017 -0500
+
+    Added Brian Zhu as a team member
+
+commit 79e9539c8cfdbd0a8f9da3cf7b8001d7f0ff20ed
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Wed Mar 22 18:55:58 2017 -0500
+
+    added fluff
+
+commit dae7ff8491777e8cc722daeedf66ebc06c3b6034
+Author: ibly31UT <willc@Williams-MacBook-Pro.local>
+Date:   Wed Mar 22 18:39:28 2017 -0500
+
+    Hacked together book_images for embedded media for books
+    
+    Downloaded the best images for each book cover and embedded them in the
+    book pages.
+
+commit 1a716688cb5562524201965704ef5b8dbd12cbd2
+Author: ibly31UT <willc@Williams-MacBook-Pro.local>
+Date:   Wed Mar 22 18:20:40 2017 -0500
+
+    Further refinement of the house data, now every house in data/trimmed_houses.json has an imageLink
+    
+    Refining the house dataset, combining the imageLinks from api.got.show
+    with the house data of Ice and Fire.
+
+commit 3bddd98f9c1036e912f03cdc9e60792675bbc074
+Merge: a334ad7 ae20319
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Wed Mar 22 17:57:43 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+    fix merge conflicts`
+
+commit a334ad7880d78a273f773f12cd07af98d06d8381
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Wed Mar 22 17:57:35 2017 -0500
+
+    added api paragraph
+
+commit ae20319dddf7bdcdcd48159e90726ff269881c45
+Author: ibly31UT <willc@Williams-MacBook-Pro.local>
+Date:   Wed Mar 22 07:10:23 2017 -0500
+
+    Trimmed book data, theres now a book listing and individual book page
+    
+    Started preliminary work on getting interconnectivity working with
+    links to other models. Ran into some issues with books pointing to
+    character IDs that got trimmed out with trimdata.py, but I just added a
+    check if that character exists before displaying it.
+
+commit 628337d744009fa1a71805614ccb150958c062cd
+Merge: 54a3af1 aa37470
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Tue Mar 21 07:53:19 2017 -0500
+
+    fix merge conflict
+
+commit 54a3af15dfd67430f7f3023d2afc48d091389a2c
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Tue Mar 21 07:52:25 2017 -0500
+
+    add temp paragraph
+
+commit aa37470f15e50c678e1c07074b9dcb716dba529d
+Author: ibly31UT <willc@Williams-MacBook-Pro.local>
+Date:   Tue Mar 21 02:08:26 2017 -0500
+
+    Started scraping APIs to populate our static pages with data
+    
+    Worked on finding intersections/unions between API data, removing url
+    references from apioficeandfire JSON.
+
+commit 9bfcc7ed72f4b05e5f1a00e7e7594f51db3c5871
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Mon Mar 20 20:29:48 2017 -0500
+
+    fix urll typo
+
+commit f2c5aeeeec76f18a61da0d49f75effb1d68e40e8
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Mon Mar 20 20:24:51 2017 -0500
+
+    change context
+
+commit 6ecd84bcc787b0e925e79af41238dfcdd7dbfff9
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Mon Mar 20 20:21:22 2017 -0500
+
+    hot fix
+
+commit 9b07a90e7ff1bdd3a03a622307e59161320e94cd
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Mon Mar 20 20:18:24 2017 -0500
+
+    changed style
+
+commit 79fc4d61b85223c3f83b900d58ceaabad216ee6d
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Mon Mar 20 20:04:33 2017 -0500
+
+    fix spelling
+
+commit 084883a57ff40d1851e932acccd581cfdf833d44
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Mon Mar 20 19:39:36 2017 -0500
+
+    create template
+
+commit e173ef21f96fdbe6fa712df1da1ae7d8acbf47e3
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Mon Mar 20 19:33:11 2017 -0500
+
+    add devnotes
+
+commit c0519563e122311080d907f1651b669c26d38d3d
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Mon Mar 20 19:03:12 2017 -0500
+
+    modified readme
+
+commit b70c0557a8bd44be226858292d5014ad3911372f
+Author: Adam Levi Poncher <aponcher@utexas.edu>
+Date:   Mon Mar 20 18:50:54 2017 -0500
+
+    add dev notes
+
+commit 8edaf506d01411bd7566fd9d91a64fd8c2b70fe8
+Author: Tim Gianitsos <timgianitsos@users.noreply.github.com>
+Date:   Mon Mar 20 18:15:08 2017 -0500
+
+    Update README.md
+
+commit 2af3432e03240650a25bf2180d572df683d56c1d
+Author: ibly31UT <willc@Williams-MacBook-Pro.local>
+Date:   Mon Mar 20 17:01:00 2017 -0500
+
+    Got test data for characters and houses, built rudimentary listing pages
+    
+    trimdata.py cleans up the houses.json and characters.json which are
+    directly from api.got.show/ Also created pages for individual houses
+    and characters.
+
+commit da3c00c8b1c95d3e97283c82d428b743fc3264cc
+Author: Collin Caram <collin.caram@gmail.com>
+Date:   Mon Mar 20 15:25:20 2017 -0500
+
+    Update README.md
+
+commit fc8939862113127f6690ee7ebb57f2215fed05aa
+Author: Collin Caram <collinc777@aol.com>
+Date:   Mon Mar 20 15:22:21 2017 -0500
+
+    Transferring API Description file from Apiary.io
+
+commit 8fa822e7c7ef6aebe9bdccc7390c76a2f81cd4d9
+Author: ibly31UT <willc@wireless-10-147-142-40.public.utexas.edu>
+Date:   Mon Mar 20 10:58:45 2017 -0500
+
+    Created a character.html static page
+    
+    Also added a notfound.html template for any entities that are not found.
+
+commit 622938e2a7d8dbd61e2074dcd9535f916bd58311
+Author: ibly31UT <willc@Williams-MacBook-Pro.local>
+Date:   Mon Mar 20 10:11:07 2017 -0500
+
+    Created a listing.html that will do grid view for each model
+    
+    Created a parameterized listing.html that is parameterized to save
+    template reuse.
+
+commit 43cdd93f39e455f82946a533c6d7b546a5e02f99
+Author: collinc777 <collinc777@aol.com>
+Date:   Mon Mar 20 01:44:39 2017 +0100
+
+    add some info with how to start the app
+
+commit 766c13b37338b2633c1e089a06500848989e857b
+Author: collinc777 <collinc777@aol.com>
+Date:   Mon Mar 20 01:36:37 2017 +0100
+
+    add the proper reqirements
+
+commit 480939e85a71054907fb75bf90ae75384aa0ced0
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Sun Mar 19 14:51:58 2017 -0500
+
+    Added README.
+
+commit 8b7b4aa13516bac70233786b92f63fb4ef91e203
+Author: ibly31UT <willc@Williams-MacBook-Pro.local>
+Date:   Thu Mar 9 20:06:13 2017 -0600
+
+    Added a characters.html page, demonstrated passing Python objects to templates
+    
+    Added a characters.html page, demonstrated passing Python objects to
+    templates
+
+commit 69bca3f08dfaf8f6152cd527c47312b04cf3d0f2
+Author: ibly31UT <willc@wireless-10-147-167-242.public.utexas.edu>
+Date:   Thu Mar 9 16:18:10 2017 -0600
+
+    Created base.html template that every page will extend
+    
+    Created base.html template that every page will extend
+
+commit ca2af9baa2c0056702d6384c738318d583e12895
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 9 16:16:40 2017 +0000
+
+    The run harness needs to be named application.py, because that is what Elastic Beanstalk uses to deploy
+
+commit 0ef8c7aa8fe03f7c99059a9a4e02598491367b58
+Author: ibly31UT <willc@Williams-MacBook-Pro.local>
+Date:   Thu Mar 9 00:36:01 2017 -0600
+
+    Created module app, separated view logic from entry-point logic
+    
+    Restructured project into a module pattern that allows abstraction and
+    addition of future files like model.py.
+
+commit 4d9fe10056616fff4370ad467c0875644f22d27b
+Author: collinc777 <collinc777@aol.com>
+Date:   Wed Mar 8 18:23:38 2017 -0600
+
+    requiremets
+
+commit f1ef62238b17c7a86f96d19a2c418f56097f9b99
+Author: collinc777 <collinc777@aol.com>
+Date:   Wed Mar 8 18:16:00 2017 -0600
+
+    Deploy
+
+commit 927a70c34526a9672b2798f364e6706f83cabcfb
+Author: collinc777 <collinc777@aol.com>
+Date:   Wed Mar 8 18:12:40 2017 -0600
+
+    Deploy
