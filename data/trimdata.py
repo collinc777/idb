@@ -300,7 +300,39 @@ def add_images_to_characters():
     with open("trimmed_characters_images.json", 'w') as characters_file:
         json.dump(characters, characters_file)
 
-convert_house_strings_to_id()
+def add_alliance_membership_to_houses():
+    alliances = None
+    with open("trimmed_alliances.json") as alliances_file:
+        alliances = json.load(alliances_file)
+
+    houses = None
+    with open("trimmed_houses.json") as houses_file:
+        houses = json.load(houses_file)
+
+    for house in houses:
+        for alliance in alliances:
+            if house["id"] in alliance["swornHouses"]:
+                house["alliance"] = alliance["id"]
+                break
+            else:
+                house["alliance"] = ""
+
+
+    with open("trimmed_houses_alliances.json", 'w') as alliances_file:
+        json.dump(houses, alliances_file)
+
+def sort_houses_by_members():
+    houses = None
+    with open("trimmed_houses.json") as houses_file:
+        houses = json.load(houses_file)
+
+    houses_sorted = sorted(houses, key=lambda x: -len(x["swornMembers"]))
+    with open("trimmed_houses.json", 'w') as houses_file:
+        json.dump(houses_sorted, houses_file)
+
+
+add_alliance_membership_to_houses()
+#convert_house_strings_to_id()
 #add_images_to_characters()
 #find_intersecting_houses()
 #ice_and_fire_trim_houses()

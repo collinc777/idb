@@ -8,10 +8,10 @@
 {% for val in listing.data %}
   <div class="card listingCard">
     <div class="card-header">
-      <h4>{{ val["name"] }}</h4>
+      <h4><a href="{{ listing.url }}/{{ val.id }}">{{ val["name"] }}</a></h4>
     </div>
     <div class="card-block">
-      <a href="{{ listing.url }}/{{ val.id }}"><b>Details</b></a>
+      <a class="btn btn-block btn-default" href="{{ listing.url }}/{{ val.id }}">Details</a>
     </div>
   </div>
 {% endfor %}

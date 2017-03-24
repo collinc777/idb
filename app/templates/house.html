@@ -21,6 +21,18 @@
 </div>
 <div class="card">
 	<h4 class="card-header">
+		Member of Alliance
+	</h4>
+	<div class="card-block">
+		{% if house.alliance in alliance_links %}
+		<a href="{{ alliance_links[house.alliance].link }}">{{ alliance_links[house.alliance].name }} </a>
+		{% else %}
+		House is not a member of any alliance.
+		{% endif %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
 		Region
 	</h4>
 	<div class="card-block">
