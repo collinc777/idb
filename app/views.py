@@ -127,7 +127,7 @@ def book(bookid):
         context = create_context(HL_BOOKS, entity="Book", entity_id=bookid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_BOOKS, book=book, character_links=character_links, book_images=book_images)
+        context = create_context(HL_BOOKS, book=book, character_links=character_links, house_links=house_links, book_images=book_images)
         return render_template('book.html', **context)
 
 

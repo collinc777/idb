@@ -8,7 +8,7 @@
 	"headHouse": 362,
 	"currentLord" : 583,
 	"swornHouses" : [362, 216, 318, 395, 401, 271, 282, 150, 236, 435, 61],
-	"imageLink": "wardens.jpg"
+	"imageLink": "alliancebanners/North.png"
 },
 {
 	"name": "The Rightful Heir to Baratheon's Throne",
@@ -20,7 +20,7 @@
 	"headHouse": 231,
 	"currentLord": 238,
 	"swornHouses" : [231, 72, 120, 13, 40, 359, 443, 270, 303, 118, 250, 425, 234, 294, 331, 408, 86, 212, 258, 374, 231, 245, 377, 163, 357, 219, 306, 426],
-	"imageLink" : "rightfulheir.jpg"
+	"imageLink" : "alliancebanners/Baratheon.png"
 },
 {
 	"name": "The Rightful Ruler of the Seven Kingdoms",
@@ -32,6 +32,6 @@
 	"headHouse": 378,
 	"currentLord" : 1303,
 	"swornHouses" : [378, 95, 59],
-	"imageLink": "rightfulrulers.jpg"
+	"imageLink": "alliancebanners/SevenKingdoms.png"
 }
 ]

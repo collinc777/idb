@@ -85,6 +85,16 @@ class Book(Base):
     released = Column(String(80))
 
     def __init__(self, numberOfPages, isbn, name, publisher, country, povCharacter_ids, author, mediaType, released, character_ids):
+        assert numberOfPages > 0
+        assert len(isbn) > 0
+        assert len(name) > 0
+        assert len(publisher) > 0
+        assert len(country) > 0
+        assert len(author) > 0
+        assert len(mediaType) > 0
+        assert hasattr(povCharacter_ids, '__iter__')
+        assert hasattr(character_ids, '__iter__')
+
         self.numberOfPages = numberOfPages
         self.isbn = isbn
         self.name = name
@@ -137,6 +147,23 @@ class Character(Base):
     male = Column(database.Boolean)
 
     def __init__(self, house, culture, titles, spouse, died, aliases, dateOfDeath, name, born, gender, father, allegiances, alliance_ids, povBook_ids, playedBy, book_ids, tvSeries, mother, male):
+        assert isinstance(house, basestring)
+        assert isinstance(culture, basestring)
+        assert hasattr(titles, '__iter__')
+        assert isinstance(spouse, basestring)
+        assert isinstance(died, basestring)
+        assert hasattr(aliases, '__iter__')
+        assert isinstance(died, basestring)
+        assert isinstance(name, basestring)
+        assert isinstance(born, basestring)
+        assert isinstance(gender, basestring)
+        assert isinstance(father, basestring)
+        assert isinstance(mother, basestring)
+        assert hasattr(allegiances, '__iter__')
+        assert hasattr(playedBy, '__iter__')
+        assert hasattr(tvSeries, '__iter__')
+        assert isinstance(male, bool)
+
         self.house = house
         self.culture = culture
         self.titles = titles
@@ -193,6 +220,18 @@ class House(Base):
     ancestralWeapons = Column(database.ARRAY(String(80)))
 
     def __init__(self, currentLord_id, founder_id, heir_id, cadetBranches, founded, diedOut, titles, coatOfArms, words, seats, overlord_id, name, swornMember_ids, region, ancestralWeapons):
+        assert hasattr(cadetBranches, '__iter__')
+        assert isinstance(founded, basestring)
+        assert isinstance(diedOut, basestring)
+        assert hasattr(titles, '__iter__')
+        assert isinstance(coatOfArms, basestring)
+        assert isinstance(words, basestring)
+        assert hasattr(seats, '__iter__')
+        assert isinstance(name, basestring)
+        assert isinstance(region, basestring)
+        assert hasattr(swornMember_ids, '__iter__')
+        assert hasattr(ancestralWeapons, '__iter__')
+
         self.currentLord_id = currentLord_id
         self.founder_id = founder_id
         self.heir_id = heir_id
@@ -233,6 +272,12 @@ class Alliance(Base):
     cultures = Column(database.ARRAY(String(80)))
 
     def __init__(self, headLeader_id, member_ids, weapons, seats, regions, cultures):
+        assert hasattr(member_ids, "__iter__")
+        assert hasattr(weapons, "__iter__")
+        assert hasattr(seats, "__iter__")
+        assert hasattr(regions, "__iter__")
+        assert hasattr(cultures, "__iter__")
+
         self.headLeader_id = headLeader_id
         self.member_ids = member_ids
         self.weapons = weapons
