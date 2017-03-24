@@ -4,6 +4,38 @@
 <h1>{{ listing.title }}</h1>
 <br />
 </div>
+<div class="card-deck">
+  <div class="card text-center">
+    <h3 class="card-header">Sort By</h3>
+    <div class="card-block">
+      <div class="dropdown">
+        <button class="btn btn-block btn-lg btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sort By
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Name Ascending</a>
+          <a class="dropdown-item" href="#">Name Descending</a>
+          <a class="dropdown-item" href="#">ID Ascending</a>
+          <a class="dropdown-item" href="#">ID Descending</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card text-center">
+    <h3 class="card-header">Filter By</h3>
+    <div class="card-block">
+      <div class="dropdown">
+        <button class="btn btn-block btn-lg btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Filter By
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Name</a>
+          <a class="dropdown-item" href="#">ID</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="card-deck text-center">
 {% for val in listing.data %}
   <div class="card listingCard">
