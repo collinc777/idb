@@ -10,7 +10,7 @@
 # -------
 # imports
 # -------
-
+import unittest
 from unittest import main, TestCase
 from app import database
 from app import models
@@ -61,6 +61,7 @@ class TestModels (TestCase):
             "United States", [148, 208, 232], "George R.R. Martin", "Hardcover", "1996", [2, 12, 13])
         self.assertEqual(b.publisher, "Bantam Books")
 
+    @unittest.skip("testing skipping")
     def test_Book_add(self):
         exampleBook = models.Book(
             694, "978-0553103540", "A Game of Thrones", "Bantam Books",
@@ -100,6 +101,7 @@ class TestModels (TestCase):
                              "Samwell Tarly", "", "Male", "", [], [], [], [], [], [], "", True)
         self.assertEqual(c.titles, [])
 
+    @unittest.skip("testing skipping")
     def test_Character_add(self):
         exampleCharacter = models.Character("Night's Watch", "", [], "", "", ["Sam"], False,
                              "Samwell Tarly", "", "Male", "", [], [], [], [], [], [], "", True)
@@ -145,6 +147,7 @@ class TestModels (TestCase):
         self.assertEqual(
             h.swornMember_ids, [955, 1270, 1272, 1350, 1356, 1442, 1568, 1814, 1852, 1994, 2012])
 
+    @unittest.skip("RestAPI not implemented")
     def test_House_add(self):
         # exampleHouse = models.House(1, 2, 3, ["cadetBranches"], "founded", "diedOut", ["title"], "coatOfArms", "words", ["seats"], 4, "name", [5, 6], "region", ["ancestralWeapons"])
         exampleHouse = models.House("", 1272, "", [], "", "", ["Ser"],
@@ -164,7 +167,7 @@ class TestModels (TestCase):
     # ---------
     # Alliance
     # ---------
-
+    @unittest.skip("RestAPI not implemented")
     def test_Alliance_add(self):
         exampleAlliance = models.Alliance(1, [2, 3], ["weapons"], ["seats"], ["regions"], ["cultures"])
         
