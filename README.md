@@ -1,6 +1,7 @@
 # Project #3: IDB1
 Due on Thursday, 23 Mar 2017 at 10pm  
 [Project Description](http://www.cs.utexas.edu/users/downing/cs373/projects/IDB1.html)
+[Travis](https://travis-ci.org/collinc777/idb/builds)  
 
 ### Setup
 NOTE: Python version must be 3.4 because that is what works with the server  
