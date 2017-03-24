@@ -34,7 +34,9 @@ def load_listing(filename):
 character_listing = dict(title="Characters", url="/characters",
                          properties=[["Name", "name"], ["Gender", "male"], ["Culture", "culture"], ["House", "house"]])
 character_listing["data"] = load_listing("data/trimmed_characters_houses.json")
-character_links = {character["id"]: {"name": character["name"], "link": "/characters/" + str(character["id"])} for character in character_listing["data"]}
+character_links = {}
+for character in character_listing["data"]:
+    character_links = {character["id"]: {"name": character["name"], "link": "/characters/" + str(character["id"])}}
 
 house_listing = dict(title="Houses", url="/houses",
                      properties=[["Name", 'name'], ["Current Lord", 'currentLord'], ["Region", 'region'],
