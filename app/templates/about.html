@@ -1,17 +1,163 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="row text-center">
-    <h1>About</h1>
+    <h1>Meet the team!</h1>
+    <br>
     <br />
 </div>
-<div class="container">
-    <h1>Hello world!</h1>
+<!--First row of people-->
+<div class="row text-center" style="background-color:azure">
+    <div class="col-lg-4">
+        <img class="img-circle" src="/static/img/profile-pics/brian.jpg" alt="profile-pic" width="150" height="150">
+        <h2>Brian Zhu</h2>
+        <p>
+            Brian is a junior at UT Austin pursuing a degree in Computer Science and a Business Foundations certificate. He enjoys reading, rock climbing, biking, exploring, playing video and board games, and learning random things.
+            <br>
+            <br>
+            Major responsibilities: Front-end, Splash page, About page
+            <br>
+            Number of commits: 4
+            <br>
+            Number of issues: 4
+            <br>
+            Number of unit tests: X
+        </p>
+    </div>
+    <div class="col-lg-4">
+        <img class="img-circle" src="/static/img/profile-pics/tim.jpg" alt="profile-pic" width="150" height="150">
+        <h2>Tim Gianitsos</h2>
+        <p>
+            Tim is a Junior with a B.S. in Computer Science, with minors in Math and Business. Last year he worked for Squarecap part time during the semester, and IBM during the summer as a software engineer. Next summer he will being working with Amazon at their headquarters in Seattle. In his free time he enjoys lifting weights, and teaching his little brother Java.
+            <br>
+            <br>
+            Major responsibilities: UML diagram, About page
+            <br>
+            Number of commits: 4
+            <br>
+            Number of issues: 4
+            <br>
+            Number of unit tests: X
+        </p>
+    </div>
+    <div class="col-lg-4">
+        <img class="img-circle" src="/static/img/profile-pics/collin.jpg" alt="profile-pic" width="150" height="150">
+        <h2>Collin Caram</h2>
+        <p>
+            Collin is a senior studying Computer Science at the University of Texas at Austin. He likes to get his hands dirty solving difficult problems and building awesome products.
+            <br>
+            <br>
+            Major responsibilities: Infrastructure and deployment, Apiary documentation
+            <br>
+            Number of commits: 13
+            <br>
+            Number of issues: 4
+            <br>
+            Number of unit tests: X
+        </p>
+    </div>
+</div>
+<br>
+<br>
+<!--Second row of people-->
+<div class="row text-center">
+    <div class="col-lg-4">
+        <img class="img-circle" src="/static/img/profile-pics/greg.jpg" alt="profile-pic" width="150" height="150">
+        <h2>Greg McDonald</h2>
+        <p>
+            Greg is a junior at the University of Texas at Austin pursuing a degree in Computer Science and a Business Foundations certificate. His favorite part of Computer Science is computer vision. He enjoys playing soccer and tennis. His favorite animal is baby elephants.
+            <br>
+            <br>
+            Major responsibilities: Backend work on models and tests
+            <br>
+            Number of commits: 17
+            <br>
+            Number of issues: 4
+            <br>
+            Number of unit tests: 17
+        </p>
+    </div>
+    <div class="col-lg-4">
+        <img class="img-circle" src="/static/img/profile-pics/adam.jpg" alt="profile-pic" width="150" height="150">
+        <h2>Adam Poncher</h2>
+        <p>
+            Adam is a 22 year old Senior who moved to Austin from Chicago to pursue a degree in CS and BFP from UT. He joined the TXSG to fund his education and currently holds a rank of SGT (E-5). He starts a full time position at Lithium as a Software Engineer after graduation.
+            <br>
+            <br>
+            Major responsibilities: Report, Dev page
+            <br>
+            Number of commits: 34
+            <br>
+            Number of issues: 4
+            <br>
+            Number of unit tests: X
+        </p>
+    </div>
+    <div class="col-lg-4">
+        <img class="img-circle" src="/static/img/profile-pics/will.jpg" alt="profile-pic" width="150" height="150">
+        <h2>Will Connolly</h2>
+        <p>
+            Will is a senior at UT Austin pursuing happiness and a BS in Computer Science. He enjoys learning about new technology, keeping up to date with world news, and playing Legend of Zelda : Breath of the Wild.
+            <br>
+            <br>
+            Major responsibilities: Backend using Flask, Frontend infrastructure and tab pages
+            <br>
+            Number of commits: 12
+            <br>
+            Number of issues: 4
+            <br>
+            Number of unit tests: X
+        </p>
+    </div>
+</div>
+<br>
+<br>
+<!--Stats, Data, Tools-->
+<div class="row text-center" style="background-color:azure">
+    <div class="col-lg-4">
+        <h2>Stats</h2>
+        <p>
+            Number of commits: 91
+            <br>
+            Number of issues: 24
+            <br>
+            Number of unit tests: 17
+            <br>
+            Link to Apiary API: <a href="http://docs.gottrones.apiary.io/#">Apiary</a>
+            <br>
+            Link to Github Issue Tracker: <a href="https://github.com/collinc777/idb/issues">Issues</a>
+            <br>
+            Link to Github Repo: <a href="https://github.com/collinc777/idb">Repo</a>
+        </p>
+    </div>
+    <div class="col-lg-4">
+        <h2>Data Sources</h2>
+        <p>
+            <a href="https://anapioficeandfire.com/Documentation">https://anapioficeandfire.com/Documentation</a>
+            <br>
+            <a href="https://api.got.show/doc/">https://api.got.show/doc/</a>
+            <br>
+            Obtained data about Characters, Books, and Alliances. We scraped the data by sending an RESTful API call/HTTP request, getting back the data in a Json file, scraping the Json file to process the info, and saving that.
+        </p>
+    </div>
+    <div class="col-lg-4">
+        <h2>Tools</h2>
+        <p>
+            Bootstrap: A framework to help style the front-end of the website
+            <br>
+            Amazon AWS: Used to host and deploy the website
+            <br>
+            Github: Public repository, issue tracker, and version control
+            <br>
+            Apiary: Used to document API
+            <br>
+            Flask: Python Framework to create our backend
+            <br>
+            Travis: Continuous integration to monitor commits to repo
+            <br>
+            Slack: Used for project communication
+            <br>
+            yUML: Used to create UML diagrams
+        </p>
+    </div>
 </div>
 {% endblock %}
-
-<!--Write an initial technical report
-It must be at least 2500 words.
-The report must be embedded in the website.
-Document the use cases, RESTful API, models, tools, and hosting well.
-The audience comprises other software developers, as opposed to users.
-Format the report clearly, attractively, and consistently, using good sections, multiple pages, good headers, figures, and grammar. -->
