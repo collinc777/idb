@@ -41,8 +41,7 @@ house_listing = dict(title="Houses", url="/houses",
                                  ["Coat of Arms", 'coatOfArms'], ["Founded", 'founded'], ["Overlord", 'overlord'],
                                  ["Extinct?", 'isExtinct'], ["Words", 'words']])
 house_listing["data"] = load_listing("data/trimmed_houses.json")
-house_links = {house["id"]: {"name": house["name"], "link": "/houses/" + str(house["id"])} for house in
-               house_listing["data"]}
+house_links = {house["id"]: {"name": house["name"], "link": "/houses/" + str(house["id"])} for house in house_listing["data"]}
 
 book_listing = dict(title="Books", url="/books",
                     properties=[["Name", "name"], ["Publisher", "publisher"], ["Country", "country"],
@@ -60,8 +59,7 @@ alliance_listing = dict(title="Alliances", url="/alliances",
                         properties=[["Ancestral Weapons", 'ancestral_weapons'], ["Seats", 'seats'],
                                     ["Cultures", 'cultures'], ["Regions", 'regions']])
 alliance_listing["data"] = load_listing("data/trimmed_alliance.json")
-alliance_link = {alliance["id"]: {"name": alliance["seats"], "link": "/books/" + str(alliance["id"])} for alliance in \
-                 alliance_listing["data"]}
+alliance_link = {alliance["id"]: {"name": alliance["seats"], "link": "/books/" + str(alliance["id"])} for alliance in alliance_listing["data"]}
 
 
 # Build a base "context" dictionary for passing to any given template
