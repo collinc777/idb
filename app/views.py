@@ -33,15 +33,19 @@ def load_listing(filename):
 
 character_listing = dict(title="Characters", url="/characters")
 character_listing["data"] = load_listing("data/trimmed_characters_houses.json")
-character_links = {character["id"]: {"name": character["name"], "link": "/characters/" + str(character["id"])} for character in character_listing["data"]}
+character_links = {}
+for character in character_listing["data"]:
+    character_links = {character["id"]: {"name": character["name"], "link": "/characters/" + str(character["id"])}}
 
 house_listing = dict(title="Houses", url="/houses")
 house_listing["data"] = load_listing("data/trimmed_houses_alliances.json")
-house_links = {house["id"]: {"name": house["name"], "link": "/houses/" + str(house["id"])} for house in house_listing["data"]}
+for house in house_listing["data"]:
+    house_links = {house["id"]: {"name": house["name"], "link": "/houses/" + str(house["id"])}}
 
 book_listing = dict(title="Books", url="/books")
-book_listing["data"] = load_listing("data/trimmed_books.json")
-book_links = {book["id"]: {"name": book["name"], "link": "/books/" + str(book["id"])} for book in book_listing["data"]}
+book_listing["data"] = load_listing("data/api_ice_and_fire/trimmed_books.json")
+for book in book_listing["data"]:
+    book_links = {book["id"]: {"name": book["name"], "link": "/books/" + str(book["id"])}}
 book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswords.jpg", 4: "thehedgeknight.jpg",
                5: "afeastforcrows.jpg", 6: "theswornsword.jpg", 7: "themysteryknight.jpg", 8: "adancewithdragons.jpg",
                9: "theprincessandthequeen.jpg", 10: "therogueprince.jpg", 11: "theworldoficeandfire.png",
@@ -51,7 +55,8 @@ book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswor
 
 alliance_listing = dict(title="Alliances", url="/alliances")
 alliance_listing["data"] = load_listing("data/trimmed_alliances.json")
-alliance_links = {alliance["id"]: {"name": alliance["name"], "link": "/alliances/" + str(alliance["id"])} for alliance in alliance_listing["data"]}
+for alliance in alliance_listing["data"]:
+    alliance_links = {alliance["id"]: {"name": alliance["name"], "link": "/alliances/" + str(alliance["id"])}}
 
 
 # Build a base "context" dictionary for passing to any given template
@@ -101,7 +106,8 @@ def house(houseid):
         context = create_context(HL_HOUSES, entity="House", entity_id=houseid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_HOUSES, house=house, character_links=character_links, house_links=house_links, alliance_links=alliance_links)
+        context = create_context(HL_HOUSES, house=house, character_links=character_links, house_links=house_links,
+                                 alliance_links=alliance_links)
         return render_template('house.html', **context)
 
 
@@ -124,6 +130,7 @@ def book(bookid):
         context = create_context(HL_BOOKS, book=book, character_links=character_links, house_links=house_links, book_images=book_images)
         return render_template('book.html', **context)
 
+
 @application.route("/alliances/<allianceid>")
 def alliance(allianceid):
     try:
@@ -140,7 +147,8 @@ def alliance(allianceid):
         context = create_context(HL_ALLIANCES, entity="Alliance", entity_id=allianceid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_ALLIANCES, alliance=alliance, character_links=character_links, house_links=house_links)
+        context = create_context(HL_ALLIANCES, alliance=alliance, character_links=character_links,
+                                 house_links=house_links)
         return render_template('alliance.html', **context)
 
 
