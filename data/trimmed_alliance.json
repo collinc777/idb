@@ -1,0 +1,28 @@
+[{
+	"ancestral_weapons" : ["Long Claw"],
+	"seats" : ["Stark"],
+	"cultures" : "North",
+	"regions" : "North",
+	"id" : "1",
+	"headLeader_id" : "583",
+	"member_ids" : [583]
+},
+{
+	"ancestral_weapons" : ["Oathkeeper","Widow's Wail", "Brightroar"],
+	"seats" : ["Lannister"],
+	"cultures" : "South",
+	"regions" : "Castlery Rock",
+	"id" : "2",
+	"headLeader_id" : 238,
+	"member_ids" : [238]
+},
+{
+	"ancestral_weapons" : ["Dragons"],
+	"seats" : ["Targaryen"],
+	"cultures" : "Valyrian",
+	"regions" : "Free cities",
+	"id" : "3",
+	"headLeader_id" : 1303,
+	"member_ids" : [1303]
+}
+]
