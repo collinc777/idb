@@ -4,65 +4,44 @@
     <meta charset="UTF-8">
     <title>GoT Thrones?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/style.css?nocache=345">
     
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="/static/css/style.css?nocache=13464347">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </head>
 <body>
-<nav id="navbar" class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            <a href="#" class="navbar-brand">GoT Thrones?</a>
-        </div>
-        <ul class="nav navbar-nav">
+<nav id="navbar" class="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a href="#" class="navbar-brand">GoT Thrones?</a>
+    <div id="navbarSupportedContent" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
             {% for nav in navigation %}
                 {% if loop.index0 == nav_highlight %}
-                <li class="active">
+                <li class="nav-item active">
                 {% else %}
-                <li>
+                <li class="nav-item">
                 {% endif %}
-                    <a href="{{ nav.url }}">{{ nav.name }}</a>
+                    <a class="
+                    nav-link" href="{{ nav.url }}">{{ nav.name }}</a>
                 </li>
             {% endfor %}
         </ul>
     </div>
 </nav>
-<div class="container">
+<div id="contentContainer" class="container">
 {% block content %}
 {% endblock %}
 </div>
 
-<!-- React looks fuckin' weiiiird but I'm excited to learn it
-<script type="text/jsx">
-
-    /*** @jsx React.DOM */
-
-    var realPython = React.createClass({
-        render: function () {
-            return (<h2>Greetings, from Real Python!</h2>);
-        }
-    });
-
-    ReactDOM.render(
-        React.createElement(realPython, null),
-        document.getElementById('content')
-    );
-</script>
---> 
-
-<!-- Load these at the bottom to improve page load-time -->
+<!-- Load these at the bottom to improve page load-time 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+-->
 </body>
 </html>

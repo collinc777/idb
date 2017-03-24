@@ -1,19 +1,88 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="row text-center">
-	<h1>House - {{ house.name }}</h1>
-	<br />
+<div class="details">
+<div class="card">
+	<div class="card-header text-center">
+		<h1>House - {{ house.name }}</h1>
+	</div>
+	<div class="card-block text-center">
+		<img src="https://api.got.show/{{ house.imageLink }}">
+	</div>
 </div>
-<div class="row text-center">
-	<img src="https://api.got.show/{{ house.imageLink }}">
+<div class="card">
+	<h4 class="card-header">
+		Current Lord
+	</h4>
+	<div class="card-block">
+		{% if house.currentLord in character_links %}
+		<a href="{{ character_links[house.currentLord].link }}">{{ character_links[house.currentLord].name }} </a>
+		{% endif %}
+	</div>
 </div>
-<div class="row text-center">
-	<h4>Current Lord - {{ house.currentLord }}</h4>
-	<h4>Region - {{ house.region }}</h4>
-	<h4>Coat of Arms - {{ house.coatOfArms }}</h4>
-	<h4>Founded - {{ house.founded }}</h4>
-	<h4>Overlord - {{ house.overlord }}</h4>
-	<h4>Extinct - {% if house.isExtinct %}Yes{% else %}No{% endif %}</h4>
-	<h4>Words - {{ house.words }}</h4>
+<div class="card">
+	<h4 class="card-header">
+		Region
+	</h4>
+	<div class="card-block">
+		{{ house.region }}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Coat of Arms
+	</h4>
+	<div class="card-block">
+		{{ house.coatOfArms }}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Founded
+	</h4>
+	<div class="card-block">
+		{{ house.founded }}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Overlord House
+	</h4>
+	<div class="card-block">
+		{% if house.overlord in house_links %}
+		<a href="{{ house_links[house.overlord].link }}">{{ house_links[house.overlord].name }} </a>
+		
+		{% endif %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Extinct
+	</h4>
+	<div class="card-block">
+		{% if house.isExtinct %}Yes{% else %}No{% endif %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Words
+	</h4>
+	<div class="card-block">
+		{{ house.words }}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Sworn Members
+	</h4>
+	<div class="card-block">
+	{% for char in house.swornMembers %}
+		{% if char in character_links %}
+			<h5><a href="{{ character_links[char].link }}">{{ character_links[char].name }}  </a></h5>
+		{% endif %}
+	{% else %}
+		House has no sworn members
+	{% endfor %}
+	</div>
+</div>
 </div>
 {% endblock %}

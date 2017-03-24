@@ -27,7 +27,7 @@ def loadListing(filename):
 # POV (point-of-view) characters that are in it. So we pass it the character_links array
 
 character_listing = {"title": "Characters", "url": "/characters", "properties": [["Name", "name"], ["Gender", "male"], ["Culture", "culture"], ["House", "house"]]}
-character_listing["data"] = loadListing("data/trimmed_characters.json")
+character_listing["data"] = loadListing("data/trimmed_characters_houses.json")
 character_links = {character["id"]: {"name": character["name"], "link": "/characters/" + str(character["id"])} for character in character_listing["data"]}
 
 house_listing = {"title": "Houses", "url": "/houses", "properties": [["Name", 'name'], ["Current Lord", 'currentLord'], ["Region", 'region'], ["Coat of Arms", 'coatOfArms'], ["Founded", 'founded'], ["Overlord", 'overlord'], ["Extinct?", 'isExtinct'], ["Words", 'words']]}
@@ -66,7 +66,7 @@ def character(charid):
         context = createContext(HL_CHARACTERS, entity="Character", entity_id=charid)
         return render_template('notfound.html', **context)
     else:
-        context = createContext(HL_CHARACTERS, character=character, book_links=book_links)
+        context = createContext(HL_CHARACTERS, character=character, book_links=book_links, house_links=house_links)
         return render_template('character.html', **context)
 
 @application.route("/houses/<houseid>")
@@ -85,7 +85,7 @@ def house(houseid):
         context = createContext(HL_HOUSES, entity="House", entity_id=houseid)
         return render_template('notfound.html', **context)
     else:
-        context = createContext(HL_HOUSES, house=house)
+        context = createContext(HL_HOUSES, house=house, character_links=character_links, house_links=house_links)
         return render_template('house.html', **context)
 
 @application.route("/books/<bookid>")
@@ -104,7 +104,7 @@ def book(bookid):
         context = createContext(HL_BOOKS, entity="Book", entity_id=bookid)
         return render_template('notfound.html', **context)
     else:
-        context = createContext(HL_HOUSES, book=book, character_links=character_links, book_images=book_images)
+        context = createContext(HL_BOOKS, book=book, character_links=character_links, book_images=book_images)
         return render_template('book.html', **context)
 
 @application.route('/characters', methods=['GET', 'POST'])

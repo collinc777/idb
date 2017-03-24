@@ -1,31 +1,73 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="row text-center">
-	<h1>Character - {{ character.name }}</h1>
-	<br />
+<div class="details">
+<div class="card">
+	<div class="card-header text-center">
+		<h1>Character - {{ character.name }}</h1>
+	</div>
+	<div class="card-block text-center">
+		<img src="/static/img/chars/{{ character.imageLink }}">
+	</div>
 </div>
-<div class="row text-center">
-	<h3>House - {{ character.house }}</h3>
-	<h3>Culture - {{ character.culture }}</h3>
-	<h3>Gender - {% if character.male %}Male{% else %}Female{% endif %}</h3>
-	<h3>Titles</h3>
+<div class="card">
+	<h4 class="card-header">
+		House
+	</h4>
+	<div class="card-block">
+		<a href="{{ house_links[character.house].link }}">{{ house_links[character.house].name }}</a>
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Culture
+	</h4>
+	<div class="card-block">
+		{{ character.culture }}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Gender
+	</h4>
+	<div class="card-block">
+		{% if character.male %}Male{% else %}Female{% endif %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Titles
+	</h4>
+	<div class="card-block">
 	{% for title in character.titles %}
-		<h4>{{ title }}</h4>
+		<h5>{{ title }}</h5>
 	{% else %}
-		<h4>This character has no titles</h4>
+		<h5>A character has no names</h5>
 	{% endfor %}
-
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Living or Dead
+	</h4>
+	<div class="card-block">
 	{% if character.died %}
-	<h3>Died - {{ character.died }}</h3>
+		<h5>{{ character.died }}</h5>
 	{% else %}
-	<h3>Died? - Still alive!</h3>
+		<h5>Alive... for now.</h5>
 	{% endif %}
-
-	<h3>Books this character appears in:</h3>
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Books This Character Appears In
+	</h4>
+	<div class="card-block">
 	{% for book in character.books %}
-		<h4><a href="{{ book_links[book].link }}">{{ book_links[book].name }}</a></h4>
+		<h5><a href="{{ book_links[book].link }}">{{ book_links[book].name }} </a></h5>
 	{% else %}
-		<h4>This character appears in no books</h4>
+		<h5>This character appears in no books</h5>
 	{% endfor %}
+	</div>
+</div>
 </div>
 {% endblock %}

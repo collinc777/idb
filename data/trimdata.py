@@ -250,7 +250,59 @@ def find_distinct_cultures():
     cultures = gs_cultures.union(iaf_cultures)
     print(cultures)
 
-find_intersecting_houses()
+def convert_house_strings_to_id():
+    characters = None
+    with open("trimmed_characters.json") as characters_file:
+        characters = json.load(characters_file)
+
+    houses = None
+    with open("trimmed_houses.json") as houses_file:
+        houses = json.load(houses_file)
+
+    final_characters = list()
+
+    for character in characters:
+        house_string = character["house"]
+        house_match = None
+        for house in houses:
+            if house["name"] == house_string:
+                house_match = house
+                break
+
+        if house_match is None:
+            for house in houses:
+                if house["name"] in house_string or house_string in house["name"]:
+                    house_match = house
+                    break
+            if house_match is None:
+                print("Could not find house: ", house_string, " for character: ", character["name"])
+            else:
+                character["house"] = house_match["id"]
+                final_characters.append(character)
+        else:
+            character["house"] = house_match["id"]
+            final_characters.append(character)
+
+
+
+    with open("trimmed_characters_houses.json", 'w') as characters_file:
+        json.dump(final_characters, characters_file)
+
+def add_images_to_characters():
+    characters = None
+    with open("trimmed_characters.json") as characters_file:
+        characters = json.load(characters_file)
+
+    for character in characters:
+        name = character["name"]
+        character["imageLink"] = name.replace(" ", "_") + ".jpeg"
+
+    with open("trimmed_characters_images.json", 'w') as characters_file:
+        json.dump(characters, characters_file)
+
+convert_house_strings_to_id()
+#add_images_to_characters()
+#find_intersecting_houses()
 #ice_and_fire_trim_houses()
 #got_show_filter_characters()
 #find_intersecting_characters()

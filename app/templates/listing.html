@@ -1,10 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="row text-center">
+<div class="text-center">
 <h1>{{ listing.title }}</h1>
 <br />
 </div>
-<table class="table">
+<div class="card-deck text-center">
+{% for val in listing.data %}
+  <div class="card listingCard">
+    <div class="card-header">
+      <h4>{{ val["name"] }}</h4>
+    </div>
+    <div class="card-block">
+      <a href="{{ listing.url }}/{{ val.id }}"><b>Details</b></a>
+    </div>
+  </div>
+{% endfor %}
+</div>
+<!--<table class="table">
   <thead>
     <tr>
     {% for property in listing.properties %}
@@ -25,5 +37,5 @@
     </tr>
     {% endfor %}
   </tbody>
-</table>
+</table>-->
 {% endblock %}
