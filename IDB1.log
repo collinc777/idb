@@ -1,3 +1,133 @@
+commit cf8670bb8d0eb11a3fcd0421669b348f9c14d59a
+Merge: ad98797 e0bfc09
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Fri Mar 24 15:08:55 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+
+commit ad98797c4608560bd5b41fede597497ee9226d8a
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Fri Mar 24 15:08:52 2017 -0500
+
+    Changed "basestring" to "str". Now works with Python 3.
+
+commit e0bfc09e798e8c0b718de46e1a48f973651ec957
+Author: collinc777 <collinc777@aol.com>
+Date:   Fri Mar 24 14:28:51 2017 -0500
+
+    add elastic beanstalk files to repo and project root
+
+commit d87a062711cc202249c08d55baa90a55ac97c2e6
+Merge: f0f4968 a204727
+Author: collinc777 <collinc777@aol.com>
+Date:   Fri Mar 24 14:23:39 2017 -0500
+
+    fix merge
+
+commit a2047276e880c08f427a3624a05902280fbe99a9
+Merge: 982355b 164d0a6
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Fri Mar 24 14:10:59 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+
+commit 982355bdad8887b40970f37ce9409bc9e50934bd
+Author: Greg McDonald <grm695@utexas.edu>
+Date:   Fri Mar 24 14:10:54 2017 -0500
+
+    Added assertions to model constructors.
+
+commit 164d0a643964a1864444aeb5970f8db0d5a1bf02
+Author: ibly31UT <willc@Williams-MacBook-Pro.local>
+Date:   Fri Mar 24 14:04:02 2017 -0500
+
+    Added alliance embedded media
+    
+    Hacked it together but it’ll do for now. In future renditions we can
+    auto-generate this based on the top 4 contributors of military strength
+    to any given alliance rather than hand-creating it.
+
+commit f0f49687edce982c18698c0906261b027af9691a
+Author: collinc777 <collinc777@aol.com>
+Date:   Fri Mar 24 13:52:54 2017 -0500
+
+    change the requirements and the for looop
+
+commit 2c226f33bcdb6b10c34d637a255c3e0fc163250e
+Author: ibly31UT <willc@Williams-MacBook-Pro.local>
+Date:   Fri Mar 24 13:50:20 2017 -0500
+
+    Finalized a trimmed_books.json, books now can point to houses and characters
+    
+    Books now have a list of characters and houses that are referenced in
+    them.
+
+commit ff21e4f23d997febeffdb353e6dd57390cd6630a
+Merge: ec6cbb3 8e6545e
+Author: collinc777 <collinc777@aol.com>
+Date:   Fri Mar 24 13:39:30 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+
+commit 8e6545ecd59cff3ff598ac4bcaea54bebe1cf0f5
+Author: ibly31UT <willc@Williams-MacBook-Pro.local>
+Date:   Fri Mar 24 13:03:02 2017 -0500
+
+    Finalizing all the linkages between models. Alliance model page is up and ready to go.
+    
+    About to get embedded media for the alliance figured out.
+
+commit ec6cbb3397362561106481d4f3566898b147f0fe
+Author: collinc777 <collinc777@aol.com>
+Date:   Fri Mar 24 16:20:22 2017 +0100
+
+    test cmmit
+
+commit 5324b6dc3bd97de3b5ad024cd94dd09a9929d84c
+Author: Tim Gianitsos <timgianitsos@users.noreply.github.com>
+Date:   Fri Mar 24 08:04:21 2017 -0500
+
+    fix #28
+
+commit 86c7cc4beaec4a034dfd611095b11bc4b8bf85b0
+Author: Tim Gianitsos <timgianitsos@users.noreply.github.com>
+Date:   Fri Mar 24 07:56:36 2017 -0500
+
+    Display correct path to uml
+
+commit 5bfc123a3b415cd2cecc706ed62a814548604d21
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 23 22:45:15 2017 -0500
+
+    needs to be on same line to deploh on server maybe?
+
+commit bb046589ae861f2dbcacd320cbc35fcaa719e579
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 23 22:41:38 2017 -0500
+
+    Deploy
+
+commit bab9f7ba14c378c88d365555aa3b14786709afda
+Merge: c7a2876 b8bb418
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 23 22:24:49 2017 -0500
+
+    Merge branch 'master' of https://github.com/collinc777/idb
+
+commit c7a28761ecd99a50f495ab87878866a992dcef51
+Author: collinc777 <collinc777@aol.com>
+Date:   Thu Mar 23 22:24:40 2017 -0500
+
+    name changing crap
+
+commit b8bb4187cb532ce3a646f3c273023deda34fc3aa
+Author: ibly31UT <willc@Williams-MacBook-Pro.local>
+Date:   Thu Mar 23 22:20:22 2017 -0500
+
+    Updated devnotes with React.js and media tools blurb
+    
+    Updated devnotes with React.js and media tools blurb
+
 commit 4d9c45c6777e155bea5541cdba7b71a4af11a8a2
 Author: collinc777 <collinc777@aol.com>
 Date:   Thu Mar 23 22:07:02 2017 -0500

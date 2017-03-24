@@ -1,0 +1,303 @@
+Help on module models:
+
+NAME
+    models
+
+FILE
+    /v/filer4b/v38q001/grm695/cs373/idb/app/models.py
+
+DESCRIPTION
+    # See link: http://docs.sqlalchemy.org/en/latest/orm/join_conditions.html
+    # See link: http://flask-sqlalchemy.pocoo.org/2.1/models/
+
+CLASSES
+    sqlalchemy.ext.declarative.api.Base(__builtin__.object)
+        Alliance
+        Book
+        Character
+        House
+    
+    class Alliance(sqlalchemy.ext.declarative.api.Base)
+     |  Method resolution order:
+     |      Alliance
+     |      sqlalchemy.ext.declarative.api.Base
+     |      __builtin__.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, headLeader_id, member_ids, weapons, seats, regions, cultures)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  cultures
+     |  
+     |  headLeader
+     |  
+     |  headLeader_id
+     |  
+     |  id
+     |  
+     |  member_ids
+     |  
+     |  members
+     |  
+     |  regions
+     |  
+     |  seats
+     |  
+     |  weapons
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |  
+     |  __mapper__ = <Mapper at 0x7f14bee59850; Alliance>
+     |  
+     |  __table__ = Table('alliance', MetaData(bind=None), Column('i...ring(le...
+     |  
+     |  __tablename__ = 'alliance'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from sqlalchemy.ext.declarative.api.Base:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from sqlalchemy.ext.declarative.api.Base:
+     |  
+     |  metadata = MetaData(bind=None)
+    
+    class Book(sqlalchemy.ext.declarative.api.Base)
+     |  Method resolution order:
+     |      Book
+     |      sqlalchemy.ext.declarative.api.Base
+     |      __builtin__.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, numberOfPages, isbn, name, publisher, country, povCharacter_ids, author, mediaType, released, character_ids)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  author
+     |  
+     |  character_ids
+     |  
+     |  characters
+     |  
+     |  country
+     |  
+     |  id
+     |  
+     |  isbn
+     |  
+     |  mediaType
+     |  
+     |  name
+     |  
+     |  numberOfPages
+     |  
+     |  povCharacter_ids
+     |  
+     |  povCharacters
+     |  
+     |  publisher
+     |  
+     |  released
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |  
+     |  __mapper__ = <Mapper at 0x7f14bee858d0; Book>
+     |  
+     |  __table__ = Table('book', MetaData(bind=None), Column('id', ...', Stri...
+     |  
+     |  __tablename__ = 'book'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from sqlalchemy.ext.declarative.api.Base:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from sqlalchemy.ext.declarative.api.Base:
+     |  
+     |  metadata = MetaData(bind=None)
+    
+    class Character(sqlalchemy.ext.declarative.api.Base)
+     |  Method resolution order:
+     |      Character
+     |      sqlalchemy.ext.declarative.api.Base
+     |      __builtin__.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, house, culture, titles, spouse, died, aliases, dateOfDeath, name, born, gender, father, allegiances, alliance_ids, povBook_ids, playedBy, book_ids, tvSeries, mother, male)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  aliases
+     |  
+     |  allegiances
+     |  
+     |  alliance_ids
+     |  
+     |  alliances
+     |  
+     |  book_ids
+     |  
+     |  books
+     |  
+     |  born
+     |  
+     |  culture
+     |  
+     |  dateOfDeath
+     |  
+     |  died
+     |  
+     |  father
+     |  
+     |  gender
+     |  
+     |  house
+     |  
+     |  id
+     |  
+     |  male
+     |  
+     |  mother
+     |  
+     |  name
+     |  
+     |  playedBy
+     |  
+     |  povBook_ids
+     |  
+     |  povBooks
+     |  
+     |  spouse
+     |  
+     |  titles
+     |  
+     |  tvSeries
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |  
+     |  __mapper__ = <Mapper at 0x7f14beeac910; Character>
+     |  
+     |  __table__ = Table('character', MetaData(bind=None), Column('...ale', B...
+     |  
+     |  __tablename__ = 'character'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from sqlalchemy.ext.declarative.api.Base:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from sqlalchemy.ext.declarative.api.Base:
+     |  
+     |  metadata = MetaData(bind=None)
+    
+    class House(sqlalchemy.ext.declarative.api.Base)
+     |  Method resolution order:
+     |      House
+     |      sqlalchemy.ext.declarative.api.Base
+     |      __builtin__.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, currentLord_id, founder_id, heir_id, cadetBranches, founded, diedOut, titles, coatOfArms, words, seats, overlord_id, name, swornMember_ids, region, ancestralWeapons)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  ancestralWeapons
+     |  
+     |  cadetBranches
+     |  
+     |  coatOfArms
+     |  
+     |  currentLord
+     |  
+     |  currentLord_id
+     |  
+     |  diedOut
+     |  
+     |  founded
+     |  
+     |  founder
+     |  
+     |  founder_id
+     |  
+     |  heir
+     |  
+     |  heir_id
+     |  
+     |  id
+     |  
+     |  name
+     |  
+     |  overlord
+     |  
+     |  overlord_id
+     |  
+     |  region
+     |  
+     |  seats
+     |  
+     |  swornMember_ids
+     |  
+     |  swornMembers
+     |  
+     |  titles
+     |  
+     |  words
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |  
+     |  __mapper__ = <Mapper at 0x7f14bee48dd0; House>
+     |  
+     |  __table__ = Table('house', MetaData(bind=None), Column('id',...(String...
+     |  
+     |  __tablename__ = 'house'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from sqlalchemy.ext.declarative.api.Base:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from sqlalchemy.ext.declarative.api.Base:
+     |  
+     |  metadata = MetaData(bind=None)
+
+DATA
+    alliance_members_association_table = Table('alliance_members_associati...
+    books_characters_association_table = Table('books_characters_associati...
+    books_povCharacters_association_table = Table('books_povCharacters_ass...
+    database = <SQLAlchemy engine='sqlite:////tmp/test.db'>
+    house_swornMembers_association_table = Table('house_swornMembers_assoc...
+
+
