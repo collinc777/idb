@@ -34,8 +34,7 @@ def load_listing(filename):
 character_listing = dict(title="Characters", url="/characters",
                          properties=[["Name", "name"], ["Gender", "male"], ["Culture", "culture"], ["House", "house"]])
 character_listing["data"] = load_listing("data/trimmed_characters_houses.json")
-character_links = {character["id"]: {"name": character["name"], "link": "/characters/" + str(character["id"])} for
-                   character in character_listing["data"]}
+character_links = {character["id"]: {"name": character["name"], "link": "/characters/" + str(character["id"])} for character in character_listing["data"]}
 
 house_listing = dict(title="Houses", url="/houses",
                      properties=[["Name", 'name'], ["Current Lord", 'currentLord'], ["Region", 'region'],
@@ -61,7 +60,7 @@ alliance_listing = dict(title="Alliances", url="/alliances",
                         properties=[["Ancestral Weapons", 'ancestral_weapons'], ["Seats", 'seats'],
                                     ["Cultures", 'cultures'], ["Regions", 'regions']])
 alliance_listing["data"] = load_listing("data/trimmed_alliance.json")
-alliance_link = {alliance["id"]: {"name": alliance["seats"], "link": "/books/" + str(alliance["id"])} for alliance in
+alliance_link = {alliance["id"]: {"name": alliance["seats"], "link": "/books/" + str(alliance["id"])} for alliance in \
                  alliance_listing["data"]}
 
 
