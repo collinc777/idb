@@ -40,7 +40,7 @@ house_listing["data"] = load_listing("data/trimmed_houses_alliances.json")
 house_links = {house["id"]: {"name": house["name"], "link": "/houses/" + str(house["id"])} for house in house_listing["data"]}
 
 book_listing = dict(title="Books", url="/books")
-book_listing["data"] = load_listing("data/api_ice_and_fire/trimmed_books.json")
+book_listing["data"] = load_listing("data/trimmed_books.json")
 book_links = {book["id"]: {"name": book["name"], "link": "/books/" + str(book["id"])} for book in book_listing["data"]}
 book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswords.jpg", 4: "thehedgeknight.jpg",
                5: "afeastforcrows.jpg", 6: "theswornsword.jpg", 7: "themysteryknight.jpg", 8: "adancewithdragons.jpg",
@@ -121,7 +121,7 @@ def book(bookid):
         context = create_context(HL_BOOKS, entity="Book", entity_id=bookid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_BOOKS, book=book, character_links=character_links, book_images=book_images)
+        context = create_context(HL_BOOKS, book=book, character_links=character_links, house_links=house_links, book_images=book_images)
         return render_template('book.html', **context)
 
 @application.route("/alliances/<allianceid>")

@@ -300,6 +300,30 @@ def add_images_to_characters():
     with open("trimmed_characters_images.json", 'w') as characters_file:
         json.dump(characters, characters_file)
 
+def add_houses_to_books():
+    houses = None
+    with open("trimmed_houses.json") as houses_file:
+        houses = json.load(houses_file)
+
+    books = None
+    with open("api_ice_and_fire/trimmed_books.json") as books_file:
+        books = json.load(books_file)
+
+    characters = None
+    with open("trimmed_characters_houses.json") as characters_file:
+        characters = json.load(characters_file)
+
+    for book in books:
+        houses_set = set()
+        for character in characters:
+            if character["house"] in (book["povCharacters"] + book["characters"]):
+                houses_set.add(character["house"])
+        book["houses"] = list(houses_set)
+
+    with open("trimmed_books.json", 'w') as books_file:
+        json.dump(books, books_file)
+
+
 def add_alliance_membership_to_houses():
     alliances = None
     with open("trimmed_alliances.json") as alliances_file:
@@ -331,7 +355,8 @@ def sort_houses_by_members():
         json.dump(houses_sorted, houses_file)
 
 
-add_alliance_membership_to_houses()
+add_houses_to_books()
+#add_alliance_membership_to_houses()
 #convert_house_strings_to_id()
 #add_images_to_characters()
 #find_intersecting_houses()
