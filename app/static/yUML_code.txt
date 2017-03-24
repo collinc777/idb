@@ -1,0 +1,5 @@
+[Character|name;gender;culture;titles;spouse;died;aliases;date_of_death;born;father;mother;played_by|]1..* residence_of-1 dwells_in>[House|name;current_lord;coat_of_arms;founded;overlord;extinct;words;diedOut;titles;seats;ancestral_weapons;region|]
+[House|name;current_lord;coat_of_arms;founded;overlord;extinct;words;diedOut;titles;seats;ancestral_weapons;region|]
+[Book|name;publisher;country;release_date;media_type;number_of_pages;isbn;author|]main_character-0..* from_point_of_view<>[Character|name;gender;culture;titles;spouse;died;aliases;date_of_death;born;father;mother;played_by|]
+[Alliances|ancestral_weapons;seats;cultures;regions|]0..* leader_of-1 head_leader>[Character|name;gender;culture;titles;spouse;died;aliases;date_of_death;born;father;mother;played_by|]
+[Alliances|ancestral_weapons;seats;cultures;regions|]0..* alliances-2 constituents++[House|name;current_lord;coat_of_arms;founded;overlord;extinct;words;diedOut;titles;seats;ancestral_weapons;region|]
