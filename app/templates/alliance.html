@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="details">
+<div class="card">
+	<div class="card-header text-center">
+		<h1>Alliance - {{ alliance.name }}</h1>
+	</div>
+	<!--<div class="card-block text-center">
+		<img src="/static/img/{{ [alliance.id] }}">
+	</div>-->
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Current Lord
+	</h4>
+	<div class="card-block">
+		{% if alliance.currentLord in character_links %}	
+		<a href="{{ character_links[alliance.currentLord].link }}">{{ character_links[alliance.currentLord].name }}</a>
+		{% else %}
+		No current lord
+		{% endif %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Current Head House
+	</h4>
+	<div class="card-block">
+		{% if alliance.headHouse in house_links %}	
+		<a href="{{ house_links[alliance.headHouse].link }}">{{ house_links[alliance.headHouse].name }}</a>
+		{% else %}
+		No head house
+		{% endif %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Ancestral Weapons this Alliance Has Access To
+	</h4>
+	<div class="card-block">
+		{% for weapon in alliance.ancestralWeapons %}
+		<h5>{{ weapon }}</h5>
+		{% else %}
+		<h5>This alliance has access to noi ancestral weapons</h5>
+		{% endfor %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Seats (Castles) Available to this Alliance
+	</h4>
+	<div class="card-block">
+		{% for seat in alliance.seats %}
+		<h5>{{ seat }}</h5>
+		{% else %}
+		<h5>No seats available to this alliance</h5>
+
+		{% endfor %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Cultures This Alliance Encompasses
+	</h4>
+	<div class="card-block">
+		{% for culture in alliance.cultures %}
+		<h5>{{ culture }}</h5>
+		{% else %}
+		<h5>No cultures available to this alliance</h5>
+		{% endfor %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Regions This Alliance Encompasses
+	</h4>
+	<div class="card-block">
+		{% for region in alliance.regions %}
+		<h5>{{ region }}</h5>
+		{% else %}
+		<h5>No regions available to this alliance</h5>
+		{% endfor %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Houses That Are Part of This Alliance
+	</h4>
+	<div class="card-block">
+		{% for sworn in alliance.swornHouses %}
+			{% if sworn in house_links %}	
+				<h5><a href="{{ house_links[sworn].link }}">{{ house_links[sworn].name }}</a></h5>
+			{% endif %}
+		{% else %}
+		<h5>No sworn houses in this alliance</h5>
+		{% endfor %}
+	</div>
+</div>
+</div>
+{% endblock %}
