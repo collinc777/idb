@@ -10,7 +10,7 @@
 # -------
 # imports
 # -------
-
+import unittest
 from unittest import main, TestCase
 from app import database
 from app import models
@@ -61,7 +61,7 @@ class TestModels (TestCase):
             "United States", [148, 208, 232], "George R.R. Martin", "Hardcover", "1996", [2, 12, 13])
         self.assertEqual(b.publisher, "Bantam Books")
 
-    @unittest.skip("RestAPI not implemented")
+    @unittest.skip("testing skipping")
     def test_Book_add(self):
         exampleBook = models.Book(
             694, "978-0553103540", "A Game of Thrones", "Bantam Books",
@@ -101,7 +101,7 @@ class TestModels (TestCase):
                              "Samwell Tarly", "", "Male", "", [], [], [], [], [], [], "", True)
         self.assertEqual(c.titles, [])
 
-    @unittest.skip("RestAPI not implemented")
+    @unittest.skip("testing skipping")
     def test_Character_add(self):
         exampleCharacter = models.Character("Night's Watch", "", [], "", "", ["Sam"], False,
                              "Samwell Tarly", "", "Male", "", [], [], [], [], [], [], "", True)
