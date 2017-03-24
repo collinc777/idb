@@ -1,8 +1,8 @@
 import urllib.request
 
-from app.views import loadListing
+from app.views import load_listing
 
-char_list = loadListing('data/api_got_show/characters.json')
+char_list = load_listing('data/api_got_show/characters.json')
 
 
 def getFileName(imageURl):

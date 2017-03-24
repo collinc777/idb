@@ -1,9 +1,9 @@
 from flask import json
 
-from app.views import loadListing
+from app.views import load_listing
 
-char_list = loadListing('data/api_got_show/characters.json')
-trimmed_char_list = loadListing('data/trimmed_characters.json')
+char_list = load_listing('data/api_got_show/characters.json')
+trimmed_char_list = load_listing('data/trimmed_characters.json')
 
 namedToImageDict = dict()
 

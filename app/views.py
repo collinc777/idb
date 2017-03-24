@@ -1,6 +1,6 @@
 # We'll define all of our views in this file. 
 
-from flask import render_template, flash, redirect
+from flask import render_template
 from app import application
 import json
 
@@ -17,7 +17,7 @@ HL_DEVNOTES = 5
 HL_ABOUT = 6
 
 
-def loadListing(filename):
+def load_listing(filename):
     with open(filename) as data_file:
         return json.load(data_file)
 
@@ -33,7 +33,7 @@ def loadListing(filename):
 
 character_listing = dict(title="Characters", url="/characters",
                          properties=[["Name", "name"], ["Gender", "male"], ["Culture", "culture"], ["House", "house"]])
-character_listing["data"] = loadListing("data/trimmed_characters_houses.json")
+character_listing["data"] = load_listing("data/trimmed_characters_houses.json")
 character_links = {character["id"]: {"name": character["name"], "link": "/characters/" + str(character["id"])} for
                    character in character_listing["data"]}
 
@@ -41,14 +41,14 @@ house_listing = dict(title="Houses", url="/houses",
                      properties=[["Name", 'name'], ["Current Lord", 'currentLord'], ["Region", 'region'],
                                  ["Coat of Arms", 'coatOfArms'], ["Founded", 'founded'], ["Overlord", 'overlord'],
                                  ["Extinct?", 'isExtinct'], ["Words", 'words']])
-house_listing["data"] = loadListing("data/trimmed_houses.json")
+house_listing["data"] = load_listing("data/trimmed_houses.json")
 house_links = {house["id"]: {"name": house["name"], "link": "/houses/" + str(house["id"])} for house in
                house_listing["data"]}
 
 book_listing = dict(title="Books", url="/books",
                     properties=[["Name", "name"], ["Publisher", "publisher"], ["Country", "country"],
                                 ["Release Date", "released"], ["Media Type", "mediaType"]])
-book_listing["data"] = loadListing("data/api_ice_and_fire/trimmed_books.json")
+book_listing["data"] = load_listing("data/api_ice_and_fire/trimmed_books.json")
 book_links = {book["id"]: {"name": book["name"], "link": "/books/" + str(book["id"])} for book in book_listing["data"]}
 book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswords.jpg", 4: "thehedgeknight.jpg",
                5: "afeastforcrows.jpg", 6: "theswornsword.jpg", 7: "themysteryknight.jpg", 8: "adancewithdragons.jpg",
@@ -60,17 +60,19 @@ book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswor
 alliance_listing = dict(title="Alliances", url="/alliances",
                         properties=[["Ancestral Weapons", 'ancestral_weapons'], ["Seats", 'seats'],
                                     ["Cultures", 'cultures'], ["Regions", 'regions']])
-alliance_listing["data"] = loadListing("data/trimmed_alliance.json")
-alliance_link = {alliance["id"]: {"name": alliance["seats"], "link": "/books/" + str(alliance["id"])} for alliance in alliance_listing["data"]}
+alliance_listing["data"] = load_listing("data/trimmed_alliance.json")
+alliance_link = {alliance["id"]: {"name": alliance["seats"], "link": "/books/" + str(alliance["id"])} for alliance in
+                 alliance_listing["data"]}
+
 
 # Build a base "context" dictionary for passing to any given template
-def createContext(nav_highlight=-1, **kwargs):
+def create_context(nav_highlight=-1, **kwargs):
     return dict(navigation=navigation, nav_highlight=nav_highlight, **kwargs)
 
 
 @application.route('/', methods=['GET', 'POST'])
 def index():
-    context = createContext(0)
+    context = create_context(0)
     return render_template('index.html', **context)
 
 
@@ -78,19 +80,19 @@ def index():
 def character(charid):
     try:
         charid = int(charid)
-    except:
+    except ValueError:
         # Could not even convert to an integer, return empty page for now
-        return render_template('notfound.html', **createContext(1, entity="Character", entity_id=charid))
+        return render_template('notfound.html', **create_context(1, entity="Character", entity_id=charid))
 
     character = None
     for c in character_listing["data"]:
         if c["id"] == charid:
             character = c
     if character is None:
-        context = createContext(HL_CHARACTERS, entity="Character", entity_id=charid)
+        context = create_context(HL_CHARACTERS, entity="Character", entity_id=charid)
         return render_template('notfound.html', **context)
     else:
-        context = createContext(HL_CHARACTERS, character=character, book_links=book_links, house_links=house_links)
+        context = create_context(HL_CHARACTERS, character=character, book_links=book_links, house_links=house_links)
         return render_template('character.html', **context)
 
 
@@ -98,19 +100,19 @@ def character(charid):
 def house(houseid):
     try:
         houseid = int(houseid)
-    except:
+    except ValueError:
         # Could not even convert to an integer, return empty page for now
-        return render_template('notfound.html', **createContext(1, entity="House", entity_id=houseid))
+        return render_template('notfound.html', **create_context(1, entity="House", entity_id=houseid))
 
     house = None
     for h in house_listing["data"]:
         if h["id"] == houseid:
             house = h
     if house is None:
-        context = createContext(HL_HOUSES, entity="House", entity_id=houseid)
+        context = create_context(HL_HOUSES, entity="House", entity_id=houseid)
         return render_template('notfound.html', **context)
     else:
-        context = createContext(HL_HOUSES, house=house, character_links=character_links, house_links=house_links)
+        context = create_context(HL_HOUSES, house=house, character_links=character_links, house_links=house_links)
         return render_template('house.html', **context)
 
 
@@ -118,53 +120,53 @@ def house(houseid):
 def book(bookid):
     try:
         bookid = int(bookid)
-    except:
+    except ValueError:
         # Could not even convert to an integer, return empty page for now
-        return render_template('notfound.html', **createContext(1, entity="Book", entity_id=bookid))
+        return render_template('notfound.html', **create_context(1, entity="Book", entity_id=bookid))
 
     book = None
     for b in book_listing["data"]:
         if b["id"] == bookid:
             book = b
     if book is None:
-        context = createContext(HL_BOOKS, entity="Book", entity_id=bookid)
+        context = create_context(HL_BOOKS, entity="Book", entity_id=bookid)
         return render_template('notfound.html', **context)
     else:
-        context = createContext(HL_BOOKS, book=book, character_links=character_links, book_images=book_images)
+        context = create_context(HL_BOOKS, book=book, character_links=character_links, book_images=book_images)
         return render_template('book.html', **context)
 
 
 @application.route('/characters', methods=['GET', 'POST'])
 def characters():
-    context = createContext(HL_CHARACTERS, listing=character_listing)
+    context = create_context(HL_CHARACTERS, listing=character_listing)
     return render_template('listing.html', **context)
 
 
 @application.route('/houses', methods=['GET', 'POST'])
 def houses():
-    context = createContext(HL_HOUSES, listing=house_listing)
+    context = create_context(HL_HOUSES, listing=house_listing)
     return render_template('listing.html', **context)
 
 
 @application.route('/regions', methods=['GET', 'POST'])
 def regions():
-    context = createContext(HL_REGIONS, listing=character_listing)
+    context = create_context(HL_REGIONS, listing=character_listing)
     return render_template('listing.html', **context)
 
 
 @application.route('/books', methods=['GET', 'POST'])
 def books():
-    context = createContext(HL_BOOKS, listing=book_listing)
+    context = create_context(HL_BOOKS, listing=book_listing)
     return render_template('listing.html', **context)
 
 
 @application.route('/devnotes', methods=['GET', 'POST'])
 def devnotes():
-    context = createContext(HL_DEVNOTES)
+    context = create_context(HL_DEVNOTES)
     return render_template('devnotes.html', **context)
 
 
 @application.route('/about', methods=['GET'])
 def about():
-    context = createContext(HL_ABOUT)
+    context = create_context(HL_ABOUT)
     return render_template('about.html', **context)
