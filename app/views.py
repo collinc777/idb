@@ -33,19 +33,21 @@ def load_listing(filename):
 
 character_listing = dict(title="Characters", url="/characters")
 character_listing["data"] = load_listing("data/trimmed_characters_houses.json")
-character_links = {}
+character_links = dict()
 for character in character_listing["data"]:
-    character_links = {character["id"]: {"name": character["name"], "link": "/characters/" + str(character["id"])}}
+    character_links[character["id"]] = {"name": character["name"], "link": "/characters/" + str(character["id"])}
 
 house_listing = dict(title="Houses", url="/houses")
 house_listing["data"] = load_listing("data/trimmed_houses_alliances.json")
+house_links = dict()
 for house in house_listing["data"]:
-    house_links = {house["id"]: {"name": house["name"], "link": "/houses/" + str(house["id"])}}
+    house_links[house["id"]] = {"name": house["name"], "link": "/houses/" + str(house["id"])}
 
 book_listing = dict(title="Books", url="/books")
-book_listing["data"] = load_listing("data/api_ice_and_fire/trimmed_books.json")
+book_listing["data"] = load_listing("data/trimmed_books.json")
+book_links = dict()
 for book in book_listing["data"]:
-    book_links = {book["id"]: {"name": book["name"], "link": "/books/" + str(book["id"])}}
+    book_links[book["id"]] = {"name": book["name"], "link": "/books/" + str(book["id"])}
 book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswords.jpg", 4: "thehedgeknight.jpg",
                5: "afeastforcrows.jpg", 6: "theswornsword.jpg", 7: "themysteryknight.jpg", 8: "adancewithdragons.jpg",
                9: "theprincessandthequeen.jpg", 10: "therogueprince.jpg", 11: "theworldoficeandfire.png",
@@ -55,8 +57,9 @@ book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswor
 
 alliance_listing = dict(title="Alliances", url="/alliances")
 alliance_listing["data"] = load_listing("data/trimmed_alliances.json")
+alliance_links = dict()
 for alliance in alliance_listing["data"]:
-    alliance_links = {alliance["id"]: {"name": alliance["name"], "link": "/alliances/" + str(alliance["id"])}}
+    alliance_links[alliance["id"]] = {"name": alliance["name"], "link": "/alliances/" + str(alliance["id"])}
 
 
 # Build a base "context" dictionary for passing to any given template
