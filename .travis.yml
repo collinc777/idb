@@ -1,17 +1,14 @@
 language: python
 python:
-  - "3.4"
-# command to install dependencies
-install: "pip install -r requirements.txt"
-# command to run tests
+- '3.4'
+install: pip install -r requirements.txt
 script: python -m app.tests
-
 deploy:
   provider: elasticbeanstalk
   access_key_id: AKIAJI3MT5MJU4USAM7A
   secret_access_key:
-    secure: "6JF6S4W9/oJuHSkSgYEW7Fxjib+RCuDs/HVIZ+m0ObpnNOaUhQGQFsLM8gFIv/RT8DhejJaOkMD406Aqr3bzIcU5n5wB10Lx/m+T6Bk8UK3zSRClPJXuI90silaaLK9k5a/sGR3xhl5OzB7j7QezHVjjaDjxTt2fGP6X3lx7Dqu5ssyuhMCnG+P4jhyBsE0DUxYgaoDEiRNoFYl2W9hZQO8hTy9zfQVeN8K22JKZsHwyv2REpValwPj+nDSmCWk9IMNQZc0hz0M5LDIWcznQud6bhOas4dFc+evunO0Oq0RqUz5Tx7Fbkqkbkx0kERotBRIwBpMsTrOECX6ncuyAyHbtaVSI9FNH6Y2H8MXJvx4kIbxozPQD5DzevAlxjpy39mPsCU3sbq/Ux/3JqHHrDxxNojojeQDwG3q3xxNPWrkPDxy6K4IVXFONorI6redOhckHVd55lyhAtasdZKQb/SQKbee4bkZ9cWeZdD98IeUxpg99PqiGXn27Y7HyYjc3r587KnEnTpE3UpDqwSplj03Kr+xAOK8+1BD+sGBU8MddoT+DQBA9l+68uix3e6qfiaASDGBREGF7hMnscTbHr9tTW/GeDduBvcPUFa7mJ60eiKQy3UoYJfecoNRT4+08G80uluCT+wY1VYMeHkum7xEgeql/2DPzhUNk4Bt0DdM="
-  region: "us-west-2"  
-  app: "project"
-  env: "swe16project"
-  bucket_name: "elasticbeanstalk-us-west-2-536572426247"
+    secure: Tz1y/bN+fRtr2dBFDce4QzC62k+ZvXChCPVgsQs0gKO+Ky1GVUpwWPBtawG0Zfz0uolPBtEW+t6UW4hUmXw9GLbIa44KHgGrH6KASRcgBhERJEA518dR7ArtJlmzxAph5ZIIjqjMLuETArWq8Q64uoKFW02TTJIB0gkECfyC9ieQPhG/UNqdaEvwf8rKx79M9IJTwnqpCLMLDpMBPpMNgqSmBTZIIMbKrJaE+z4pED65fOSNFM4BSY+6PgHR74Kexuxji0megcP2bC8Z78XLx5mYJyFsiy0uMChQETwKZtiydJzjmz+f97AoeN8EFJx4k9SIepZnS14IBCMckkpaBhwHaLL6BqSJWgxkZXDDOfPhru5VUxrWSvZtn9Qk26FXkSxcFIA2qmKVJgoFbRcgV8fvWX+gcskt8SJ0sweedk4I4vuibCXw6uHFcY54n2Xrs7Y/FXxYMjnf62RW4jF8oJ7Myh69nkNuTRfbgeSJzxTEU6MI1TISpWcgQtBDbD6cm7N+R527Gq2oNqU84Wkx0sKBpy8nLS+p1PgNFuHcRVXQUkmIZ/hUl79tofDv37g2EX7L35HBI6fssryxpOHuAHmXZ0tWPg9PKbpKRBdeDIQ1ndrfJm6367VmXsKrgfLAIK5ORrSn6A3wQd3YfktAFS1+Ydl7G4jtj5vPjT9vtjU=
+  region: us-west-2
+  app: project
+  env: swe16project
+  bucket_name: elasticbeanstalk-us-west-2-536572426247
