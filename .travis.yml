@@ -10,7 +10,7 @@ deploy:
   provider: elasticbeanstalk
   access_key_id: AKIAJI3MT5MJU4USAM7A
   secret_access_key:
-    secure: "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"
+    secure: "Encypted <secret-access-key>=2QkZtWnbshuHgpIiiSibwTADdkU0c3g0X9OFiYi7PM9r7kM9H5MeK3VXVn3EICjB1i0f1PH6i+MaoBivr/CBVwqRdK4tF9nRetJC+KYDob8tIJlIX4qIDdH4v7VLbv7bQyrW0gBAWNk5qUdRt446Xw99Riq5Wy1VdmJltpwgIhSdXLJxNigCTxX6LUhNaYp/uqzGBvlqIHtzAVIIMTEaIEWB8hCdIUHrbSNKSzTWHdX12MfQMQuBfLBSaJwLAPTv/8T3TMmeNDPGPhKNb+3e07vxC5DQo+nJG2safLr75stsTHva+HdVZMJtvGY8DtD10bvWFaZHIu4AFPF3bmLGttFYYoKYiU7RQYVNeUbWgL7t6Wa/hyZhiIZbnotgf9405irFhOaBFsF54DIR3PaQLN5SazYzbsYzaWY3wrAjZaucR10vFAdC/2Dj7bUgBUyLrIRpl2RcgBvH38Usxi6KFk7llguFjCSwZI1XjWo2+c7f5JywNd7dXRqzjJofA/0uRDdfolmWuVLCjtv3MKzN/dGv+3SMbQNzVZA3f8Dbbt+BrXNO5kYL2TVRYB0EOLVsEAvrClEVuxTFnjLTbCv0tSa73nRo+tUCyuRtMJtV3irZ3XExVYd296JjzqMe+F49AVXmpmNBRgcfr5b+9ix9Lv58f+EmbeyttcsSYsXW46I="
   region: "us-west-2"  
   app: "project"
   env: "swe16project"
