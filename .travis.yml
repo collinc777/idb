@@ -5,3 +5,13 @@ python:
 install: "pip install -r requirements.txt"
 # command to run tests
 script: python -m app.tests
+
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: AKIAJI3MT5MJU4USAM7A
+  secret_access_key:
+    secure: "Encypted <secret-access-key>=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"
+  region: "us-west-2"  
+  app: "project"
+  env: "swe16project"
+  bucket_name: "elasticbeanstalk-us-west-2-536572426247"
