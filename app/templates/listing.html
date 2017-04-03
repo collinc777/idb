@@ -1,54 +1,111 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="text-center">
-<h1>{{ listing.title }}</h1>
-<br />
-</div>
-<div class="card-deck">
-  <div class="card text-center">
-    <h3 class="card-header">Sort By</h3>
-    <div class="card-block">
-      <div class="dropdown">
-        <button class="btn btn-block btn-lg btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Sort By
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Name Ascending</a>
-          <a class="dropdown-item" href="#">Name Descending</a>
-          <a class="dropdown-item" href="#">ID Ascending</a>
-          <a class="dropdown-item" href="#">ID Descending</a>
+    <script type="text/jsx">
+        var data = [];
+        class GridLayout extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    gridCards: props.data
+                };
+                console.log("the state is: " + this.state);
+            }
+
+            render() {
+                return (
+                        <div className="card-deck text-center">
+                            {this.state.gridCards.map((gc) => <GridCard cardID={gc.cardID}
+                                                                        cardName={gc.cardName} cardUrl={gc.cardUrl}/>)}
+                        </div>
+                );
+            }
+        }
+
+        class GridCard extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    cardID: props.cardID,
+                    cardName: props.cardName,
+                    cardUrl: props.cardUrl
+                }
+            }
+
+            render() {
+                return (
+                        <div className="card listingCard">
+                            <div className="card-header">
+                                <h4><a href={this.state.cardUrl + '/' + this.state.cardID}>{this.state.cardName}</a>
+                                </h4>
+                            </div>
+                            <div className="card-block">
+                                <a className="btn btn-block btn-default"
+                                        {#                                   href="{{ listing.url }}/{{ val.id }}">Details</a>#}
+                                   href={this.state.cardUrl + '/' + this.state.cardID}>Details</a>
+                            </div>
+                        </div>
+                );
+            }
+        }
+
+    </script>
+    <div class="text-center">
+        <h1>{{ listing.title }}</h1>
+        <br/>
+    </div>
+    <div class="card-deck">
+        <div class="card text-center">
+            <h3 class="card-header">Sort By</h3>
+            <div class="card-block">
+                <div class="dropdown">
+                    <button class="btn btn-block btn-lg btn-secondary dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sort By
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Name Ascending</a>
+                        <a class="dropdown-item" href="#">Name Descending</a>
+                        <a class="dropdown-item" href="#">ID Ascending</a>
+                        <a class="dropdown-item" href="#">ID Descending</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="card text-center">
-    <h3 class="card-header">Filter By</h3>
-    <div class="card-block">
-      <div class="dropdown">
-        <button class="btn btn-block btn-lg btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Filter By
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Name</a>
-          <a class="dropdown-item" href="#">ID</a>
+        <div class="card text-center">
+            <h3 class="card-header">Filter By</h3>
+            <div class="card-block">
+                <div class="dropdown">
+                    <button class="btn btn-block btn-lg btn-secondary dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter By
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Name</a>
+                        <a class="dropdown-item" href="#">ID</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-</div>
-<div class="card-deck text-center">
-{% for val in listing.data %}
-  <div class="card listingCard">
-    <div class="card-header">
-      <h4><a href="{{ listing.url }}/{{ val.id }}">{{ val["name"] }}</a></h4>
+    <div class="card-deck text-center" id="deck-container">
+        {% for val in listing.data %}
+            <script type="text/jsx">
+                var url = "{{ listing.url }}";
+                var valID = {{ val.id }};
+                var valName = "{{ val['name'] }}";
+                var listing = {
+                    cardUrl: url, cardID: valID, cardName: valName
+                }
+                data.push(listing);
+                {#                console.log("the listing is:  " + listing);#}
+            </script>
+        {% endfor %}
+        <script type="text/jsx">
+            ReactDOM.render(<GridLayout data={data}/>, document.getElementById("deck-container"));
+
+        </script>
     </div>
-    <div class="card-block">
-      <a class="btn btn-block btn-default" href="{{ listing.url }}/{{ val.id }}">Details</a>
-    </div>
-  </div>
-{% endfor %}
-</div>
-<!--<table class="table">
+    <!--<table class="table">
   <thead>
     <tr>
     {% for property in listing.properties %}
