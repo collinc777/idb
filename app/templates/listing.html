@@ -1,40 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
+    <div id="container">
+        <script type="text/jsx">
+            var data = [];
+        </script>
+        {% for val in listing.data %}
+            <script type="text/jsx">
+                var url = "{{ listing.url }}";
+                var valID = {{ val.id }};
+                var valName = "{{ val['name'] }}";
+                var listing = {
+                    cardUrl: url, cardID: valID, cardName: valName
+                };
+                data.push(listing);
+                {#                console.log("the listing is:  " + listing);#}
+
+            </script>
+        {% endfor %}
+    </div>
     <script type="text/jsx">
-        var data = [];
-        class LayoutContainer extends React.Component {
-            render() {
-                return ();
-            }
-        }
-        class GridLayout extends React.Component {
-            {#            sortByKey = function (key) {#}
-            {#                return this.state.gridCards.sort(function(a, b) {#}
-            {#                    let x = a[key]; let y = b[key];#}
-            {#                    return ((x < y) ? -1 : ((x > y) ? 1 : 0));#}
-            {#                });#}
-            {#            };#}
-
-            constructor(props) {
-                super(props);
-                //this.sortByKey('cardID');
-            }
-
-            render() {
-                return (
-                        <div className="card-deck text-center">
-                            {this.props.data.map((gc) => <GridCard cardID={gc.cardID}
-                                                                        cardName={gc.cardName} cardUrl={gc.cardUrl}/>)}
-                        </div>
-                );
-            }
-
-            componentWillReceiveProps(nextProps) {
-                this.props = nextProps;
-            }
-
-
-        }
 
         class GridCard extends React.Component {
             constructor(props) {
@@ -64,109 +48,128 @@
             }
         }
 
+        class GridLayout extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    data: props.data
+                }
+            }
+
+            render() {
+                return (
+                        <div className="card-deck text-center">
+                            {this.state.data.map((gc) => <GridCard cardID={gc.cardID}
+                                                                   cardName={gc.cardName} cardUrl={gc.cardUrl}/>)}
+                        </div>
+                );
+            }
+        }
+
+        class FilterCard extends React.Component {
+            render() {
+                return (<div className="card text-center">
+                    <h3 className="card-header">Filter By</h3>
+                    <div className="card-block">
+                        <div className="dropdown">
+                            <button className="btn btn-block btn-lg btn-secondary dropdown-toggle"
+                                    type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                Filter By
+                            </button>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a className="dropdown-item" href="#">Name</a>
+                                <a className="dropdown-item" href="#">ID</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>);
+            }
+
+        }
+
+        class SortCard extends React.Component {
+            constructor(props) {
+                super(props);
+            }
+
+            onSortData(field, ascending){
+                console.log("in SortCard");
+            }
+
+            render() {
+                return (<div className="card text-center">
+                    <h3 className="card-header">Sort By</h3>
+                    <div className="card-block">
+                        <div className="dropdown">
+                            <button className="btn btn-block btn-lg btn-secondary dropdown-toggle"
+                                    type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                Sort By
+                            </button>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardName", 1)}>Name
+                                    Ascending</a>
+                                <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardName", -1)}>Name
+                                    Descending</a>
+                                <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardID", 1)}>ID Ascending</a>
+                                <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardID", -1)}>ID Descending</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>);
+            }
+        }
+        class SortAndFilterCards extends React.Component {
+            constructor(props){
+                super(props);
+
+            }
+
+
+            render() {
+                return (
+                        <div className="card-deck">
+                            <SortCard/>
+                            <FilterCard/>
+                        </div>
+
+                );
+            }
+        }
+
+        class TitleLayout extends React.Component {
+            render() {
+                return (<div className="text-center">
+                    <h1>{{ listing.title }}</h1>
+                    <br/>
+                </div>);
+            }
+        }
+
+        class ListingContainer extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    cardData: props.listing_data
+                }
+            }
+
+
+            render() {
+                return (
+                        <div>
+                            <TitleLayout/>
+                            <SortAndFilterCards/>
+                            <GridLayout data={this.state.cardData}/>
+                        </div>);
+            }
+        }
+
+        ReactDOM.render(<ListingContainer listing_data={data}/>, document.getElementById("container"));
+
     </script>
-    <div class="text-center">
-        <h1>{{ listing.title }}</h1>
-        <br/>
-    </div>
-    <div class="card-deck">
-        <div class="card text-center">
-            <h3 class="card-header">Sort By</h3>
-            <div class="card-block">
-                <div class="dropdown">
-                    <button class="btn btn-block btn-lg btn-secondary dropdown-toggle" type="button"
-                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Sort By
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#" onclick="sortNameAscending()" ;>Name Ascending</a>
-                        <a class="dropdown-item" href="#" onclick="sortNameDescending()" ;>Name Descending</a>0
-                        <a class="dropdown-item" href="#" onclick="sortIdAscending()" ;>ID Ascending</a>
-                        <a class="dropdown-item" href="#" onclick="sortIdDescending()" ;>ID Descending</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card text-center">
-            <h3 class="card-header">Filter By</h3>
-            <div class="card-block">
-                <div class="dropdown">
-                    <button class="btn btn-block btn-lg btn-secondary dropdown-toggle" type="button"
-                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Filter By
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Name</a>
-                        <a class="dropdown-item" href="#">ID</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card-deck text-center" id="deck-container">
-        {% for val in listing.data %}
-            <script type="text/jsx">
-                var url = "{{ listing.url }}";
-                var valID = {{ val.id }};
-                var valName = "{{ val['name'] }}";
-                var listing = {
-                    cardUrl: url, cardID: valID, cardName: valName
-                };
-                data.push(listing);
-                {#                console.log("the listing is:  " + listing);#}
 
-            </script>
-        {% endfor %}
-        <script type="text/jsx">
-            function sortNameAscending() {
-                console.log("we get in here");
-                console.log("the data is: " + data);
-                sortByKey('cardName', 1);
-            }
-            function sortNameDescending() {
-                console.log("the data is: " + data);
-                sortByKey('cardName', -1);
-            }
-            function sortIdAscending() {
-                console.log("the data is: " + data);
-                sortByKey('cardId', 1);
-            }
-            function sortIdDescending() {
-                sortByKey('cardId', -1);
-
-            }
-
-            function sortByKey(key, asc) {
-                return data.sort(function (a, b) {
-                    let x = a[key];
-                    let y = b[key];
-                    return ((x < y) ? -1 * asc : ((x > y) ? 1 * asc : 0));
-                });
-
-            }
-            ReactDOM.render(<GridLayout data={data}/>, document.getElementById("deck-container"));
-        </script>
-    </div>
-    <!--<table class="table">
-  <thead>
-    <tr>
-    {% for property in listing.properties %}
-      <th>{{ property[0] }}</th>
-    {% endfor %}
-    </tr>
-  </thead>
-  <tbody>
-  	{% for val in listing.data %}
-    <tr>
-      {% for property in listing.properties %}
-        {% if loop.index0 == 0 %}
-      <td><a href="{{ listing.url }}/{{ val.id }}">{{ val[property[1]] }}</a></td>
-        {% else %}
-      <td>{{ val[property[1]] }}</td>
-        {% endif %}  
-      {% endfor %}
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>-->
 {% endblock %}
