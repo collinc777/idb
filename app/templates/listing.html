@@ -15,7 +15,7 @@
                 return (
                         <div className="card-deck text-center">
                             {this.state.gridCards.map((gc) => <GridCard cardID={gc.cardID}
-                                                                        cardName={gc.cardName} cardUrl={gc.cardUrl}/>)}
+                                                                        cardName={gc.cardName} cardURL={gc.cardURL}/>)}
                         </div>
                 );
             }
@@ -27,7 +27,7 @@
                 this.state = {
                     cardID: props.cardID,
                     cardName: props.cardName,
-                    cardUrl: props.cardUrl
+                    cardURL: props.cardURL
                 }
             }
 
@@ -35,13 +35,12 @@
                 return (
                         <div className="card listingCard">
                             <div className="card-header">
-                                <h4><a href={this.state.cardUrl + '/' + this.state.cardID}>{this.state.cardName}</a>
+                                <h4><a href={this.state.cardURL + '/' + this.state.cardID}>{this.state.cardName}</a>
                                 </h4>
                             </div>
                             <div className="card-block">
                                 <a className="btn btn-block btn-default"
-                                        {#                                   href="{{ listing.url }}/{{ val.id }}">Details</a>#}
-                                   href={this.state.cardUrl + '/' + this.state.cardID}>Details</a>
+                                   href={this.state.cardURL + '/' + this.state.cardID}>Details</a>
                             </div>
                         </div>
                 );
@@ -88,21 +87,10 @@
         </div>
     </div>
     <div class="card-deck text-center" id="deck-container">
-        {% for val in listing.data %}
-            <script type="text/jsx">
-                var url = "{{ listing.url }}";
-                var valID = {{ val.id }};
-                var valName = "{{ val['name'] }}";
-                var listing = {
-                    cardUrl: url, cardID: valID, cardName: valName
-                }
-                data.push(listing);
-                {#                console.log("the listing is:  " + listing);#}
-            </script>
-        {% endfor %}
         <script type="text/jsx">
-            ReactDOM.render(<GridLayout data={data}/>, document.getElementById("deck-container"));
-
+            var initialData = {{ data | tojson }};
+            window.gridLayout = <GridLayout data={initialData}/>;
+            ReactDOM.render(gridLayout, document.getElementById("deck-container"));
         </script>
     </div>
     <!--<table class="table">
