@@ -1,173 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-    <div id="container">
-        <script type="text/jsx">
-            var data = [];
-        </script>
-        {% for val in listing.data %}
-            <script type="text/jsx">
-                var url = "{{ listing.url }}";
-                var valID = {{ val.id }};
-                var valName = "{{ val['name'] }}";
-                var listing = {
-                    cardUrl: url, cardID: valID, cardName: valName
-                };
-                data.push(listing);
-                {#                console.log("the listing is:  " + listing);#}
-            </script>
-        {% endfor %}
-    </div>
+<script type="text/jsx">
+    window.initialData = {{ data | tojson }};
+    class TitleLayout extends React.Component {
+        render() {
+            return (<div className="text-center">
+                <h1>{{ listing.title }}</h1>
+                <br/>
+            </div>);
+        }
+    }
+</script>
+
+<script src="/static/scripts/GridLayout.jsx" type="text/jsx"></script>
+<script src="/static/scripts/GridCard.jsx" type="text/jsx"></script>
+<script src="/static/scripts/SortAndFilterCards.jsx" type="text/jsx"></script>
+<script src="/static/scripts/ListingContainer.jsx" type="text/jsx"></script>
+
+<div id="container">
     <script type="text/jsx">
-
-        class GridCard extends React.Component {
-            constructor(props) {
-                super(props);
-                this.state = {
-                    cardID: props.cardID,
-                    cardName: props.cardName,
-                    cardURL: props.cardURL
-                }
-            }
-
-            render() {
-                console.log("the props are " + this.props);
-                return (
-                        <div className="card listingCard">
-                            <div className="card-header">
-                                <h4><a href={this.state.cardURL + '/' + this.state.cardID}>{this.state.cardName}</a>
-                                </h4>
-                            </div>
-                            <div className="card-block">
-                                <a className="btn btn-block btn-default"
-                                   href={this.state.cardURL + '/' + this.state.cardID}>Details</a>
-                            </div>
-                        </div>
-                );
-            }
-        }
-
-        class GridLayout extends React.Component {
-            constructor(props) {
-                super(props);
-                this.state = {
-                    data: props.data
-                }
-            }
-
-            render() {
-                return (
-                        <div className="card-deck text-center">
-                            {this.state.data.map((gc) => <GridCard cardID={gc.cardID}
-                                                                   cardName={gc.cardName} cardUrl={gc.cardUrl}/>)}
-                        </div>
-                );
-            }
-        }
-
-        class FilterCard extends React.Component {
-            render() {
-                return (<div className="card text-center">
-                    <h3 className="card-header">Filter By</h3>
-                    <div className="card-block">
-                        <div className="dropdown">
-                            <button className="btn btn-block btn-lg btn-secondary dropdown-toggle"
-                                    type="button"
-                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                Filter By
-                            </button>
-                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a className="dropdown-item" href="#">Name</a>
-                                <a className="dropdown-item" href="#">ID</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>);
-            }
-
-        }
-
-        class SortCard extends React.Component {
-            constructor(props) {
-                super(props);
-            }
-
-            onSortData(field, ascending){
-                console.log("in SortCard");
-            }
-
-            render() {
-                return (<div className="card text-center">
-                    <h3 className="card-header">Sort By</h3>
-                    <div className="card-block">
-                        <div className="dropdown">
-                            <button className="btn btn-block btn-lg btn-secondary dropdown-toggle"
-                                    type="button"
-                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                Sort By
-                            </button>
-                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardName", 1)}>Name
-                                    Ascending</a>
-                                <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardName", -1)}>Name
-                                    Descending</a>
-                                <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardID", 1)}>ID Ascending</a>
-                                <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardID", -1)}>ID Descending</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>);
-            }
-        }
-        class SortAndFilterCards extends React.Component {
-            constructor(props){
-                super(props);
-
-            }
-
-
-            render() {
-                return (
-                        <div className="card-deck">
-                            <SortCard/>
-                            <FilterCard/>
-                        </div>
-
-                );
-            }
-        }
-
-        class TitleLayout extends React.Component {
-            render() {
-                return (<div className="text-center">
-                    <h1>{{ listing.title }}</h1>
-                    <br/>
-                </div>);
-            }
-        }
-
-        class ListingContainer extends React.Component {
-            constructor(props) {
-                super(props);
-                this.state = {
-                    cardData: props.listing_data
-                }
-            }
-
-
-            render() {
-                return (
-                        <div>
-                            <TitleLayout/>
-                            <SortAndFilterCards/>
-                            <GridLayout data={this.state.cardData}/>
-                        </div>);
-            }
-        }
-
-        ReactDOM.render(<ListingContainer listing_data={data}/>, document.getElementById("container"));
-
+        ReactDOM.render(<ListingContainer listing_data={initialData}/>, document.getElementById("container"));
     </script>
-
+</div>
 {% endblock %}

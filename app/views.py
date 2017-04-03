@@ -177,7 +177,7 @@ def getCharacters():
 @application.route('/characters', methods=['GET', 'POST'])
 def characters():
     character_data = getCharacters()
-    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(characters_listing))
+    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing))
     return render_template('listing.html', **context)
 
 @application.route('/getHouses', methods=['GET'])
