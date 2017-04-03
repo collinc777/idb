@@ -2,23 +2,38 @@
 {% block content %}
     <script type="text/jsx">
         var data = [];
+        class LayoutContainer extends React.Component {
+            render() {
+                return ();
+            }
+        }
         class GridLayout extends React.Component {
+            {#            sortByKey = function (key) {#}
+            {#                return this.state.gridCards.sort(function(a, b) {#}
+            {#                    let x = a[key]; let y = b[key];#}
+            {#                    return ((x < y) ? -1 : ((x > y) ? 1 : 0));#}
+            {#                });#}
+            {#            };#}
+
             constructor(props) {
                 super(props);
-                this.state = {
-                    gridCards: props.data
-                };
-                console.log("the state is: " + this.state);
+                //this.sortByKey('cardID');
             }
 
             render() {
                 return (
                         <div className="card-deck text-center">
-                            {this.state.gridCards.map((gc) => <GridCard cardID={gc.cardID}
+                            {this.props.data.map((gc) => <GridCard cardID={gc.cardID}
                                                                         cardName={gc.cardName} cardUrl={gc.cardUrl}/>)}
                         </div>
                 );
             }
+
+            componentWillReceiveProps(nextProps) {
+                this.props = nextProps;
+            }
+
+
         }
 
         class GridCard extends React.Component {
@@ -32,6 +47,7 @@
             }
 
             render() {
+                console.log("the props are " + this.props);
                 return (
                         <div className="card listingCard">
                             <div className="card-header">
@@ -63,10 +79,10 @@
                         Sort By
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Name Ascending</a>
-                        <a class="dropdown-item" href="#">Name Descending</a>
-                        <a class="dropdown-item" href="#">ID Ascending</a>
-                        <a class="dropdown-item" href="#">ID Descending</a>
+                        <a class="dropdown-item" href="#" onclick="sortNameAscending()" ;>Name Ascending</a>
+                        <a class="dropdown-item" href="#" onclick="sortNameDescending()" ;>Name Descending</a>0
+                        <a class="dropdown-item" href="#" onclick="sortIdAscending()" ;>ID Ascending</a>
+                        <a class="dropdown-item" href="#" onclick="sortIdDescending()" ;>ID Descending</a>
                     </div>
                 </div>
             </div>
@@ -95,14 +111,40 @@
                 var valName = "{{ val['name'] }}";
                 var listing = {
                     cardUrl: url, cardID: valID, cardName: valName
-                }
+                };
                 data.push(listing);
                 {#                console.log("the listing is:  " + listing);#}
+
             </script>
         {% endfor %}
         <script type="text/jsx">
-            ReactDOM.render(<GridLayout data={data}/>, document.getElementById("deck-container"));
+            function sortNameAscending() {
+                console.log("we get in here");
+                console.log("the data is: " + data);
+                sortByKey('cardName', 1);
+            }
+            function sortNameDescending() {
+                console.log("the data is: " + data);
+                sortByKey('cardName', -1);
+            }
+            function sortIdAscending() {
+                console.log("the data is: " + data);
+                sortByKey('cardId', 1);
+            }
+            function sortIdDescending() {
+                sortByKey('cardId', -1);
 
+            }
+
+            function sortByKey(key, asc) {
+                return data.sort(function (a, b) {
+                    let x = a[key];
+                    let y = b[key];
+                    return ((x < y) ? -1 * asc : ((x > y) ? 1 * asc : 0));
+                });
+
+            }
+            ReactDOM.render(<GridLayout data={data}/>, document.getElementById("deck-container"));
         </script>
     </div>
     <!--<table class="table">
