@@ -17,8 +17,17 @@ class PageLink extends React.Component {
     }
 
     render() {
+        // this.state.active + " " + this.state.disabled
+        var classNameIfAny = "";
+        if(this.state.active !== undefined){
+            classNameIfAny += this.state.active + " ";
+        }
+        if(this.state.disabled !== undefined){
+            classNameIfAny += this.state.disabled + " ";
+        }
+
         return (
-            <a className={this.state.active + " " + this.state.disabled} href="#" onClick={this.handleClick}>{this.state.link}</a>
+            <a className={classNameIfAny} href="#" onClick={this.handleClick}>{this.state.link}</a>
         )
     }
 }
@@ -63,9 +72,9 @@ class Pagination extends React.Component {
         lastPage = Math.min(lastPage, firstPage + totalPaginationLinks);
 
         if(currentPage == 1){
-            paginationElements.push(<PageLink key={Math.random(1, 9999)} link={previous} disabled={disabled} onChange={this.handleChange}/>);
+            paginationElements.push(<PageLink key={Math.random(1, 999999)} link={previous} disabled={disabled} onChange={this.handleChange}/>);
         }else{
-            paginationElements.push(<PageLink key={Math.random(1, 9999)} name={previous} onChange={this.handleChange}/>);
+            paginationElements.push(<PageLink key={Math.random(1, 999999)} link={previous} onChange={this.handleChange}/>);
         }
 
         console.log("FirstPage: ", firstPage, " and lastPage: ", lastPage);
@@ -73,17 +82,17 @@ class Pagination extends React.Component {
         for(var i = firstPage; i < firstPage + 7; i++){
             (function(self, i){
                 if(i == currentPage){
-                    paginationElements.push(<PageLink key={Math.random(1, 9999)} link={i} active={active} onChange={self.handleChange}/>);
+                    paginationElements.push(<PageLink key={Math.random(1, 999999)} link={i} active={active} onChange={self.handleChange}/>);
                 }else{
-                    paginationElements.push(<PageLink key={Math.random(1, 9999)} link={i} onChange={self.handleChange}/>);
+                    paginationElements.push(<PageLink key={Math.random(1, 999999)} link={i} onChange={self.handleChange}/>);
                 }
             })(this, i);
         }
 
         if(currentPage == this.state.numberPages){
-            paginationElements.push(<PageLink key={Math.random(1, 9999)} link={next} disabled={disabled} onChange={this.handleChange}/>);
+            paginationElements.push(<PageLink key={Math.random(1, 999999)} link={next} disabled={disabled} onChange={this.handleChange}/>);
         }else{
-            paginationElements.push(<PageLink key={Math.random(1, 9999)} link={next} onChange={this.handleChange}/>);
+            paginationElements.push(<PageLink key={Math.random(1, 999999)} link={next} onChange={this.handleChange}/>);
         }
 
         return (
