@@ -3,18 +3,7 @@ class FilterCard extends React.Component {
         return (<div className="card text-center">
             <h3 className="card-header">Filter By</h3>
             <div className="card-block">
-                <div className="dropdown">
-                    <button className="btn btn-block btn-lg btn-secondary dropdown-toggle"
-                            type="button"
-                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                        Filter By
-                    </button>
-                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a className="dropdown-item" href="#">Name</a>
-                        <a className="dropdown-item" href="#">ID</a>
-                    </div>
-                </div>
+                <input type="text" className="form-control form-control-lg" placeholder="Name..."></input>
             </div>
         </div>);
     }
@@ -27,7 +16,7 @@ class SortCard extends React.Component {
     }
 
     onSortData(field, ascending){
-        console.log("Sorting field: " + field + " by ascending: " + ascending);
+        ajaxModel.sortData(field, ascending);
     }
 
     render() {
@@ -44,10 +33,10 @@ class SortCard extends React.Component {
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardName", 1)}>Name
                             Ascending</a>
-                        <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardName", -1)}>Name
+                        <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardName", 0)}>Name
                             Descending</a>
                         <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardID", 1)}>ID Ascending</a>
-                        <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardID", -1)}>ID Descending</a>
+                        <a className="dropdown-item" href="#" onClick={() => this.onSortData("cardID", 0)}>ID Descending</a>
                     </div>
                 </div>
             </div>

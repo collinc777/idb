@@ -1,9 +1,10 @@
 # We'll define all of our views in this file. 
 
-from flask import render_template, Response
+from flask import render_template, Response, request
 from app import application
 from functools import wraps
 import json
+from random import randint
 
 navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"},
               {"url": "/houses", "name": "Houses"}, {"url": "/alliances", "name": "Alliances"},
@@ -62,6 +63,7 @@ alliance_links = dict()
 for alliance in alliance_listing["data"]:
     alliance_links[alliance["id"]] = {"name": alliance["name"], "link": "/alliances/" + str(alliance["id"])}
 
+### Begin Decorators ###
 
 def returns_json(f):
     @wraps(f)
@@ -71,17 +73,58 @@ def returns_json(f):
 
     return decorated_function
 
+### GET /api/modeltype?page=[int]&offset=[int]&sortParam=[string]&sortAscending=[bool]&filter=[string]
+
+def takes_query_params(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        requiredParameters = [("page", int), ("offset", int)]
+        optionalParameters = [("sortParam", str), ("sortAscending", int), ("filter", str)]
+        allParameters = requiredParameters + optionalParameters
+
+        parameters = dict()
+
+        for key, _ in requiredParameters:
+            if key not in request.args:
+                return json.dumps({"error": "Required parameter " + key + " not supplied"})
+            else:
+                parameters[key] = request.args[key]
+                
+
+        # for key, t in allParameters:
+        #     if key in request.args:
+        #         val = request.args[key]
+
+        for key, _ in optionalParameters:
+            if key in request.args:
+                parameters[key] = request.args[key]
+
+
+        r = f(**parameters)
+        return r
+
+    return decorated_function
+
+### End Decorators ###
+
 
 # Build a base "context" dictionary for passing to any given template
 def create_context(nav_highlight=-1, **kwargs):
-    return dict(navigation=navigation, nav_highlight=nav_highlight, **kwargs)
+    return dict(navigation=navigation, nav_highlight=nav_highlight, nocache=randint(1,1000000), **kwargs)
 
+
+### Begin Landing Page ###
 
 @application.route('/', methods=['GET', 'POST'])
 def index():
     context = create_context(0)
     return render_template('index.html', **context)
 
+### End Landing Page ###
+
+
+
+### Begin "Detail" Pages ###
 
 @application.route("/characters/<charid>")
 def character(charid):
@@ -165,6 +208,9 @@ def alliance(allianceid):
                                  house_links=house_links)
         return render_template('alliance.html', **context)
 
+### End "Detail" Pages ###
+
+
 
 def getDataList(listing):
     cardURL = listing["url"]
@@ -172,60 +218,97 @@ def getDataList(listing):
     return listing_list
 
 
-@application.route('/api/characters', methods=['GET'])
+### Begin "API" Pages ###
+### Note: These accept POST requests, behavior will be as follows: 
+### GET /api/modeltype?page=[int]&offset=[int]
+### The following are OPTIONAL parameters
+### GET /api/modeltype?page=[int]&offset=[int]&sortParam=[string]&sortAscending=[bool]&filter=[string]
+
+### POST /api/modeltype
+### request body contains JSON of model data to ADD to database
+
+@application.route('/api/characters', methods=['GET', 'POST'])
 @returns_json
-def get_characters():
+@takes_query_params
+def get_characters(page, offset, sortParam=None, sortAscending=None, filter=None):
+    print("Getting characters page: ", page, " offset: ", offset)
+    print("SortParam: ", sortParam)
+    print("SortAscending: ", sortAscending)
+
     json_out = getDataList(character_listing)
+    json_out = json_out[1:]
     return json.dumps(json_out)
 
 
-@application.route('/characters', methods=['GET', 'POST'])
+@application.route('/api/houses', methods=['GET', 'POST'])
+@returns_json
+@takes_query_params
+def get_houses(page, offset, sortParam=None, sortAscending=None, filter=None):
+    json_out = getDataList(house_listing)
+    json_out = json_out[1:]
+    return json.dumps(json_out)
+
+
+@application.route('/api/alliances', methods=['GET', 'POST'])
+@returns_json
+@takes_query_params
+def get_alliances(page, offset, sortParam=None, sortAscending=None, filter=None):
+    json_out = getDataList(alliance_listing)
+    json_out = json_out[1:]
+    return json.dumps(json_out)
+
+
+@application.route('/api/books', methods=['GET', 'POST'])
+@returns_json
+@takes_query_params
+def get_books(page, offset, sortParam=None, sortAscending=None, filter=None):
+    json_out = getDataList(book_listing)
+    json_out = json_out[1:]
+    return json.dumps(json_out)
+
+### End "API" Pages ###
+
+
+
+### Begin "Listing" Pages ###
+
+
+@application.route('/characters', methods=['GET'])
 def characters():
     character_data = get_characters()
     context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing))
     return render_template('listing.html', **context)
 
 
-@application.route('/api/houses', methods=['GET'])
-@returns_json
-def get_houses():
-    json_out = getDataList(house_listing)
-    return json.dumps(json_out)
-
-
-@application.route('/houses', methods=['GET', 'POST'])
+@application.route('/houses', methods=['GET'])
 def houses():
     context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing))
     return render_template('listing.html', **context)
 
 
-@application.route('/api/alliances', methods=['GET'])
-@returns_json
-def get_alliances():
-    json_out = getDataList(alliance_listing)
-    return json.dumps(json_out)
 
-
-@application.route('/alliances', methods=['GET', 'POST'])
+@application.route('/alliances', methods=['GET'])
 def alliances():
     context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing))
     return render_template('listing.html', **context)
 
 
-@application.route('/api/books', methods=['GET'])
-@returns_json
-def get_books():
-    json_out = getDataList(book_listing)
-    return json.dumps(json_out)
-
-
-@application.route('/books', methods=['GET', 'POST'])
+@application.route('/books', methods=['GET'])
 def books():
     context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing))
     return render_template('listing.html', **context)
 
 
-@application.route('/devnotes', methods=['GET', 'POST'])
+### End "Listing" Pages ###
+
+
+
+
+
+### Begin "Miscellaneous" Pages ###
+
+
+@application.route('/devnotes', methods=['GET'])
 def devnotes():
     context = create_context(HL_DEVNOTES)
     return render_template('devnotes.html', **context)
@@ -235,3 +318,7 @@ def devnotes():
 def about():
     context = create_context(HL_ABOUT)
     return render_template('about.html', **context)
+
+
+### End "Miscellaneous" Pages ###
+

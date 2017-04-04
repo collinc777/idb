@@ -1,25 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
+<script src="/static/scripts/AjaxModel.jsx?nocache={{ nocache }}" type="text/jsx"></script>
+
 <script type="text/jsx">
-    window.initialData = {{ data | tojson }};
-    class TitleLayout extends React.Component {
-        render() {
-            return (<div className="text-center">
-                <h1>{{ listing.title }}</h1>
-                <br/>
-            </div>);
-        }
-    }
+    var initialData = {{ data | tojson }};
+    var listingTitle = "{{ listing.title }}";
+    ajaxModel.dataURL = "/api{{ listing.url }}";
 </script>
 
-<script src="/static/scripts/GridLayout.jsx" type="text/jsx"></script>
-<script src="/static/scripts/GridCard.jsx" type="text/jsx"></script>
-<script src="/static/scripts/SortAndFilterCards.jsx" type="text/jsx"></script>
-<script src="/static/scripts/ListingContainer.jsx" type="text/jsx"></script>
+<script src="/static/scripts/GridLayout.jsx?nocache={{ nocache }}" type="text/jsx"></script>
+<script src="/static/scripts/GridCard.jsx?nocache={{ nocache }}" type="text/jsx"></script>
+<script src="/static/scripts/SortAndFilterCards.jsx?nocache={{ nocache }}" type="text/jsx"></script>
+<script src="/static/scripts/ListingLayout.jsx?nocache={{ nocache }}" type="text/jsx"></script>
 
 <div id="container">
     <script type="text/jsx">
-        ReactDOM.render(<ListingContainer listing_data={initialData}/>, document.getElementById("container"));
+        ReactDOM.render(<ListingContainer listing_data={initialData} listing_title={listingTitle}/>, document.getElementById("container"));
     </script>
 </div>
 {% endblock %}
