@@ -8,7 +8,6 @@ class GridLayout extends React.Component {
     }
 
     componentWillMount() {
-        console.log("Mounting gridlayout");
         ajaxModel.updateGridDataCallback = (data) => {
             this.setState({data: data});
         }

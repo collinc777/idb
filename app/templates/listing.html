@@ -5,17 +5,20 @@
 <script type="text/jsx">
     var initialData = {{ data | tojson }};
     var listingTitle = "{{ listing.title }}";
+    var listingSorts = {{ listing.sorts | tojson }};
+    var listingFilterPlaceholder = "Name or property...";
     ajaxModel.dataURL = "/api{{ listing.url }}";
 </script>
 
 <script src="/static/scripts/GridLayout.jsx?nocache={{ nocache }}" type="text/jsx"></script>
 <script src="/static/scripts/GridCard.jsx?nocache={{ nocache }}" type="text/jsx"></script>
 <script src="/static/scripts/SortAndFilterCards.jsx?nocache={{ nocache }}" type="text/jsx"></script>
+<script src="/static/scripts/Pagination.jsx?nocache={{ nocache }}" type="text/jsx"></script>
 <script src="/static/scripts/ListingLayout.jsx?nocache={{ nocache }}" type="text/jsx"></script>
 
-<div id="container">
+<div id="listingContainer">
     <script type="text/jsx">
-        ReactDOM.render(<ListingContainer listing_data={initialData} listing_title={listingTitle}/>, document.getElementById("container"));
+        ReactDOM.render(<ListingContainer listing_data={initialData} listing_title={listingTitle} listing_sorts={listingSorts} listing_filter_placeholder={listingFilterPlaceholder}/>, document.getElementById("listingContainer"));
     </script>
 </div>
 {% endblock %}

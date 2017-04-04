@@ -8,7 +8,7 @@ class TitleLayout extends React.Component {
 
     render() {
         return (<div className="text-center">
-            <h1 className="cursive">{this.state.title}</h1>
+            <h1 className="cursive listingTitle">{this.state.title}</h1>
             <br/>
         </div>);
     }
@@ -19,15 +19,19 @@ class ListingContainer extends React.Component {
         super(props);
         this.state = {
             listingTitle: props.listing_title,
-            cardData: props.listing_data
+            cardData: props.listing_data,
+            sorts: props.listing_sorts,
+            filterPlaceholder: props.listing_filter_placeholder
         }
     }
 
     render() {
+        const numPages = 15;
         return (
                 <div>
                     <TitleLayout title={this.state.listingTitle}/>
-                    <SortAndFilterCards/>
+                    <SortAndFilterCards sorts={this.state.sorts} filterPlaceholder={this.state.filterPlaceholder}/>
+                    <Pagination numberPages={numPages}/>
                     <GridLayout data={this.state.cardData}/>
                 </div>);
     }

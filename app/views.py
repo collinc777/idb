@@ -33,19 +33,19 @@ def load_listing(filename):
 # links between resources. E.g. in the books/2 page we want to have links to the 
 # POV (point-of-view) characters that are in it. So we pass it the character_links array
 
-character_listing = dict(title="Characters", url="/characters")
+character_listing = dict(title="Characters", url="/characters", sorts=["Name", "House", "Culture", "Gender"])
 character_listing["data"] = load_listing("data/trimmed_characters_houses.json")
 character_links = dict()
 for character in character_listing["data"]:
     character_links[character["id"]] = {"name": character["name"], "link": "/characters/" + str(character["id"])}
 
-house_listing = dict(title="Houses", url="/houses")
+house_listing = dict(title="Houses", url="/houses", sorts=["Name", "Region", "Coat of Arms", "Words"])
 house_listing["data"] = load_listing("data/trimmed_houses_alliances.json")
 house_links = dict()
 for house in house_listing["data"]:
     house_links[house["id"]] = {"name": house["name"], "link": "/houses/" + str(house["id"])}
 
-book_listing = dict(title="Books", url="/books")
+book_listing = dict(title="Books", url="/books", sorts=["Name", "Author", "Publisher", "ISBN", "Number of Pages", "Release Date"])
 book_listing["data"] = load_listing("data/trimmed_books.json")
 book_links = dict()
 for book in book_listing["data"]:
@@ -57,7 +57,7 @@ book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswor
 # book_images is a total hack right now. Ideally this would be a field inside the book data/model
 # but for now we'll just do this. Theres only 12 books so it'll be easy to add it in manually later
 
-alliance_listing = dict(title="Alliances", url="/alliances")
+alliance_listing = dict(title="Alliances", url="/alliances", sorts=["Name", "Current Head House", "Number of Members"])
 alliance_listing["data"] = load_listing("data/trimmed_alliances.json")
 alliance_links = dict()
 for alliance in alliance_listing["data"]:
@@ -152,7 +152,6 @@ def characters():
 def houses():
     context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing))
     return render_template('listing.html', **context)
-
 
 
 @application.route('/alliances', methods=['GET'])
