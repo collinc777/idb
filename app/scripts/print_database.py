@@ -1,6 +1,6 @@
-from app import models
+# Run with command: 'python -m app.scripts.print_database'
 
-Book = models.Book
+from app.models import Book
 
 # Print all books
 allBooks = Book.query.all()
