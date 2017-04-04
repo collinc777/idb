@@ -8,7 +8,7 @@ class TitleLayout extends React.Component {
 
     render() {
         return (<div className="text-center">
-            <h1>{this.state.title}</h1>
+            <h1 className="cursive">{this.state.title}</h1>
             <br/>
         </div>);
     }

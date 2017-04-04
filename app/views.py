@@ -1,8 +1,8 @@
 # We'll define all of our views in this file. 
 
-from flask import render_template, Response, request
+from flask import render_template, request
 from app import application
-from functools import wraps
+from app.decorators import returns_json, takes_query_params
 import json
 from random import randint
 
@@ -63,53 +63,12 @@ alliance_links = dict()
 for alliance in alliance_listing["data"]:
     alliance_links[alliance["id"]] = {"name": alliance["name"], "link": "/alliances/" + str(alliance["id"])}
 
-### Begin Decorators ###
-
-def returns_json(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        r = f(*args, **kwargs)
-        return Response(r, content_type='text/json; charset=utf-8')
-
-    return decorated_function
-
-### GET /api/modeltype?page=[int]&offset=[int]&sortParam=[string]&sortAscending=[bool]&filter=[string]
-
-def takes_query_params(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        requiredParameters = [("page", int), ("offset", int)]
-        optionalParameters = [("sortParam", str), ("sortAscending", int), ("filter", str)]
-        allParameters = requiredParameters + optionalParameters
-
-        parameters = dict()
-
-        for key, _ in requiredParameters:
-            if key not in request.args:
-                return json.dumps({"error": "Required parameter " + key + " not supplied"})
-            else:
-                parameters[key] = request.args[key]
-                
-
-        # for key, t in allParameters:
-        #     if key in request.args:
-        #         val = request.args[key]
-
-        for key, _ in optionalParameters:
-            if key in request.args:
-                parameters[key] = request.args[key]
-
-
-        r = f(**parameters)
-        return r
-
-    return decorated_function
-
-### End Decorators ###
-
 
 # Build a base "context" dictionary for passing to any given template
 def create_context(nav_highlight=-1, **kwargs):
+    # nav_highlight tells which navigation item to highlight
+    # nocache provides a way to stop the browser from caching our scripts and css files
+    # kwargs provides a way to add additional info to the context, per-page
     return dict(navigation=navigation, nav_highlight=nav_highlight, nocache=randint(1,1000000), **kwargs)
 
 
@@ -122,6 +81,93 @@ def index():
 
 ### End Landing Page ###
 
+def getDataList(listing, params=None):
+    cardURL = listing["url"]
+    listing_list = [{"cardID": c["id"], "cardURL": cardURL, "cardName": c["name"]} for c in listing["data"]]
+    
+    if params is not None:
+        print("Params: ", params)
+
+        if "sortAscending" in params and params["sortAscending"] == 0:
+            listing_list = list(reversed(listing_list))
+
+    return listing_list
+
+
+### Begin "API" Pages ###
+### Note: These accept POST requests, behavior will be as follows: 
+### GET /api/modeltype?page=[int]&offset=[int]
+### The following are OPTIONAL parameters
+### GET /api/modeltype?page=[int]&offset=[int]&sortParam=[string]&sortAscending=[bool]&filter=[string]
+
+### POST /api/modeltype
+### request body contains JSON of model data to ADD to database
+
+@application.route('/api/characters', methods=['GET', 'POST'])
+@returns_json
+@takes_query_params
+def get_characters(**kwargs):
+    json_out = getDataList(character_listing, kwargs)
+    return json.dumps(json_out)
+
+
+@application.route('/api/houses', methods=['GET', 'POST'])
+@returns_json
+@takes_query_params
+def get_houses(**kwargs):
+    json_out = getDataList(house_listing, kwargs)
+    return json.dumps(json_out)
+
+
+@application.route('/api/alliances', methods=['GET', 'POST'])
+@returns_json
+@takes_query_params
+def get_alliances(**kwargs):
+    json_out = getDataList(alliance_listing, kwargs)
+    return json.dumps(json_out)
+
+
+@application.route('/api/books', methods=['GET', 'POST'])
+@returns_json
+@takes_query_params
+def get_books(**kwargs):
+    json_out = getDataList(book_listing, kwargs)
+    return json.dumps(json_out)
+
+### End "API" Pages ###
+
+
+
+### Begin "Listing" Pages ###
+
+
+@application.route('/characters', methods=['GET'])
+def characters():
+    character_data = get_characters()
+    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing))
+    return render_template('listing.html', **context)
+
+
+@application.route('/houses', methods=['GET'])
+def houses():
+    context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing))
+    return render_template('listing.html', **context)
+
+
+
+@application.route('/alliances', methods=['GET'])
+def alliances():
+    context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing))
+    return render_template('listing.html', **context)
+
+
+@application.route('/books', methods=['GET'])
+def books():
+    context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing))
+    return render_template('listing.html', **context)
+
+
+### End "Listing" Pages ###
 
 
 ### Begin "Detail" Pages ###
@@ -209,100 +255,6 @@ def alliance(allianceid):
         return render_template('alliance.html', **context)
 
 ### End "Detail" Pages ###
-
-
-
-def getDataList(listing):
-    cardURL = listing["url"]
-    listing_list = [{"cardID": c["id"], "cardURL": cardURL, "cardName": c["name"]} for c in listing["data"]]
-    return listing_list
-
-
-### Begin "API" Pages ###
-### Note: These accept POST requests, behavior will be as follows: 
-### GET /api/modeltype?page=[int]&offset=[int]
-### The following are OPTIONAL parameters
-### GET /api/modeltype?page=[int]&offset=[int]&sortParam=[string]&sortAscending=[bool]&filter=[string]
-
-### POST /api/modeltype
-### request body contains JSON of model data to ADD to database
-
-@application.route('/api/characters', methods=['GET', 'POST'])
-@returns_json
-@takes_query_params
-def get_characters(page, offset, sortParam=None, sortAscending=None, filter=None):
-    print("Getting characters page: ", page, " offset: ", offset)
-    print("SortParam: ", sortParam)
-    print("SortAscending: ", sortAscending)
-
-    json_out = getDataList(character_listing)
-    json_out = json_out[1:]
-    return json.dumps(json_out)
-
-
-@application.route('/api/houses', methods=['GET', 'POST'])
-@returns_json
-@takes_query_params
-def get_houses(page, offset, sortParam=None, sortAscending=None, filter=None):
-    json_out = getDataList(house_listing)
-    json_out = json_out[1:]
-    return json.dumps(json_out)
-
-
-@application.route('/api/alliances', methods=['GET', 'POST'])
-@returns_json
-@takes_query_params
-def get_alliances(page, offset, sortParam=None, sortAscending=None, filter=None):
-    json_out = getDataList(alliance_listing)
-    json_out = json_out[1:]
-    return json.dumps(json_out)
-
-
-@application.route('/api/books', methods=['GET', 'POST'])
-@returns_json
-@takes_query_params
-def get_books(page, offset, sortParam=None, sortAscending=None, filter=None):
-    json_out = getDataList(book_listing)
-    json_out = json_out[1:]
-    return json.dumps(json_out)
-
-### End "API" Pages ###
-
-
-
-### Begin "Listing" Pages ###
-
-
-@application.route('/characters', methods=['GET'])
-def characters():
-    character_data = get_characters()
-    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing))
-    return render_template('listing.html', **context)
-
-
-@application.route('/houses', methods=['GET'])
-def houses():
-    context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing))
-    return render_template('listing.html', **context)
-
-
-
-@application.route('/alliances', methods=['GET'])
-def alliances():
-    context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing))
-    return render_template('listing.html', **context)
-
-
-@application.route('/books', methods=['GET'])
-def books():
-    context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing))
-    return render_template('listing.html', **context)
-
-
-### End "Listing" Pages ###
-
-
-
 
 
 ### Begin "Miscellaneous" Pages ###
