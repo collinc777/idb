@@ -6,9 +6,17 @@ img {
 	max-height: 400px;
 }
 
+body {
+	font-family: 'Lato', sans-serif !important;
+}
+
+h1.cursive {
+	font-family: 'Macondo', cursive;
+	font-size: 56px;
+}
+
 #contentContainer {
 	padding-top: 40px;
-	margin-top: 40px;
 }
 
 .nav-item.active {
@@ -27,6 +35,9 @@ img {
 @media (min-width: 576px){
 	.listingCard:first-child {
 		margin-left: 15px;
+	}
+	.listingCard:last-child {
+		margin-right: 15px;
 	}
 	.listingCard {
 		margin-top: 10px;
