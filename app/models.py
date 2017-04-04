@@ -107,22 +107,31 @@ class Book(database.Model):
     def toJSON(self):
         jsonString = '{'
         jsonString += '\"numberOfPages\":' + str(self.numberOfPages) + ','
-        jsonString += '\"isbn\":' + self.isbn + ','
-        jsonString += '\"name\":' + self.name + ','
-        jsonString += '\"publisher\":' + self.publisher + ','
-        jsonString += '\"country\":' + self.country + ','
-        jsonString += '\"author\":' + self.author + ','
-        jsonString += '\"mediaType\":' + self.mediaType + ','
-        jsonString += '\"released\":' + self.released + ','
-        jsonString += '\"povCharacters\":['
-        for povCharacter_id in self.povCharacter_ids:
-            jsonString += str(povCharacter_id) + ','
-        jsonString = jsonString[0:-1] + ']'
+        jsonString += '\"isbn\":\"' + self.isbn + '\",'
+        jsonString += '\"name\":\"' + self.name + '\",'
+        jsonString += '\"publisher\":\"' + self.publisher + '\",'
+        jsonString += '\"country\":\"' + self.country + '\",'
+        jsonString += '\"author\":\"' + self.author + '\",'
+        jsonString += '\"mediaType\":\"' + self.mediaType + '\",'
+        jsonString += '\"released\":\"' + self.released + '\",'
+
+        if len(self.povCharacter_ids) > 0:
+            jsonString += '\"povCharacters\":['
+            for povCharacter_id in self.povCharacter_ids:
+                jsonString += str(povCharacter_id) + ','
+            jsonString = jsonString[0:-1] + ']'
+        else:
+            jsonString += '\"povCharacters\":[]'
+
         jsonString += ','
-        jsonString += '\"characters\":['
-        for character_id in self.character_ids:
-            jsonString += str(character_id) + ','
-        jsonString = jsonString[0:-1] + ']'
+        if len(self.character_ids) > 0:
+            jsonString += '\"characters\":['
+            for character_id in self.character_ids:
+                jsonString += str(character_id) + ','
+            jsonString = jsonString[0:-1] + ']'
+        else:
+            jsonString += '\"characters\":[]'
+
         jsonString += '}'
         return jsonString
 
