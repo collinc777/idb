@@ -10,3 +10,9 @@ SQLALCHEMY_DATABASE_URI = 'postgres://swe16:swe16idb@idbtest.cevmyqqxetxv.us-wes
 SQLALCHEMY_POOL_RECYCLE = 3600
 
 WTF_CSRF_ENABLED = True
+
+# If set to True, Flask-SQLAlchemy will track modifications of objects and emit signals. 
+# The default is None, which enables tracking but issues a warning that it will be disabled 
+# by default in the future. This requires extra memory and should be disabled if not needed.
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+
