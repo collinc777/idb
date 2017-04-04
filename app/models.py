@@ -29,26 +29,26 @@ Base = declarative_base()
 # -------------------
 
 books_characters_association_table = Table(
-    'books_characters_association', Base.metadata,
+    'books_characters_association', database.metadata,
                                           Column(
                                               'book_id', Integer, ForeignKey('book.id')),
     Column('character_id', Integer, ForeignKey('character.id'))
 )
 
 books_povCharacters_association_table = Table(
-    'books_povCharacters_association', Base.metadata,
+    'books_povCharacters_association', database.metadata,
     Column('book_id', Integer, ForeignKey('book.id')),
     Column('povCharacter_id', Integer, ForeignKey('character.id'))
 )
 
 house_swornMembers_association_table = Table(
-    'house_swornMembers_association', Base.metadata,
+    'house_swornMembers_association', database.metadata,
     Column('house_id', Integer, ForeignKey('house.id')),
     Column('character_id', Integer, ForeignKey('character.id'))
 )
 
 alliance_members_association_table = Table(
-    'alliance_members_association', Base.metadata,
+    'alliance_members_association', database.metadata,
     Column('alliance_id', Integer, ForeignKey('alliance.id')),
     Column('character_id', Integer, ForeignKey('character.id'))
 )
@@ -58,7 +58,7 @@ alliance_members_association_table = Table(
 # -------
 
 
-class Book(Base):
+class Book(database.Model):
     __tablename__ = 'book'
     id = Column(Integer, primary_key=True)
 
@@ -76,7 +76,7 @@ class Book(Base):
 
     # Attributes
     numberOfPages = Column(Integer)
-    isbn = Column(String(13))
+    isbn = Column(String(14))
     name = Column(String(80))
     publisher = Column(String(80))
     country = Column(String(80))
@@ -107,7 +107,7 @@ class Book(Base):
         self.character_ids = character_ids
 
 
-class Character(Base):
+class Character(database.Model):
     __tablename__ = 'character'
     id = Column(Integer, primary_key=True)
 
@@ -122,6 +122,12 @@ class Character(Base):
         "Book",
         secondary=books_povCharacters_association_table,
         back_populates="povCharacters")
+    # Many-to-Many Relationships
+    swornHouses_ids = Column(database.ARRAY(Integer))
+    swornHouses = database.relationship(
+        "House",
+        secondary=house_swornMembers_association_table,
+        back_populates="swornMembers")
     alliance_ids = Column(database.ARRAY(Integer))
     alliances = database.relationship(
         "Alliance",
@@ -185,7 +191,7 @@ class Character(Base):
         self.male = male
 
 
-class House(Base):
+class House(database.Model):
     __tablename__ = 'house'
     id = Column(Integer, primary_key=True)
 
@@ -200,11 +206,12 @@ class House(Base):
     overlord_id = Column(Integer, ForeignKey('character.id'))
     overlord = database.relationship("Character", foreign_keys=[overlord_id])
 
-    # One-to-Many Relationships
+    # Many-to-Many Relationships
     swornMember_ids = Column(database.ARRAY(Integer))
     swornMembers = database.relationship(
         "Character",
-        secondary=house_swornMembers_association_table)
+        secondary=house_swornMembers_association_table,
+        back_populates="swornHouses")
 
     # Attributes
     cadetBranches = Column(database.ARRAY(String(80)))
@@ -249,7 +256,7 @@ class House(Base):
         self.ancestralWeapons = ancestralWeapons
 
 
-class Alliance(Base):
+class Alliance(database.Model):
     __tablename__ = 'alliance'
     id = Column(Integer, primary_key=True)
 
