@@ -22,8 +22,6 @@ from sqlalchemy import Column, Integer, String, Table, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from app import database
 
-Base = declarative_base()
-
 # -------------------
 # Association Tables
 # -------------------
@@ -106,6 +104,27 @@ class Book(database.Model):
         self.released = released
         self.character_ids = character_ids
 
+    def toJSON(self):
+        jsonString = '{'
+        jsonString += '\"numberOfPages\":' + str(self.numberOfPages) + ','
+        jsonString += '\"isbn\":' + self.isbn + ','
+        jsonString += '\"name\":' + self.name + ','
+        jsonString += '\"publisher\":' + self.publisher + ','
+        jsonString += '\"country\":' + self.country + ','
+        jsonString += '\"author\":' + self.author + ','
+        jsonString += '\"mediaType\":' + self.mediaType + ','
+        jsonString += '\"released\":' + self.released + ','
+        jsonString += '\"povCharacters\":['
+        for povCharacter_id in self.povCharacter_ids:
+            jsonString += str(povCharacter_id) + ','
+        jsonString = jsonString[0:-1] + ']'
+        jsonString += ','
+        jsonString += '\"characters\":['
+        for character_id in self.character_ids:
+            jsonString += str(character_id) + ','
+        jsonString = jsonString[0:-1] + ']'
+        jsonString += '}'
+        return jsonString
 
 class Character(database.Model):
     __tablename__ = 'character'
