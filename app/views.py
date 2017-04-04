@@ -68,7 +68,9 @@ def returns_json(f):
     def decorated_function(*args, **kwargs):
         r = f(*args, **kwargs)
         return Response(r, content_type='text/json; charset=utf-8')
+
     return decorated_function
+
 
 # Build a base "context" dictionary for passing to any given template
 def create_context(nav_highlight=-1, **kwargs):
@@ -138,7 +140,8 @@ def book(bookid):
         context = create_context(HL_BOOKS, entity="Book", entity_id=bookid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_BOOKS, book=book, character_links=character_links, house_links=house_links, book_images=book_images)
+        context = create_context(HL_BOOKS, book=book, character_links=character_links, house_links=house_links,
+                                 book_images=book_images)
         return render_template('book.html', **context)
 
 
@@ -168,45 +171,53 @@ def getDataList(listing):
     listing_list = [{"cardID": c["id"], "cardURL": cardURL, "cardName": c["name"]} for c in listing["data"]]
     return listing_list
 
-@application.route('/getCharacters', methods=['GET'])
+
+@application.route('/api/characters', methods=['GET'])
 @returns_json
-def getCharacters():
+def get_characters():
     json_out = getDataList(character_listing)
     return json.dumps(json_out)
 
+
 @application.route('/characters', methods=['GET', 'POST'])
 def characters():
-    character_data = getCharacters()
+    character_data = get_characters()
     context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing))
     return render_template('listing.html', **context)
 
-@application.route('/getHouses', methods=['GET'])
+
+@application.route('/api/houses', methods=['GET'])
 @returns_json
-def getHouses():
-    json_out = getDataList(houses_listing)
+def get_houses():
+    json_out = getDataList(house_listing)
     return json.dumps(json_out)
+
 
 @application.route('/houses', methods=['GET', 'POST'])
 def houses():
     context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing))
     return render_template('listing.html', **context)
 
-@application.route('/getAlliances', methods=['GET'])
+
+@application.route('/api/alliances', methods=['GET'])
 @returns_json
-def getAlliances():
-    json_out = getDataList(alliances_listing)
+def get_alliances():
+    json_out = getDataList(alliance_listing)
     return json.dumps(json_out)
+
 
 @application.route('/alliances', methods=['GET', 'POST'])
 def alliances():
     context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing))
     return render_template('listing.html', **context)
 
-@application.route('/getBooks', methods=['GET'])
+
+@application.route('/api/books', methods=['GET'])
 @returns_json
-def getBooks():
-    json_out = getDataList(books_listing)
+def get_books():
+    json_out = getDataList(book_listing)
     return json.dumps(json_out)
+
 
 @application.route('/books', methods=['GET', 'POST'])
 def books():
