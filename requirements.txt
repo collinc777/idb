@@ -7,3 +7,4 @@ requests==2.13.0
 simplejson==3.10.0
 urllib2-file==0.2.1
 Werkzeug==0.11.15
+psycopg2==2.7.1
