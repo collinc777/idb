@@ -63,10 +63,10 @@ class Book(database.Model):
 
     # Many-to-Many Relationships
     povCharacter_ids = Column(database.ARRAY(Integer))
-    povCharacters = database.relationship(
-        "Character",
-        secondary=books_povCharacters_association_table,
-        back_populates="povBooks")
+    #povCharacters = database.relationship(
+    #    "Character",
+    #   secondary=books_povCharacters_association_table,
+    #   back_populates="povBooks")
     character_ids = Column(database.ARRAY(Integer))
     characters = database.relationship(
         "Character",
@@ -159,11 +159,12 @@ class Character(database.Model):
         "Book",
         secondary=books_characters_association_table,
         back_populates="characters")
-    povBook_ids = Column(database.ARRAY(Integer))
-    povBooks = database.relationship(
-        "Book",
-        secondary=books_povCharacters_association_table,
-        back_populates="povCharacters")
+    # TODO: Greg 4/4/2017 Re-add povBook ids when issue #52 is resolved
+    #povBook_ids = Column(database.ARRAY(Integer))
+    #povBooks = database.relationship(
+    #   "Book",
+    #   secondary=books_povCharacters_association_table,
+    #   back_populates="povCharacters")
     # Many-to-Many Relationships
     swornHouses_ids = Column(database.ARRAY(Integer))
     swornHouses = database.relationship(
@@ -193,8 +194,9 @@ class Character(database.Model):
     tvSeries = Column(database.ARRAY(String(80)))
     mother = Column(String(80))
     male = Column(database.Boolean)
+    povBooks = Column(database.ARRAY(String(80)))
 
-    def __init__(self, house, culture, titles, spouse, died, aliases, dateOfDeath, name, born, gender, father, allegiances, alliance_ids, povBook_ids, playedBy, book_ids, tvSeries, mother, male):
+    def __init__(self, house, culture, titles, spouse, died, aliases, dateOfDeath, name, born, gender, father, allegiances, alliance_ids, povBooks, playedBy, book_ids, tvSeries, mother, male):
         assert isinstance(house, six.string_types)
         assert isinstance(culture, six.string_types)
         assert hasattr(titles, '__iter__')
@@ -225,7 +227,7 @@ class Character(database.Model):
         self.father = father
         self.allegiances = allegiances
         self.alliance_ids = alliance_ids
-        self.povBook_ids = povBook_ids
+        self.povBooks = povBooks
         self.playedBy = playedBy
         self.book_ids = book_ids
         self.tvSeries = tvSeries
@@ -244,15 +246,18 @@ class House(database.Model):
     id = Column(Integer, primary_key=True)
 
     # Many-to-One Relationships
-    currentLord_id = Column(Integer, ForeignKey('character.id'))
-    currentLord = database.relationship("Character",
-                                        foreign_keys=[currentLord_id])
-    founder_id = Column(Integer, ForeignKey('character.id'))
-    founder = database.relationship("Character", foreign_keys=[founder_id])
-    heir_id = Column(Integer, ForeignKey('character.id'))
-    heir = database.relationship("Character", foreign_keys=[heir_id])
-    overlord_id = Column(Integer, ForeignKey('character.id'))
-    overlord = database.relationship("Character", foreign_keys=[overlord_id])
+    # TODO: Greg 4/4/2017 Re-make ids as ForeignKeys once all keys are present in characters table
+    #currentLord_id = Column(Integer, ForeignKey('character.id'), nullable=True)
+    currentLord_id = Column(Integer, nullable=True)
+    #currentLord = database.relationship("Character", foreign_keys=[currentLord_id])
+    #founder_id = Column(Integer, ForeignKey('character.id'))
+    #founder = database.relationship("Character", foreign_keys=[founder_id])
+    #heir_id = Column(Integer, ForeignKey('character.id'), nullable=True)
+    heir_id = Column(Integer, nullable=True)
+    #heir = database.relationship("Character", foreign_keys=[heir_id])
+    #overlord_id = Column(Integer, ForeignKey('character.id'), nullable=True)
+    overlord_id = Column(Integer, nullable=True)
+    #overlord = database.relationship("Character", foreign_keys=[overlord_id])
 
     # Many-to-Many Relationships
     swornMember_ids = Column(database.ARRAY(Integer))
@@ -262,19 +267,19 @@ class House(database.Model):
         back_populates="swornHouses")
 
     # Attributes
+    founder = Column(String(80))
     cadetBranches = Column(database.ARRAY(String(80)))
     founded = Column(String(80))
     diedOut = Column(String(80))
     titles = Column(database.ARRAY(String(80)))
-    coatOfArms = Column(String(80))
+    coatOfArms = Column(String(512))
     words = Column(String(80))
     seats = Column(database.ARRAY(String(80)))
-    overlord = Column(Integer)
     name = Column(String(80))
     region = Column(String(80))
     ancestralWeapons = Column(database.ARRAY(String(80)))
 
-    def __init__(self, currentLord_id, founder_id, heir_id, cadetBranches, founded, diedOut, titles, coatOfArms, words, seats, overlord_id, name, swornMember_ids, region, ancestralWeapons):
+    def __init__(self, currentLord_id, founder, heir_id, cadetBranches, founded, diedOut, titles, coatOfArms, words, seats, overlord_id, name, swornMember_ids, region, ancestralWeapons):
         assert hasattr(cadetBranches, '__iter__')
         assert isinstance(founded, six.string_types)
         assert isinstance(diedOut, six.string_types)
@@ -287,9 +292,9 @@ class House(database.Model):
         assert hasattr(swornMember_ids, '__iter__')
         assert hasattr(ancestralWeapons, '__iter__')
 
-        self.currentLord_id = currentLord_id
-        self.founder_id = founder_id
-        self.heir_id = heir_id
+        self.currentLord_id = currentLord_id if not isinstance(currentLord_id, six.string_types) else None
+        self.founder = founder
+        self.heir_id = heir_id if not isinstance(heir_id, six.string_types) else None
         self.cadetBranches = cadetBranches
         self.founded = founded
         self.diedOut = diedOut
@@ -297,7 +302,7 @@ class House(database.Model):
         self.coatOfArms = coatOfArms
         self.words = words
         self.seats = seats
-        self.overlord_id = overlord_id
+        self.overlord_id = overlord_id if not isinstance(overlord_id, six.string_types) else None
         self.name = name
         self.swornMember_ids = swornMember_ids
         self.region = region
