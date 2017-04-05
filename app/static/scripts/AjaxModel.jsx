@@ -30,13 +30,12 @@ var ajaxModel = {
             var url = this.dataURL;
             url += "?page=0&offset=0";
             url += "&filterText=" + filterText;
-            this.getJSON(url, this.updateGridData);
+            this.getJSON(url, updateGridData);
         }
     }
 };
 
 // Define this down here because it needs to reference ajaxModel
-
 updateGridData = function(dataOrError){
     console.log("Got data back: ");
     console.log(dataOrError);
