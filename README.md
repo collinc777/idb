@@ -9,6 +9,7 @@ NOTE: Python version must be 3.4 because that is what works with the server
 1. First create a virtual environment: ```virtualenv my_project_env```  
 2. Next, activate the virtual environment: ```source my_project_env/bin/activate```  
 3. Find this project's (idb) requirements.txt and install it: ```pip install -r requirements.txt```
+4. Use ```deactivate``` at any time to leave the virtual environment
 
 ### How to Run
 Navigate to the parent directory (by default it is "idb").  

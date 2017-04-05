@@ -105,6 +105,19 @@ class Book(database.Model):
         self.released = released
         self.character_ids = character_ids
 
+    @staticmethod
+    def getSorts():
+        return ["Name", "Author", "Publisher", "ISBN", "Number of Pages", "Release Date"]
+
+    @staticmethod
+    def convertSort(sort):
+        names = ["name", "author", "publisher", "isbn", "numberOfPages", "released"]
+        for i, s in enumerate(Book.getSorts()):
+            if s == sort:
+                return names[i]
+        return None
+
+
     def toJSON(self):
         jsonString = '{'
         jsonString += '\"numberOfPages\":' + str(self.numberOfPages) + ','
@@ -132,7 +145,7 @@ class Book(database.Model):
             jsonString = jsonString[0:-1] + ']'
         else:
             jsonString += '\"characters\":[]'
-
+        
         jsonString += '}'
         return jsonString
 
