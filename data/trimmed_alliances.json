@@ -5,9 +5,9 @@
 	"cultures" : ["Northman"],
 	"regions" : ["North"],
 	"id" : 1,
-	"headHouse": 362,
-	"currentLord" : 583,
-	"swornHouses" : [362, 216, 318, 395, 401, 271, 282, 150, 236, 435, 61],
+	"headHouse_id": 362,
+	"currentLord_id" : 583,
+	"swornHouse_ids" : [362, 216, 318, 395, 401, 271, 282, 150, 236, 435, 61],
 	"imageLink": "alliancebanners/North.png"
 },
 {
@@ -17,9 +17,9 @@
 	"cultures" : ["South"],
 	"regions" : ["Castlery Rock"],
 	"id" : 2,
-	"headHouse": 231,
-	"currentLord": 238,
-	"swornHouses" : [231, 72, 120, 13, 40, 359, 443, 270, 303, 118, 250, 425, 234, 294, 331, 408, 86, 212, 258, 374, 231, 245, 377, 163, 357, 219, 306, 426],
+	"headHouse_id": 231,
+	"currentLord_id": 238,
+	"swornHouse_ids" : [231, 72, 120, 13, 40, 359, 443, 270, 303, 118, 250, 425, 234, 294, 331, 408, 86, 212, 258, 374, 231, 245, 377, 163, 357, 219, 306, 426],
 	"imageLink" : "alliancebanners/Baratheon.png"
 },
 {
@@ -29,9 +29,9 @@
 	"cultures" : ["Valyrian"],
 	"regions" : ["Free cities"],
 	"id" : 3,
-	"headHouse": 378,
-	"currentLord" : 1303,
-	"swornHouses" : [378, 95, 59],
+	"headHouse_id": 378,
+	"currentLord_id" : 1303,
+	"swornHouse_ids" : [378, 95, 59],
 	"imageLink": "alliancebanners/SevenKingdoms.png"
 }
 ]

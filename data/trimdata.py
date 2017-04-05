@@ -91,9 +91,11 @@ def ice_and_fire_trim_books():
         for character in trimmed["povCharacters"]:
             pov_chars.append(int(character.rsplit("/")[-1]))
         trimmed["povCharacters"] = pov_chars
+        trimmed["povCharacter_ids"] = trimmed.pop('povCharacters')
+        trimmed["character_ids"] = trimmed.pop('characters')
         trimmed_books.append(trimmed)
 
-    with open("api_ice_and_fire/trimmed_books.json", 'w') as trimmed_books_file:
+    with open("trimmed_books.json", 'w') as trimmed_books_file:
         json.dump(trimmed_books, trimmed_books_file)
 
 
@@ -140,10 +142,11 @@ def ice_and_fire_trim_houses():
         trimmed['swornMember_ids'] = trimmed.pop('swornMembers')
         trimmed['currentLord_id'] = trimmed.pop('currentLord')
         trimmed['cadetBranches_ids'] = trimmed.pop('cadetBranches')
+        trimmed.pop('cadetBranches_ids')
 
         trimmed_houses.append(trimmed)
 
-    with open("api_ice_and_fire/trimmed_houses.json", 'w') as trimmed_houses_file:
+    with open("trimmed_houses.json", 'w') as trimmed_houses_file:
         json.dump(trimmed_houses, trimmed_houses_file)
 
 
@@ -416,11 +419,11 @@ def add_alliance_membership_to_houses():
 
     for house in houses:
         for alliance in alliances:
-            if house["id"] in alliance["swornHouses"]:
-                house["alliance"] = alliance["id"]
+            if house["id"] in alliance["swornHouse_ids"]:
+                house["alliance_id"] = alliance["id"]
                 break
             else:
-                house["alliance"] = ""
+                house["alliance_id"] = None
 
     with open("trimmed_houses_alliances.json", 'w') as alliances_file:
         json.dump(houses, alliances_file)
@@ -445,5 +448,7 @@ def sort_houses_by_members():
 # got_show_filter_characters()
 # find_intersecting_characters()
 # ice_and_fire_get_entity("books")
-
-ice_and_fire_trim_characters()
+ice_and_fire_trim_books()
+ice_and_fire_trim_houses()
+add_alliance_membership_to_houses()
+# ice_and_fire_trim_characters()
