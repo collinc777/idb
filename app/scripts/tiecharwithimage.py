@@ -19,16 +19,16 @@ for char in char_list:
         baseURl = 'https://api.got.show'
         imageURl = char['imageLink']
         name = char['name']
-        fileName = 'app/static/img/chars/' + getFileName(imageURl)
+        fileName = getFileName(imageURl)
         namedToImageDict[name] = fileName
-
 
 for char in trimmed_char_list:
     char_name = char['name']
     if char_name in namedToImageDict:
-        char['img'] = namedToImageDict[char_name]
+        char['imageLink'] = namedToImageDict[char_name]
+    else:
+        char['imageLink'] = ""
 
 with open("data/trimmed_characters.json", 'w') as data_file:
     json.dump(trimmed_char_list, data_file)
 
-print(trimmed_char_list)
