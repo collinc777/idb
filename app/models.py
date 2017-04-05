@@ -19,12 +19,10 @@
 # -------
 import json
 
+import six
 from sqlalchemy import Column, Integer, String, Table, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
 
 from app import database
-import six
 
 # -------------------
 # Association Tables
@@ -96,10 +94,10 @@ class Book(database.Model):
 
     # Many-to-Many Relationships
     povCharacter_ids = Column(database.ARRAY(Integer))
-    povCharacters = database.relationship(
-        "Character",
-        secondary=books_povCharacters_association_table,
-        back_populates="povBooks")
+    # povCharacters = database.relationship(
+    #    "Character",
+    #   secondary=books_povCharacters_association_table,
+    #   back_populates="povBooks")
     character_ids = Column(database.ARRAY(Integer))
     characters = database.relationship(
         "Character",
@@ -118,9 +116,9 @@ class Book(database.Model):
 
     def __init__(self, id, numberOfPages, isbn, name, publisher, country, povCharacter_ids, author, mediaType, released,
                  character_ids):
-        assert numberOfPages > 0
-
         assert isinstance(id, int)
+        assert isinstance(numberOfPages, int)
+        assert numberOfPages > 0
         assert isinstance(isbn, six.string_types)
         assert isinstance(name, six.string_types)
         assert isinstance(publisher, six.string_types)
@@ -160,7 +158,7 @@ class Book(database.Model):
 
 class Character(database.Model):
     __tablename__ = 'character'
-    id = Column(Integer, primary_key=True, )
+    id = Column(Integer, primary_key=True)
 
     # Many-to-Many Relationships
     book_ids = Column(database.ARRAY(Integer))
@@ -168,11 +166,12 @@ class Character(database.Model):
         "Book",
         secondary=books_characters_association_table,
         back_populates="characters")
-    povBook_ids = Column(database.ARRAY(Integer))
-    povBooks = database.relationship(
-        "Book",
-        secondary=books_povCharacters_association_table,
-        back_populates="povCharacters")
+    # TODO: Greg 4/4/2017 Re-add povBook ids when issue #52 is resolved
+    # povBook_ids = Column(database.ARRAY(Integer))
+    # povBooks = database.relationship(
+    #   "Book",
+    #   secondary=books_povCharacters_association_table,
+    #   back_populates="povCharacters")
     # Many-to-Many Relationships
     swornHouses_ids = Column(database.ARRAY(Integer))
     swornHouses = database.relationship(
@@ -242,6 +241,19 @@ class House(database.Model):
     id = Column(Integer, primary_key=True)
 
     # Many-to-One Relationships
+    # TODO: Greg 4/4/2017 Re-make ids as ForeignKeys once all keys are present in characters table
+    # currentLord_id = Column(Integer, ForeignKey('character.id'), nullable=True)
+    # currentLord_id = Column(Integer, nullable=True)
+    # currentLord = database.relationship("Character", foreign_keys=[currentLord_id])
+    # founder_id = Column(Integer, ForeignKey('character.id'))
+    # founder = database.relationship("Character", foreign_keys=[founder_id])
+    # heir_id = Column(Integer, ForeignKey('character.id'), nullable=True)
+    # heir_id = Column(Integer, nullable=True)
+    # heir = database.relationship("Character", foreign_keys=[heir_id])
+    # overlord_id = Column(Integer, ForeignKey('character.id'), nullable=True)
+    # overlord_id = Column(Integer, nullable=True)
+    # overlord = database.relationship("Character", foreign_keys=[overlord_id])
+
     currentLord_id = Column(Integer, ForeignKey('character.id'))
     currentLord = database.relationship("Character",
                                         foreign_keys=[currentLord_id])
@@ -340,7 +352,8 @@ class Alliance(database.Model):
     name = Column(database.String(80))
     imageLink = Column(database.String(300))
 
-    def __init__(self, id, currentLord_id, ancestralWeapons, seats, swornHouse_ids, regions, cultures, headHouse_id, name,
+    def __init__(self, id, currentLord_id, ancestralWeapons, seats, swornHouse_ids, regions, cultures, headHouse_id,
+                 name,
                  imageLink):
         assert hasattr(ancestralWeapons, "__iter__")
         assert hasattr(seats, "__iter__")

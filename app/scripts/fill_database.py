@@ -71,6 +71,7 @@ def commit_alliances():
     database.session.commit()
     print("Alliance data loaded")
 
+
 create_new_db()
 commit_books()
 commit_charactes()
