@@ -17,6 +17,7 @@
 # -------
 # imports
 # -------
+import json
 
 from sqlalchemy import Column, Integer, String, Table, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
@@ -28,8 +29,8 @@ from app import database
 
 books_characters_association_table = Table(
     'books_characters_association', database.metadata,
-                                          Column(
-                                              'book_id', Integer, ForeignKey('book.id')),
+    Column(
+        'book_id', Integer, ForeignKey('book.id')),
     Column('character_id', Integer, ForeignKey('character.id'))
 )
 
@@ -50,6 +51,24 @@ alliance_members_association_table = Table(
     Column('alliance_id', Integer, ForeignKey('alliance.id')),
     Column('character_id', Integer, ForeignKey('character.id'))
 )
+alliance_houses_assocation_table = Table(
+    'alliance_houses_assocation', database.metadata,
+    Column('alliance_id', Integer, ForeignKey('alliance.id')),
+    Column('house_id', Integer, ForeignKey('house.id'))
+)
+
+houses_characters_association_table = Table(
+    'houses_characters_association', database.metadata,
+    Column('house_id', Integer, ForeignKey('house.id')),
+    Column('character_id', Integer, ForeignKey('character.id'))
+)
+
+houses_alliances_association_table = Table(
+    'houses_alliances_association_table', database.metadata,
+    Column('house_id', Integer, ForeignKey('house.id')),
+    Column('alliance_id', Integer, ForeignKey('alliance.id'))
+)
+
 
 # -------
 # Models
@@ -82,7 +101,8 @@ class Book(database.Model):
     mediaType = Column(String(80))
     released = Column(String(80))
 
-    def __init__(self, numberOfPages, isbn, name, publisher, country, povCharacter_ids, author, mediaType, released, character_ids):
+    def __init__(self, id, numberOfPages, isbn, name, publisher, country, povCharacter_ids, author, mediaType, released,
+                 character_ids):
         assert numberOfPages > 0
         assert len(isbn) > 0
         assert len(name) > 0
@@ -90,9 +110,11 @@ class Book(database.Model):
         assert len(country) > 0
         assert len(author) > 0
         assert len(mediaType) > 0
+        assert isinstance(id, int)
         assert hasattr(povCharacter_ids, '__iter__')
         assert hasattr(character_ids, '__iter__')
 
+        self.id = id
         self.numberOfPages = numberOfPages
         self.isbn = isbn
         self.name = name
@@ -105,39 +127,12 @@ class Book(database.Model):
         self.character_ids = character_ids
 
     def toJSON(self):
-        jsonString = '{'
-        jsonString += '\"numberOfPages\":' + str(self.numberOfPages) + ','
-        jsonString += '\"isbn\":\"' + self.isbn + '\",'
-        jsonString += '\"name\":\"' + self.name + '\",'
-        jsonString += '\"publisher\":\"' + self.publisher + '\",'
-        jsonString += '\"country\":\"' + self.country + '\",'
-        jsonString += '\"author\":\"' + self.author + '\",'
-        jsonString += '\"mediaType\":\"' + self.mediaType + '\",'
-        jsonString += '\"released\":\"' + self.released + '\",'
+        return json.dumps({c.name: getattr(self, c.name) for c in self.__table__.columns})
 
-        if len(self.povCharacter_ids) > 0:
-            jsonString += '\"povCharacters\":['
-            for povCharacter_id in self.povCharacter_ids:
-                jsonString += str(povCharacter_id) + ','
-            jsonString = jsonString[0:-1] + ']'
-        else:
-            jsonString += '\"povCharacters\":[]'
-
-        jsonString += ','
-        if len(self.character_ids) > 0:
-            jsonString += '\"characters\":['
-            for character_id in self.character_ids:
-                jsonString += str(character_id) + ','
-            jsonString = jsonString[0:-1] + ']'
-        else:
-            jsonString += '\"characters\":[]'
-
-        jsonString += '}'
-        return jsonString
 
 class Character(database.Model):
     __tablename__ = 'character'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, )
 
     # Many-to-Many Relationships
     book_ids = Column(database.ARRAY(Integer))
@@ -162,8 +157,13 @@ class Character(database.Model):
         secondary=alliance_members_association_table,
         back_populates="members")
 
+    house_id = Column(database.Integer)
+    house = database.relationship(
+        "House",
+        secondary=houses_characters_association_table,
+        back_populates="swornMembers")
+
     # Attributes
-    house = Column(String(80))
     culture = Column(String(80))
     titles = Column(database.ARRAY(String))
     spouse = Column(String(80))
@@ -179,9 +179,11 @@ class Character(database.Model):
     tvSeries = Column(database.ARRAY(String(80)))
     mother = Column(String(80))
     male = Column(database.Boolean)
+    imageLink = Column(database.String(160))
 
-    def __init__(self, house, culture, titles, spouse, died, aliases, dateOfDeath, name, born, gender, father, allegiances, alliance_ids, povBook_ids, playedBy, book_ids, tvSeries, mother, male):
-        assert isinstance(house, str)
+    def __init__(self, id, house_id, culture, titles, spouse, died, aliases, dateOfDeath, name, born, gender, father,
+                 allegiances, alliance_ids, povBook_ids, playedBy, book_ids, tvSeries, mother, male, imageLink):
+        assert isinstance(house_id, int)
         assert isinstance(culture, str)
         assert hasattr(titles, '__iter__')
         assert isinstance(spouse, str)
@@ -193,18 +195,22 @@ class Character(database.Model):
         assert isinstance(gender, str)
         assert isinstance(father, str)
         assert isinstance(mother, str)
+        assert isinstance(imageLink, str)
+        assert isinstance(id, int)
         assert hasattr(allegiances, '__iter__')
         assert hasattr(playedBy, '__iter__')
         assert hasattr(tvSeries, '__iter__')
         assert isinstance(male, bool)
 
-        self.house = house
+        self.id = id
+        self.house_id = house_id
         self.culture = culture
         self.titles = titles
         self.spouse = spouse
         self.died = died
         self.aliases = aliases
-        self.dateOfDeath = dateOfDeath
+        if (dateOfDeath != False):
+            self.dateOfDeath = True
         self.name = name
         self.born = born
         self.gender = gender
@@ -217,6 +223,10 @@ class Character(database.Model):
         self.tvSeries = tvSeries
         self.mother = mother
         self.male = male
+        self.imageLink = imageLink
+
+    def toJSON(self):
+        return json.dumps({c.name: getattr(self, c.name) for c in self.__table__.columns})
 
 
 class House(database.Model):
@@ -227,10 +237,10 @@ class House(database.Model):
     currentLord_id = Column(Integer, ForeignKey('character.id'))
     currentLord = database.relationship("Character",
                                         foreign_keys=[currentLord_id])
-    founder_id = Column(Integer, ForeignKey('character.id'))
-    founder = database.relationship("Character", foreign_keys=[founder_id])
+
     heir_id = Column(Integer, ForeignKey('character.id'))
     heir = database.relationship("Character", foreign_keys=[heir_id])
+
     overlord_id = Column(Integer, ForeignKey('character.id'))
     overlord = database.relationship("Character", foreign_keys=[overlord_id])
 
@@ -241,34 +251,46 @@ class House(database.Model):
         secondary=house_swornMembers_association_table,
         back_populates="swornHouses")
 
+    alliance_id = Column(Integer)
+    alliance = database.relationship(
+        "Alliance",
+        secondary=houses_alliances_association_table,
+        back_populates="swornHouses"
+    )
+
     # Attributes
     cadetBranches = Column(database.ARRAY(String(80)))
     founded = Column(String(80))
     diedOut = Column(String(80))
     titles = Column(database.ARRAY(String(80)))
-    coatOfArms = Column(String(80))
+    coatOfArms = Column(String(300))
     words = Column(String(80))
     seats = Column(database.ARRAY(String(80)))
     overlord = Column(Integer)
     name = Column(String(80))
     region = Column(String(80))
+    imageLink = Column(String(160))
     ancestralWeapons = Column(database.ARRAY(String(80)))
 
-    def __init__(self, currentLord_id, founder_id, heir_id, cadetBranches, founded, diedOut, titles, coatOfArms, words, seats, overlord_id, name, swornMember_ids, region, ancestralWeapons):
+    def __init__(self, id, currentLord_id, heir_id, cadetBranches, founded, diedOut, titles, coatOfArms, words,
+                 seats, overlord_id, name, swornMember_ids, alliance_id, region, ancestralWeapons, imageLink):
         assert hasattr(cadetBranches, '__iter__')
         assert isinstance(founded, str)
-        assert isinstance(diedOut, str)
+        # assert isinstance(diedOut, str)
         assert hasattr(titles, '__iter__')
         assert isinstance(coatOfArms, str)
         assert isinstance(words, str)
         assert hasattr(seats, '__iter__')
         assert isinstance(name, str)
+        assert isinstance(imageLink, str)
         assert isinstance(region, str)
+        # assert isinstance(alliance_id, int)
+        assert isinstance(id, int)
         assert hasattr(swornMember_ids, '__iter__')
         assert hasattr(ancestralWeapons, '__iter__')
 
+        self.id = id
         self.currentLord_id = currentLord_id
-        self.founder_id = founder_id
         self.heir_id = heir_id
         self.cadetBranches = cadetBranches
         self.founded = founded
@@ -278,10 +300,15 @@ class House(database.Model):
         self.words = words
         self.seats = seats
         self.overlord_id = overlord_id
+        self.alliance_id = alliance_id
         self.name = name
         self.swornMember_ids = swornMember_ids
         self.region = region
         self.ancestralWeapons = ancestralWeapons
+        self.imageLink = imageLink
+
+    def toJSON(self):
+        return json.dumps({c.name: getattr(self, c.name) for c in self.__table__.columns})
 
 
 class Alliance(database.Model):
@@ -292,6 +319,8 @@ class Alliance(database.Model):
     headLeader_id = Column(Integer, ForeignKey('character.id'))
     headLeader = database.relationship("Character",
                                        foreign_keys=[headLeader_id])
+    headHouse_id = Column(Integer, ForeignKey('house.id'))
+    headHouse = database.relation("House", foreign_keys=[headHouse_id])
 
     # One-to-Many Relationships
     member_ids = Column(database.ARRAY(Integer))
@@ -300,22 +329,38 @@ class Alliance(database.Model):
         secondary=alliance_members_association_table,
         back_populates="alliances")
 
+    swornHouse_ids = Column(database.ARRAY(Integer))
+    swornHouses = database.relationship(
+        "House",
+        secondary=alliance_houses_assocation_table
+    )
+
     # Attributes
     weapons = Column(database.ARRAY(String(80)))
     seats = Column(database.ARRAY(String(80)))
     regions = Column(database.ARRAY(String(80)))
     cultures = Column(database.ARRAY(String(80)))
+    name = Column(database.String(80))
+    imageLink = Column(database.String(160))
 
-    def __init__(self, headLeader_id, member_ids, weapons, seats, regions, cultures):
+    def __init__(self, id, headLeader_id, member_ids, weapons, seats, regions, cultures, headHouse_id, imageLink, name):
         assert hasattr(member_ids, "__iter__")
         assert hasattr(weapons, "__iter__")
         assert hasattr(seats, "__iter__")
         assert hasattr(regions, "__iter__")
         assert hasattr(cultures, "__iter__")
+        assert isinstance(id, int)
 
+        self.id = id
         self.headLeader_id = headLeader_id
         self.member_ids = member_ids
         self.weapons = weapons
         self.seats = seats
         self.regions = regions
         self.cultures = cultures
+        self.headHouse_id = headHouse_id
+        self.name = name
+        self.imageLink = imageLink
+
+    def toJSON(self):
+        return json.dumps({c.name: getattr(self, c.name) for c in self.__table__.columns})

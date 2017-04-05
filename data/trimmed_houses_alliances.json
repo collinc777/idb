@@ -37,7 +37,7 @@
 		"id" : 378,
 		"name" : "House Targaryen of King's Landing"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [2, 20, 97, 98, 136, 143, 148, 170, 181, 192, 206, 207, 208, 209, 210, 212, 216, 232, 259, 324, 339, 340, 349, 351, 354, 389, 461, 561, 583, 584, 589, 591, 593, 603, 648, 668, 716, 737, 777, 887, 891, 911, 912, 916, 917, 918, 957, 1101, 1111, 1148, 1158, 1175, 1185, 1190, 1254, 1260, 1326, 1336, 1383, 1396, 1407, 1488, 1489, 1499, 1515, 1526, 1565, 1602, 1620, 1649, 1650, 1706, 1737, 1749, 1787, 1796, 1816, 1819, 1843, 1946, 1950, 1979, 2019, 2020, 2037, 2068, 2089, 2119],
 		"currentLord" : null,
 		"founder" : 209,
@@ -56,7 +56,7 @@
 		"id" : 362,
 		"name" : "House Stark of Winterfell"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [60, 66, 150, 278, 316, 469, 718, 836, 839, 904, 913, 1022, 1062, 1072, 1074, 1141, 1226, 1250, 1292, 1306, 1345, 1372, 1416, 1461, 1495, 1595, 1765, 1829, 1853, 1893, 1919, 1947, 1960, 1971, 1974, 2042, 2046, 2049, 2061, 2093, 2096, 2117],
 		"currentLord" : 385,
 		"founder" : null,
@@ -75,7 +75,7 @@
 		"id" : 169,
 		"name" : "House Greyjoy of Pyke"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [3, 7, 220, 243, 308, 369, 430, 601, 795, 881, 908, 925, 975, 1285, 1312, 1319, 1325, 1467, 1516, 1535, 1623, 1680, 1777, 1797, 1925, 1935, 2100],
 		"currentLord" : 862,
 		"founder" : null,
@@ -113,7 +113,7 @@
 		"id" : 395,
 		"name" : "House Tully of Riverrun"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [196, 314, 849, 933, 1084, 1159, 1208, 1313, 1329, 1452, 1492, 1648, 1747, 1949, 2077],
 		"currentLord" : 933,
 		"founder" : null,
@@ -664,7 +664,7 @@
 		"id" : 293,
 		"name" : "House Paege"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [52, 85, 118, 230, 357, 639, 999],
 		"currentLord" : 357,
 		"founder" : null,
@@ -759,7 +759,7 @@
 		"id" : 246,
 		"name" : "House Lothston of Harrenhal"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [217, 391, 392, 638, 1010, 2043],
 		"currentLord" : 638,
 		"founder" : null,
@@ -1101,7 +1101,7 @@
 		"id" : 80,
 		"name" : "House Connington of Griffin's Roost"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [651, 804, 823, 957, 970],
 		"currentLord" : 823,
 		"founder" : 823,
@@ -1120,7 +1120,7 @@
 		"id" : 10,
 		"name" : "House Baelish of Harrenhal"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [290, 533, 599, 761],
 		"currentLord" : 761,
 		"founder" : 533,
@@ -2089,7 +2089,7 @@
 		"id" : 193,
 		"name" : "House Hetherspoon"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [199, 458],
 		"currentLord" : 458,
 		"founder" : null,
@@ -2222,7 +2222,7 @@
 		"id" : 435,
 		"name" : "House Wull"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [184, 651],
 		"currentLord" : 184,
 		"founder" : null,
@@ -2469,7 +2469,7 @@
 		"id" : 306,
 		"name" : "House Prester of Feastfires"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [861, 1910],
 		"currentLord" : 861,
 		"founder" : null,
@@ -2678,7 +2678,7 @@
 		"id" : 70,
 		"name" : "House Chester of Greenshield"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [663],
 		"currentLord" : 663,
 		"founder" : null,
@@ -2811,7 +2811,7 @@
 		"id" : 145,
 		"name" : "House Gardener of Highgarden"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [382],
 		"currentLord" : 382,
 		"founder" : null,
@@ -2906,7 +2906,7 @@
 		"id" : 231,
 		"name" : "House Lannister of Lannisport"
 	}, {
-		"overlord" : 16,
+		"overlord" : null,
 		"swornMembers" : [127],
 		"currentLord" : 127,
 		"founder" : null,
