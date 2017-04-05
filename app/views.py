@@ -3,8 +3,11 @@
 from flask import render_template, request
 from app import application
 from app.decorators import returns_json, takes_query_params
+from app.models import Book
+from sqlalchemy import desc
 import json
 from random import randint
+import pdb
 
 navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"},
               {"url": "/houses", "name": "Houses"}, {"url": "/alliances", "name": "Alliances"},
@@ -45,7 +48,7 @@ house_links = dict()
 for house in house_listing["data"]:
     house_links[house["id"]] = {"name": house["name"], "link": "/houses/" + str(house["id"])}
 
-book_listing = dict(title="Books", url="/books", sorts=["Name", "Author", "Publisher", "ISBN", "Number of Pages", "Release Date"])
+book_listing = dict(model=Book, title="Books", url="/books", sorts=Book.getSorts())
 book_listing["data"] = load_listing("data/trimmed_books.json")
 book_links = dict()
 for book in book_listing["data"]:
@@ -88,8 +91,22 @@ def getDataList(listing, params=None):
     if params is not None:
         print("Params: ", params)
 
-        if "sortAscending" in params and params["sortAscending"] == 0:
-            listing_list = list(reversed(listing_list))
+        dataListing = list()
+        model = listing["model"]
+
+        if "sortParam" in params:
+            if "sortAscending" in params and params["sortAscending"] == 0:
+                dataQuery = model.query.order_by(desc(getattr(model, model.convertSort(params["sortParam"]))))
+            else:
+                dataQuery = model.query.order_by(getattr(model, model.convertSort(params["sortParam"])))
+
+            print("Books sorted by paramter: ", params["sortParam"])
+
+        modelResults = dataQuery.all()
+        jsonResults = [json.loads(c.toJSON()) for c in modelResults]
+        print([result["name"] for result in jsonResults])
+
+        listing_list = [dict(cardURL=cardURL, cardID=i, cardName=res["name"]) for i, res in enumerate(jsonResults)]
 
     return listing_list
 
