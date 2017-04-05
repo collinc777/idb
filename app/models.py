@@ -65,9 +65,15 @@ houses_characters_association_table = Table(
 )
 
 houses_alliances_association_table = Table(
-    'houses_alliances_association_table', database.metadata,
+    'houses_alliances_association', database.metadata,
     Column('house_id', Integer, ForeignKey('house.id')),
     Column('alliance_id', Integer, ForeignKey('alliance.id'))
+)
+
+allegiances_houses_association_table = Table(
+    'allegiances_houses_association', database.metadata,
+    Column('character_id', Integer, ForeignKey('character.id')),
+    Column('allegiances', database.ARRAY(Integer), ForeignKey('house.id'))
 )
 
 
@@ -177,6 +183,11 @@ class Character(database.Model):
         secondary=houses_characters_association_table,
         back_populates="swornMembers")
 
+    allegiances_ids = Column(database.ARRAY(Integer))
+    allegiances = database.relationship("Allegiances",
+                                        secondary=allegiances_houses_association_table
+                                        )
+
     # Attributes
     culture = Column(String(80))
     titles = Column(database.ARRAY(String))
@@ -188,7 +199,6 @@ class Character(database.Model):
     born = Column(String(80))
     gender = Column(String(80))
     father = Column(String(80))
-    allegiances = Column(database.ARRAY(String(80)))
     playedBy = Column(database.ARRAY(String(80)))
     tvSeries = Column(database.ARRAY(String(80)))
     mother = Column(String(80))
@@ -196,7 +206,7 @@ class Character(database.Model):
     imageLink = Column(database.String(160))
 
     def __init__(self, id, house_id, culture, titles, spouse, died, aliases, dateOfDeath, name, born, gender, father,
-                 allegiances, alliance_ids, povBook_ids, playedBy, book_ids, tvSeries, mother, male, imageLink):
+                 allegiances_ids, alliance_ids, povBook_ids, playedBy, book_ids, tvSeries, mother, male, imageLink):
         assert isinstance(house_id, int)
         assert isinstance(culture, six.string_types)
         assert hasattr(titles, '__iter__')
@@ -209,7 +219,7 @@ class Character(database.Model):
         assert isinstance(gender, six.string_types)
         assert isinstance(father, six.string_types)
         assert isinstance(mother, six.string_types)
-        assert hasattr(allegiances, '__iter__')
+        assert hasattr(allegiances_ids, '__iter__')
         assert hasattr(playedBy, '__iter__')
         assert hasattr(tvSeries, '__iter__')
         assert isinstance(male, bool)
@@ -227,7 +237,7 @@ class Character(database.Model):
         self.born = born
         self.gender = gender
         self.father = father
-        self.allegiances = allegiances
+        self.allegiances_ids = allegiances_ids
         self.alliance_ids = alliance_ids
         self.povBook_ids = povBook_ids
         self.playedBy = playedBy
@@ -294,7 +304,8 @@ class House(database.Model):
     imageLink = Column(String(160))
     ancestralWeapons = Column(database.ARRAY(String(80)))
 
-    def __init__(self, id, currentLord_id, heir_id, cadetBranches_ids, founded, founder_id, diedOut, titles, coatOfArms, words,
+    def __init__(self, id, currentLord_id, heir_id, cadetBranches_ids, founded, founder_id, diedOut, titles, coatOfArms,
+                 words,
                  seats, overlord_id, name, swornMember_ids, alliance_id, region, ancestralWeapons, imageLink):
         assert hasattr(cadetBranches_ids, '__iter__')
         assert isinstance(founder_id, int)

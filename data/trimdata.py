@@ -1,6 +1,7 @@
 import json
 import requests
 
+
 ### API GoT Show
 
 # def got_show_filter_entities(entity_name, necessary_fields, output_defaults):
@@ -184,7 +185,64 @@ def find_intersecting_houses():
         json.dump(trimmed_houses, trimmed_houses_file)
 
 
-# Only keep characters that appear in both APIs?
+def ice_and_fire_trim_characters():
+    iaf_characters = None
+    with open("api_ice_and_fire/characters.json") as iaf_characters_file:
+        iaf_characters = json.load(iaf_characters_file)
+
+        trimmed_characters = list()
+        for character in iaf_characters:
+            trimmed = character.copy()
+            trimmed["id"] = int(trimmed["url"].rsplit("/")[-1])
+            trimmed.pop("url")
+            # fix string urls into ids
+            allegiances = list()
+            for allegiance in trimmed["allegiances"]:
+                allegiances.append(int(allegiance.rsplit("/")[-1]))
+            trimmed["allegiances"] = allegiances
+
+            povBooks = list()
+            for povBook in trimmed["povBooks"]:
+                povBooks.append(int(povBook.rsplit("/")[-1]))
+            trimmed["povBooks"] = povBooks
+
+            books = list()
+            for book in trimmed["books"]:
+                books.append(int(book.rsplit("/")[-1]))
+            trimmed["books"] = books
+
+            if len(trimmed["father"]):
+                trimmed["father"] = int(trimmed["father"].rsplit("/")[-1])
+            else:
+                trimmed["father"] = None
+
+            if len(trimmed["mother"]):
+                trimmed["mother"] = int(trimmed["mother"].rsplit("/")[-1])
+            else:
+                trimmed["mother"] = None
+
+            if trimmed["spouse"] != "":
+                trimmed["spouse"] = int(trimmed["spouse"].rsplit("/")[-1])
+            else:
+                trimmed["spouse"] = None
+
+            # change required field names to id
+            trimmed['father_id'] = trimmed.pop("father")
+            trimmed['mother_id'] = trimmed.pop("mother")
+            trimmed['spouse_id'] = trimmed.pop("spouse")
+            trimmed['allegiances_ids'] = trimmed.pop("allegiances")
+            trimmed['povBook_ids'] = trimmed.pop("povBooks")
+            trimmed['book_ids'] = trimmed.pop("books")
+            trimmed_characters.append(trimmed)
+
+
+        with open("api_ice_and_fire/trimmed_characters.json", 'w') as characters_file:
+            json.dump(trimmed_characters, characters_file)
+
+
+                # Only keep characters that appear in both APIs?
+
+
 def find_intersecting_characters():
     gs_characters = None
     with open("api_got_show/trimmed_characters.json") as gs_characters_file:
@@ -388,4 +446,4 @@ def sort_houses_by_members():
 # find_intersecting_characters()
 # ice_and_fire_get_entity("books")
 
-ice_and_fire_trim_houses()
+ice_and_fire_trim_characters()
