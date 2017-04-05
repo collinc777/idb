@@ -26,26 +26,26 @@ ender = fronter
 # Print all classes.
 print(fronter + 'Class(es)' + ender)
 for c in classes:
-	print(c)
+    print(c)
 print('')
 # Print all models.
 print(fronter + 'Model(s)' + ender)
 for model in models:
-	print(model)
+    print(model)
 print('')
 # Print all tables.
 print(fronter + 'Table(s)' + ender)
 for tableName in tables:
-	print(tableName)
+    print(tableName)
 print('')
 
 # Print all model instances.
 for model in models:
-	print(fronter + str(model) + ' Instances' + ender)
-	modelInstances = model.query.all()
-	for instance in modelInstances:
-		print(instance.toJSON())
-	print('')
+    print(fronter + str(model) + ' Instances' + ender)
+    modelInstances = model.query.all()
+    for instance in modelInstances:
+        print(instance.toJSON())
+    print('')
 
 """
 source: http://stackoverflow.com/questions/6473925/sql-alchemy-getting-a-list-of-tables
