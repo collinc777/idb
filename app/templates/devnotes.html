@@ -2,10 +2,10 @@
 {% block content %}
 <div class="row text-center">
 	<h1>Developer Notes</h1>
-	<h5>Team 16: Adam Poncher, Brian Zhu, Collin Caram, Greg McDonald, Tim Gianitsos, Will Connolly</h5>
 	<br />
 </div>
 <div class="container">
+	<h5>Team 16: Adam Poncher, Brian Zhu, Collin Caram, Greg McDonald, Tim Gianitsos, Will Connolly</h5>
 	<h2>Use Cases</h2>
 	<p>This website offers Game of Thrones fans the ability to look up detailed information on their favorite books, characters, houses, and more. We have set up an easy to use comprehensive UI that will let end users to peruse the data in a user friendly manner. Our pages map to our DB models with many foreign key relationships that link to other pages. A user can skip from alliance, to house, to character, and back with ease. We have set up a postgres DB that is populated from two separate APIs. Maintaining our own database allows us to eliminate the data overlap from the APIs having similar but different models. When we pull from the APIs we parse the data on the back-end. We have scripts to format and group the data into our DB models. Once "trimmed" we load the data into our DB with JSON. Our DB models are structured so that the front end can access all of the DB information in a simple, complete, and interconnected format. Our front-end users experience easy access to the DB so they can cross-reference their own encyclopedic knowledge. There are pages that display information by book, house, and characters. Users may also intuitively sort the information by attribute (Asc, Desc). There is also a search bar in the upper right corner of each page to quickly look up information by attribute value. As our DB grows to include more models we will build pages to match; Currently each model instance has its own page. Each instance has more than one link to other instances, of one model or another, which means that each front end page has links to related pages. End users can traverse the pages in a mapped pattern due to the intricate connection between the pages on foreign keys. Users will find this experience very similar to websites like IMDB.</p>
 	
