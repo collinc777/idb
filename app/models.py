@@ -21,6 +21,7 @@
 from sqlalchemy import Column, Integer, String, Table, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from app import database
+import six
 
 # -------------------
 # Association Tables
@@ -84,12 +85,12 @@ class Book(database.Model):
 
     def __init__(self, numberOfPages, isbn, name, publisher, country, povCharacter_ids, author, mediaType, released, character_ids):
         assert numberOfPages > 0
-        assert len(isbn) > 0
-        assert len(name) > 0
-        assert len(publisher) > 0
-        assert len(country) > 0
-        assert len(author) > 0
-        assert len(mediaType) > 0
+        assert isinstance(isbn, six.string_types)
+        assert isinstance(name, six.string_types)
+        assert isinstance(publisher, six.string_types)
+        assert isinstance(country, six.string_types)
+        assert isinstance(author, six.string_types)
+        assert isinstance(mediaType, six.string_types)
         assert hasattr(povCharacter_ids, '__iter__')
         assert hasattr(character_ids, '__iter__')
 
@@ -181,18 +182,18 @@ class Character(database.Model):
     male = Column(database.Boolean)
 
     def __init__(self, house, culture, titles, spouse, died, aliases, dateOfDeath, name, born, gender, father, allegiances, alliance_ids, povBook_ids, playedBy, book_ids, tvSeries, mother, male):
-        assert isinstance(house, str)
-        assert isinstance(culture, str)
+        assert isinstance(house, six.string_types)
+        assert isinstance(culture, six.string_types)
         assert hasattr(titles, '__iter__')
-        assert isinstance(spouse, str)
-        assert isinstance(died, str)
+        assert isinstance(spouse, six.string_types)
+        assert isinstance(died, six.string_types)
         assert hasattr(aliases, '__iter__')
-        assert isinstance(died, str)
-        assert isinstance(name, str)
-        assert isinstance(born, str)
-        assert isinstance(gender, str)
-        assert isinstance(father, str)
-        assert isinstance(mother, str)
+        assert isinstance(died, six.string_types)
+        assert isinstance(name, six.string_types)
+        assert isinstance(born, six.string_types)
+        assert isinstance(gender, six.string_types)
+        assert isinstance(father, six.string_types)
+        assert isinstance(mother, six.string_types)
         assert hasattr(allegiances, '__iter__')
         assert hasattr(playedBy, '__iter__')
         assert hasattr(tvSeries, '__iter__')
@@ -217,6 +218,12 @@ class Character(database.Model):
         self.tvSeries = tvSeries
         self.mother = mother
         self.male = male
+
+    def toJSON(self):
+        jsonString = '{'
+        jsonString += '\"name\":\"' + self.name + '\",'
+        jsonString += '}'
+        return jsonString
 
 
 class House(database.Model):
@@ -256,14 +263,14 @@ class House(database.Model):
 
     def __init__(self, currentLord_id, founder_id, heir_id, cadetBranches, founded, diedOut, titles, coatOfArms, words, seats, overlord_id, name, swornMember_ids, region, ancestralWeapons):
         assert hasattr(cadetBranches, '__iter__')
-        assert isinstance(founded, str)
-        assert isinstance(diedOut, str)
+        assert isinstance(founded, six.string_types)
+        assert isinstance(diedOut, six.string_types)
         assert hasattr(titles, '__iter__')
-        assert isinstance(coatOfArms, str)
-        assert isinstance(words, str)
+        assert isinstance(coatOfArms, six.string_types)
+        assert isinstance(words, six.string_types)
         assert hasattr(seats, '__iter__')
-        assert isinstance(name, str)
-        assert isinstance(region, str)
+        assert isinstance(name, six.string_types)
+        assert isinstance(region, six.string_types)
         assert hasattr(swornMember_ids, '__iter__')
         assert hasattr(ancestralWeapons, '__iter__')
 
