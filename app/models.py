@@ -140,7 +140,6 @@ class Book(database.Model):
                 return names[i]
         return None
 
-
     def toJSON(self):
         return json.dumps({c.name: getattr(self, c.name) for c in self.__table__.columns})
 
@@ -198,7 +197,7 @@ class Character(database.Model):
 
     def __init__(self, id, house_id, culture, titles, spouse, died, aliases, dateOfDeath, name, born, gender, father,
                  allegiances, alliance_ids, povBook_ids, playedBy, book_ids, tvSeries, mother, male, imageLink):
-        assert isinstance(house, six.string_types)
+        assert isinstance(house_id, int)
         assert isinstance(culture, six.string_types)
         assert hasattr(titles, '__iter__')
         assert isinstance(spouse, six.string_types)
@@ -260,8 +259,8 @@ class House(database.Model):
     heir_id = Column(Integer, ForeignKey('character.id'))
     heir = database.relationship("Character", foreign_keys=[heir_id])
 
-    overlord_id = Column(Integer, ForeignKey('character.id'))
-    overlord = database.relationship("Character", foreign_keys=[overlord_id])
+    overlord_id = Column(Integer, ForeignKey('house.id'))
+    overlord = database.relationship("House", foreign_keys=[overlord_id])
 
     # Many-to-Many Relationships
     swornMember_ids = Column(database.ARRAY(Integer))
@@ -269,6 +268,12 @@ class House(database.Model):
         "Character",
         secondary=house_swornMembers_association_table,
         back_populates="swornHouses")
+
+    cadetBranches_ids = Column(database.ARRAY(Integer), ForeignKey('house.id'))
+    cadetBranches = database.relationship("CadetBranch")
+
+    founder_id = Column(Integer, ForeignKey('character.id'))
+    founder = database.relationship("Character", foreign_keys=[founder_id])
 
     alliance_id = Column(Integer)
     alliance = database.relationship(
@@ -278,24 +283,23 @@ class House(database.Model):
     )
 
     # Attributes
-    cadetBranches = Column(database.ARRAY(String(80)))
     founded = Column(String(80))
     diedOut = Column(String(80))
     titles = Column(database.ARRAY(String(80)))
     coatOfArms = Column(String(300))
     words = Column(String(80))
     seats = Column(database.ARRAY(String(80)))
-    overlord = Column(Integer)
     name = Column(String(80))
     region = Column(String(80))
     imageLink = Column(String(160))
     ancestralWeapons = Column(database.ARRAY(String(80)))
 
-    def __init__(self, id, currentLord_id, heir_id, cadetBranches, founded, diedOut, titles, coatOfArms, words,
+    def __init__(self, id, currentLord_id, heir_id, cadetBranches_ids, founded, founder_id, diedOut, titles, coatOfArms, words,
                  seats, overlord_id, name, swornMember_ids, alliance_id, region, ancestralWeapons, imageLink):
-        assert hasattr(cadetBranches, '__iter__')
-        assert isinstance(founded, six.string_types)
+        assert hasattr(cadetBranches_ids, '__iter__')
+        assert isinstance(founder_id, int)
         assert isinstance(diedOut, six.string_types)
+        assert isinstance(founded, six.string_types)
         assert hasattr(titles, '__iter__')
         assert isinstance(coatOfArms, six.string_types)
         assert isinstance(words, six.string_types)
@@ -308,7 +312,8 @@ class House(database.Model):
         self.id = id
         self.currentLord_id = currentLord_id
         self.heir_id = heir_id
-        self.cadetBranches = cadetBranches
+        self.cadetBranches = cadetBranches_ids
+        self.founder_id = founder_id
         self.founded = founded
         self.diedOut = diedOut
         self.titles = titles

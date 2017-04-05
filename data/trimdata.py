@@ -3,67 +3,70 @@ import requests
 
 ### API GoT Show
 
-def got_show_filter_entities(entity_name, necessary_fields, output_defaults):
-    output_fields = necessary_fields + list(output_defaults.keys())
+# def got_show_filter_entities(entity_name, necessary_fields, output_defaults):
+#     output_fields = necessary_fields + list(output_defaults.keys())
+#
+#     data = None
+#     with open("api_got_show/" + entity_name + '.json') as data_file:
+#         data = json.load(data_file)
+#
+#     if data is not None:
+#         trimmed = list()
+#         for d in data:
+#             passes = True
+#             for field in necessary_fields:
+#                 if field not in d:
+#                     passes = False
+#             if passes:
+#                 trimmed_entity = dict()
+#                 for field in output_fields:
+#                     if field in d:
+#                         trimmed_entity[field] = d[field]
+#                     else:
+#                         trimmed_entity[field] = output_defaults[field]
+#                 trimmed.append(trimmed_entity)
+#
+#         print(entity_name, " has ", len(trimmed), " data points")
+#         with open("api_got_show/trimmed_" + entity_name + ".json", 'w') as data_file:
+#             json.dump(trimmed, data_file)
+#
+#
+# def got_show_filter_houses():
+#     necessary_fields = ["imageLink", "name", "ancestralWeapon", "currentLord", "region", "coatOfArms"]
+#     output_defaults = {"overlord": "No overlord", "isExtinct": False, "founded": "???", "words": "No words"}
+#
+#     got_show_filter_entities("houses", necessary_fields, output_defaults)
+#
+#
+# def got_show_filter_characters():
+#     necessary_fields = ["male", "name", "books", "titles", "culture", "house"]
+#     output_defaults = {"dateOfDeath": False}
+#
+#     got_show_filter_entities("characters", necessary_fields, output_defaults)
 
-    data = None
-    with open("api_got_show/" + entity_name + '.json') as data_file:    
-        data = json.load(data_file)
 
-    if data is not None:
-        trimmed = list()
-        for d in data:
-            passes = True
-            for field in necessary_fields:
-                if field not in d:
-                    passes = False
-            if passes:
-                trimmed_entity = dict()
-                for field in output_fields:
-                    if field in d:
-                        trimmed_entity[field] = d[field]
-                    else:
-                        trimmed_entity[field] = output_defaults[field]
-                trimmed.append(trimmed_entity)
+# API of Ice and Fire
 
-        print(entity_name, " has ", len(trimmed), " data points")
-        with open("api_got_show/trimmed_" + entity_name + ".json", 'w') as data_file:
-            json.dump(trimmed, data_file)
+# def ice_and_fire_get_entity(entity):
+#     entities = list()
+#     i = 1
+#     while True:
+#         print("Retrieving " + entity + " : " + str(i * 50))
+#         r = requests.get("http://www.anapioficeandfire.com/api/" + entity + "?page=" + str(i) + "&pageSize=50")
+#         try:
+#             adds = json.loads(r.text)
+#             if len(adds) == 0:
+#                 break
+#             entities.extend(adds)
+#             i += 1
+#         except:
+#             print("Error parsing characters JSON on request ", i)
+#             break
+#
+#     print("Number of " + entity + " retrieved: " + str(len(entities)))
+#     with open("api_ice_and_fire/" + entity + ".json", 'w') as data_file:
+#         json.dump(entities, data_file)
 
-def got_show_filter_houses():
-    necessary_fields = ["imageLink", "name", "ancestralWeapon", "currentLord", "region", "coatOfArms"]
-    output_defaults = {"overlord": "No overlord", "isExtinct": False, "founded": "???", "words": "No words"}
-
-    got_show_filter_entities("houses", necessary_fields, output_defaults)
-
-def got_show_filter_characters():
-    necessary_fields = ["male", "name", "books", "titles", "culture", "house"]
-    output_defaults = {"dateOfDeath": False}
-
-    got_show_filter_entities("characters", necessary_fields, output_defaults)
-
-
-### API of Ice and Fire
-
-def ice_and_fire_get_entity(entity):
-    entities = list()
-    i = 1
-    while True:
-        print("Retrieving " + entity + " : " + str(i * 50))
-        r = requests.get("http://www.anapioficeandfire.com/api/" + entity + "?page=" + str(i) + "&pageSize=50")
-        try:
-            adds = json.loads(r.text)
-            if len(adds) == 0:
-                break
-            entities.extend(adds)
-            i += 1
-        except:
-            print("Error parsing characters JSON on request ", i)
-            break
-
-    print("Number of " + entity + " retrieved: " + str(len(entities)))
-    with open("api_ice_and_fire/" + entity + ".json", 'w') as data_file:
-        json.dump(entities, data_file)
 
 def ice_and_fire_trim_books():
     iaf_books = None
@@ -92,6 +95,7 @@ def ice_and_fire_trim_books():
     with open("api_ice_and_fire/trimmed_books.json", 'w') as trimmed_books_file:
         json.dump(trimmed_books, trimmed_books_file)
 
+
 def ice_and_fire_trim_houses():
     iaf_houses = None
     with open("api_ice_and_fire/houses.json") as iaf_houses_file:
@@ -104,12 +108,20 @@ def ice_and_fire_trim_houses():
         trimmed.pop("url")
         if len(trimmed["overlord"]):
             trimmed["overlord"] = int(trimmed["overlord"].rsplit("/")[-1])
+        else:
+            trimmed["overlord"] = None
         if len(trimmed["currentLord"]):
             trimmed["currentLord"] = int(trimmed["currentLord"].rsplit("/")[-1])
+        else:
+            trimmed["currentLord"] = None
         if len(trimmed["heir"]):
             trimmed["heir"] = int(trimmed["heir"].rsplit("/")[-1])
+        else:
+            trimmed["heir"] = None
         if len(trimmed["founder"]):
             trimmed["founder"] = int(trimmed["founder"].rsplit("/")[-1])
+        else:
+            trimmed["founder"] = None
 
         cadets = list()
         for cadet in trimmed["cadetBranches"]:
@@ -120,12 +132,21 @@ def ice_and_fire_trim_houses():
         for sworn in trimmed["swornMembers"]:
             sworns.append(int(sworn.rsplit("/")[-1]))
         trimmed["swornMembers"] = sworns
+
+        trimmed['overlord_id'] = trimmed.pop('overlord')
+        trimmed['heir_id'] = trimmed.pop('heir')
+        trimmed['founder_id'] = trimmed.pop('founder')
+        trimmed['swornMember_ids'] = trimmed.pop('swornMembers')
+        trimmed['currentLord_id'] = trimmed.pop('currentLord')
+        trimmed['cadetBranches_ids'] = trimmed.pop('cadetBranches')
+
         trimmed_houses.append(trimmed)
 
     with open("api_ice_and_fire/trimmed_houses.json", 'w') as trimmed_houses_file:
         json.dump(trimmed_houses, trimmed_houses_file)
 
-### Both
+
+# Both
 
 def find_intersecting_houses():
     # Find houses that appear in both and append the imageLink from got_show to ice_and_fire's house
@@ -151,7 +172,7 @@ def find_intersecting_houses():
         # in one dataset. So I check if the name is a substring of the other's name
         # by doing "if name in iaf_name"... "House Stark" IS in "House Stark of Winterfell"
         # this bumped the number of intersecting houses from 44 to 179.
-        
+
         for iaf_name in iaf_houses_by_name.keys():
             if name in iaf_name:
                 iaf_houses_by_name[iaf_name]["imageLink"] = house["imageLink"]
@@ -218,7 +239,8 @@ def find_intersecting_characters():
     with open("trimmed_characters.json", 'w') as characters_file:
         json.dump(trimmed_characters, characters_file)
 
-#  Alliances
+
+# Alliances
 # Head leader
 # Military strength (by number of sworn characters)
 # Military strength (by access to ancestral weapons)
@@ -249,6 +271,7 @@ def find_distinct_cultures():
 
     cultures = gs_cultures.union(iaf_cultures)
     print(cultures)
+
 
 def convert_house_strings_to_id():
     characters = None
@@ -283,10 +306,9 @@ def convert_house_strings_to_id():
             character["house"] = house_match["id"]
             final_characters.append(character)
 
-
-
     with open("trimmed_characters_houses.json", 'w') as characters_file:
         json.dump(final_characters, characters_file)
+
 
 def add_images_to_characters():
     characters = None
@@ -299,6 +321,7 @@ def add_images_to_characters():
 
     with open("trimmed_characters_images.json", 'w') as characters_file:
         json.dump(characters, characters_file)
+
 
 def add_houses_to_books():
     houses = None
@@ -341,9 +364,9 @@ def add_alliance_membership_to_houses():
             else:
                 house["alliance"] = ""
 
-
     with open("trimmed_houses_alliances.json", 'w') as alliances_file:
         json.dump(houses, alliances_file)
+
 
 def sort_houses_by_members():
     houses = None
@@ -355,12 +378,14 @@ def sort_houses_by_members():
         json.dump(houses_sorted, houses_file)
 
 
-add_houses_to_books()
-#add_alliance_membership_to_houses()
-#convert_house_strings_to_id()
-#add_images_to_characters()
-#find_intersecting_houses()
-#ice_and_fire_trim_houses()
-#got_show_filter_characters()
-#find_intersecting_characters()
-#ice_and_fire_get_entity("books")
+# add_houses_to_books()
+# add_alliance_membership_to_houses()
+# convert_house_strings_to_id()
+# add_images_to_characters()
+# find_intersecting_houses()
+# ice_and_fire_trim_houses()
+# got_show_filter_characters()
+# find_intersecting_characters()
+# ice_and_fire_get_entity("books")
+
+ice_and_fire_trim_houses()
