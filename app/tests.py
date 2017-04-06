@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# How to run: from main directory (idb) run 'python -m app.tests'
+# How to coverage: coverage run -m app.tests (need to fix ImportError)
+
 # pylint: disable = bad-whitespace
 # pylint: disable = invalid-name
 # pylint: disable = missing-docstring
@@ -15,7 +18,6 @@ from unittest import main, TestCase
 from app import database
 from app import models
 from app import views
-
 
 # -----------
 # TestModels
@@ -67,6 +69,60 @@ class TestModels(TestCase):
             "name": "A Game of Thrones"
         }
 
+        self.characterParameters = {
+            "aliases": ["The Hound", "Dog"],
+            "allegiances_ids": [72, 229],
+            "book_ids": [1, 2, 3, 5, 8],
+            "born": "In 270 AC or 271 AC",
+            "culture": "",
+            "died": "In 300 AC (supposedly)",
+            "father_id": None,
+            "gender": "Male",
+            "id": 955,
+            "imageLink": "Sandor_Clegane.jpeg",
+            "mother_id": None,
+            "name": "Sandor Clegane",
+            "playedBy": ["Rory McCann"],
+            "povBook_ids": [],
+            "spouse_id": None,
+            "titles": [],
+            "tvSeries": ["Season 1", "Season 2", "Season 3", "Season 4", "Season 6"]
+        }
+
+        self.houseParameters = {
+            "titles": ["King of Mountain and Vale (formerly)", "Lord of the Eyrie", "Defender of the Vale",
+                       "Warden of the East"],
+            "founded": "Coming of the Andals",
+            "seats": ["The Eyrie (summer)", "Gates of the Moon (winter)"],
+            "region": "The Vale",
+            "ancestralWeapons": [],
+            "coatOfArms": "A sky-blue falcon soaring against a white moon, on a sky-blue field(Bleu celeste, upon a plate a falcon volant of the field)",
+            "id": 7,
+            "heir_id": 477,
+            "founder_id": 144,
+            "currentLord_id": 894,
+            "swornMember_ids": [49, 92, 93, 107, 223, 265, 300, 356, 477, 508, 540, 548, 558, 572, 688, 894, 1068, 1193,
+                                1280, 1443, 1655, 1693, 1715, 1884],
+            "diedOut": "",
+            "words": "As High as Honor",
+            "alliance_id": None,
+            "name": "House Arryn of the Eyrie",
+            "overlord_id": 16
+        }
+
+        self.allianceParameters = {
+            "name": "The Wardens of the North",
+            "ancestralWeapons" : ["Long Claw", "Ice"],
+            "seats" : ["Winterfell"],
+            "cultures" : ["Northman"],
+            "regions" : ["North"],
+            "id" : 1,
+            "headHouse_id": 362,
+            "currentLord_id" : 583,
+            "swornHouse_ids" : [362, 216, 318, 395, 401, 271, 282, 150, 236, 435, 61],
+            "imageLink": "alliancebanners/North.png"
+        }
+
     # -----
     # Book
     # -----
@@ -87,274 +143,165 @@ class TestModels(TestCase):
         b = models.Book(**self.bookParameters)
         self.assertEqual(b.publisher, "Bantam Books")
 
-    def test_Book_add(self):
-        # Note: Test will fail if a book exists with the given id
+    def test_Book_toJSON(self):
+        instance = models.Book(**self.bookParameters)
+        self.assertGreater(len(instance.toJSON()), 0)
+
+    def test_Book_database_query(self):
+        # Assumes existence of at least one element in model table.
+        queryResult = database.session.query(models.Book).first()
+        self.assertNotEqual(queryResult.name, None)
+
+        database.session.rollback()
+
+    def test_Book_database_add(self):
+        # Note: Test will fail if a instance already exists with the given id
         testId = 999999
-        testName = 'Test Book'
+        testName = 'test_Book_database_add'
         self.bookParameters['name'] = testName;
         self.bookParameters['id'] = testId;
-        b = models.Book(**self.bookParameters)
+        model = models.Book
+        instance = model(**self.bookParameters)
 
-        try:
-            database.session.add(b)
-            database.session.commit()
+        database.session.add(instance)
+        queryResult = database.session.query(model).filter_by(name=testName).first()
+        self.assertEqual(queryResult.name, testName)
 
-            book = database.session.query(models.Book).filter_by(name=testName).first()
-            self.assertEqual(book.name, testName)
-
-            database.session.delete(b)
-            database.session.commit()
-        except:
-            database.session.rollback()
-            assert False    
+        database.session.rollback()
 
     # ----------
     # Character
     # ----------
 
     def test_Character_house(self):
-        params = {
-            "aliases": ["The Hound", "Dog"],
-            "allegiances_ids": [72, 229],
-            "book_ids": [1, 2, 3, 5, 8],
-            "born": "In 270 AC or 271 AC",
-            "culture": "",
-            "died": "In 300 AC (supposedly)",
-            "father_id": None,
-            "gender": "Male",
-            "id": 955,
-            "imageLink": "Sandor_Clegane.jpeg",
-            "mother_id": None,
-            "name": "Sandor Clegane",
-            "playedBy": ["Rory McCann"],
-            "povBook_ids": [],
-            "spouse_id": None,
-            "titles": [],
-            "tvSeries": ["Season 1", "Season 2", "Season 3", "Season 4", "Season 6"]
-        }
-        c = models.Character(**params)
+        c = models.Character(**self.characterParameters)
         self.assertEqual(c.aliases[0], "The Hound")
 
     def test_Character_name(self):
-        params = {
-            "aliases": ["The Hound", "Dog"],
-            "allegiances_ids": [72, 229],
-            "book_ids": [1, 2, 3, 5, 8],
-            "born": "In 270 AC or 271 AC",
-            "culture": "",
-            "died": "In 300 AC (supposedly)",
-            "father_id": None,
-            "gender": "Male",
-            "id": 955,
-            "imageLink": "Sandor_Clegane.jpeg",
-            "mother_id": None,
-            "name": "Sandor Clegane",
-            "playedBy": ["Rory McCann"],
-            "povBook_ids": [],
-            "spouse_id": None,
-            "titles": [],
-            "tvSeries": ["Season 1", "Season 2", "Season 3", "Season 4", "Season 6"]
-        }
-        c = models.Character(**params)
+        c = models.Character(**self.characterParameters)
         self.assertEqual(c.name, "Sandor Clegane")
 
     def test_Character_aliases(self):
-        params = {
-            "aliases": ["The Hound", "Dog"],
-            "allegiances_ids": [72, 229],
-            "book_ids": [1, 2, 3, 5, 8],
-            "born": "In 270 AC or 271 AC",
-            "culture": "",
-            "died": "In 300 AC (supposedly)",
-            "father_id": None,
-            "gender": "Male",
-            "id": 955,
-            "imageLink": "Sandor_Clegane.jpeg",
-            "mother_id": None,
-            "name": "Sandor Clegane",
-            "playedBy": ["Rory McCann"],
-            "povBook_ids": [],
-            "spouse_id": None,
-            "titles": [],
-            "tvSeries": ["Season 1", "Season 2", "Season 3", "Season 4", "Season 6"]
-        }
-        c = models.Character(**params)
+        c = models.Character(**self.characterParameters)
         self.assertEqual(c.aliases[1], "Dog")
 
-    def test_Character_titles_empty(self):
-        params = {
-            "aliases": ["The Hound", "Dog"],
-            "allegiances_ids": [72, 229],
-            "book_ids": [1, 2, 3, 5, 8],
-            "born": "In 270 AC or 271 AC",
-            "culture": "",
-            "died": "In 300 AC (supposedly)",
-            "father_id": None,
-            "gender": "Male",
-            "id": 955,
-            "imageLink": "Sandor_Clegane.jpeg",
-            "mother_id": None,
-            "name": "Sandor Clegane",
-            "playedBy": ["Rory McCann"],
-            "povBook_ids": [],
-            "spouse_id": None,
-            "titles": [],
-            "tvSeries": ["Season 1", "Season 2", "Season 3", "Season 4", "Season 6"]
-        }
-        c = models.Character(**params)
+    def test_Character_titles(self):
+        c = models.Character(**self.characterParameters)
         self.assertEqual(c.titles, [])
 
-    @unittest.skip("testing skipping")
-    def test_Character_add(self):
-        # just a note on this. technically insn't a unit test me thinks.
-        exampleCharacter = models.Character("Night's Watch", "", [], "", "", ["Sam"], False,
-                                            "Samwell Tarly", "", "Male", "", [], [], [], [], [], [], "", True)
+    def test_Character_toJSON(self):
+        instance = models.Character(**self.characterParameters)
+        self.assertGreater(len(instance.toJSON()), 0)
 
-        database.session.add(exampleCharacter)
-        database.session.commit()
+    def test_Character_database_add(self):
+        # Note: Test will fail if a instance already exists with the given id
+        testId = 999999
+        testName = 'test_Character_database_add'
+        self.characterParameters['name'] = testName;
+        self.characterParameters['id'] = testId;
+        model = models.Character
+        instance = model(**self.characterParameters)
 
-        character = database.session.query(models.Character).filter_by(name="Samwell Tarly").first()
-        self.assertEqual(character.house, "Night's Watch")
+        database.session.add(instance)
+        queryResult = database.session.query(model).filter_by(name=testName).first()
+        self.assertEqual(queryResult.name, testName)
 
-        database.session.delete(exampleCharacter)
-        database.session.commit()
+        database.session.rollback()
 
     # -----
     # House
     # -----
 
     def test_House_currentLord_id(self):
-        params = {
-            "titles": ["King of Mountain and Vale (formerly)", "Lord of the Eyrie", "Defender of the Vale",
-                       "Warden of the East"],
-            "founded": "Coming of the Andals",
-            "seats": ["The Eyrie (summer)", "Gates of the Moon (winter)"],
-            "region": "The Vale",
-            "ancestralWeapons": [],
-            "coatOfArms": "A sky-blue falcon soaring against a white moon, on a sky-blue field(Bleu celeste, upon a plate a falcon volant of the field)",
-            "id": 7,
-            "heir_id": 477,
-            "founder_id": 144,
-            "currentLord_id": 894,
-            "swornMember_ids": [49, 92, 93, 107, 223, 265, 300, 356, 477, 508, 540, 548, 558, 572, 688, 894, 1068, 1193,
-                                1280, 1443, 1655, 1693, 1715, 1884],
-            "diedOut": "",
-            "words": "As High as Honor",
-            "alliance_id": None,
-            "name": "House Arryn of the Eyrie",
-            "overlord_id": 16
-        }
-        h = models.House(**params)
+        h = models.House(**self.houseParameters)
         self.assertEqual(h.currentLord_id, 894)
 
     def test_House_founder_id(self):
-        params = {
-            "titles": ["King of Mountain and Vale (formerly)", "Lord of the Eyrie", "Defender of the Vale",
-                       "Warden of the East"],
-            "founded": "Coming of the Andals",
-            "seats": ["The Eyrie (summer)", "Gates of the Moon (winter)"],
-            "region": "The Vale",
-            "ancestralWeapons": [],
-            "coatOfArms": "A sky-blue falcon soaring against a white moon, on a sky-blue field(Bleu celeste, upon a plate a falcon volant of the field)",
-            "id": 7,
-            "heir_id": 477,
-            "founder_id": 144,
-            "currentLord_id": 894,
-            "swornMember_ids": [49, 92, 93, 107, 223, 265, 300, 356, 477, 508, 540, 548, 558, 572, 688, 894, 1068, 1193,
-                                1280, 1443, 1655, 1693, 1715, 1884],
-            "diedOut": "",
-            "words": "As High as Honor",
-            "alliance_id": None,
-            "name": "House Arryn of the Eyrie",
-            "overlord_id": 16
-        }
-        h = models.House(**params)
+        h = models.House(**self.houseParameters)
         self.assertEqual(h.founder_id, 144)
 
     def test_House_name(self):
-        params = {
-            "titles": ["King of Mountain and Vale (formerly)", "Lord of the Eyrie", "Defender of the Vale",
-                       "Warden of the East"],
-            "founded": "Coming of the Andals",
-            "seats": ["The Eyrie (summer)", "Gates of the Moon (winter)"],
-            "region": "The Vale",
-            "ancestralWeapons": [],
-            "coatOfArms": "A sky-blue falcon soaring against a white moon, on a sky-blue field(Bleu celeste, upon a plate a falcon volant of the field)",
-            "id": 7,
-            "heir_id": 477,
-            "founder_id": 144,
-            "currentLord_id": 894,
-            "swornMember_ids": [49, 92, 93, 107, 223, 265, 300, 356, 477, 508, 540, 548, 558, 572, 688, 894, 1068, 1193,
-                                1280, 1443, 1655, 1693, 1715, 1884],
-            "diedOut": "",
-            "words": "As High as Honor",
-            "alliance_id": None,
-            "name": "House Arryn of the Eyrie",
-            "overlord_id": 16
-        }
-        h = models.House(**params)
+        h = models.House(**self.houseParameters)
         self.assertEqual(h.name, "House Arryn of the Eyrie")
 
     def test_House_swornMember_ids(self):
-        params = {
-            "titles": ["King of Mountain and Vale (formerly)", "Lord of the Eyrie", "Defender of the Vale",
-                       "Warden of the East"],
-            "founded": "Coming of the Andals",
-            "seats": ["The Eyrie (summer)", "Gates of the Moon (winter)"],
-            "region": "The Vale",
-            "ancestralWeapons": [],
-            "coatOfArms": "A sky-blue falcon soaring against a white moon, on a sky-blue field(Bleu celeste, upon a plate a falcon volant of the field)",
-            "id": 7,
-            "heir_id": 477,
-            "founder_id": 144,
-            "currentLord_id": 894,
-            "swornMember_ids": [49, 92, 93, 107, 223, 265, 300, 356, 477, 508, 540, 548, 558, 572, 688, 894, 1068, 1193,
-                                1280, 1443, 1655, 1693, 1715, 1884],
-            "diedOut": "",
-            "words": "As High as Honor",
-            "alliance_id": None,
-            "name": "House Arryn of the Eyrie",
-            "overlord_id": 16
-        }
-        h = models.House(**params)
+        h = models.House(**self.houseParameters)
         self.assertEqual(
             h.swornMember_ids, [49, 92, 93, 107, 223, 265, 300, 356, 477, 508, 540, 548, 558, 572, 688, 894, 1068, 1193,
                                 1280, 1443, 1655, 1693, 1715, 1884])
 
-    @unittest.skip("RestAPI not implemented")
-    def test_House_add(self):
-        # exampleHouse = models.House(1, 2, 3, ["cadetBranches"], "founded", "diedOut", ["title"], "coatOfArms", "words", ["seats"], 4, "name", [5, 6], "region", ["ancestralWeapons"])
-        exampleHouse = models.House("", 1272, "", [], "", "", ["Ser"],
-                                    "Three dogs on a yellow field(Or, three dogs courant in pale sable)",
-                                    "", ["Clegane's Keep"], 229, "House Clegane",
-                                    [955, 1270, 1272, 1350, 1356, 1442, 1568, 1814, 1852, 1994, 2012],
-                                    "The Westerlands", [])
+    def test_House_toJSON(self):
+        instance = models.House(**self.houseParameters)
+        self.assertGreater(len(instance.toJSON()), 0)
 
-        database.session.add(exampleHouse)
-        database.session.commit()
+    def test_House_database_add(self):
+        # Note: Test will fail if a instance already exists with the given id
+        testId = 999999
+        testName = 'test_House_database_add'
+        self.houseParameters['name'] = testName;
+        self.houseParameters['id'] = testId;
+        model = models.House
+        instance = model(**self.houseParameters)
 
-        house = database.session.query(models.House).filter_by(name="House Clegane").first()
-        self.assertEqual(house.region, "The Westerlands")
+        database.session.add(instance)
+        queryResult = database.session.query(model).filter_by(name=testName).first()
+        self.assertEqual(queryResult.name, testName)
 
-        database.session.delete(exampleHouse)
-        database.session.commit()
+        database.session.rollback()
 
     # ---------
     # Alliance
     # ---------
-    @unittest.skip("RestAPI not implemented")
-    def test_Alliance_add(self):
-        exampleAlliance = models.Alliance(1, [2, 3], ["weapons"], ["seats"], ["regions"], ["cultures"])
 
-        database.session.add(exampleAlliance)
-        database.session.commit()
+    def test_Alliance_id(self):
+        a = models.Alliance(**self.allianceParameters)
+        self.assertEqual(a.id, 1)
 
-        house = database.session.query(models.Alliance).filter_by(headLeader_id=1).first()
-        self.assertEqual(house.weapons, ["weapons"])
+    def test_Alliance_name(self):
+        a = models.Alliance(**self.allianceParameters)
+        self.assertEqual(a.name, 'The Wardens of the North')
 
-        database.session.delete(exampleAlliance)
-        database.session.commit()
+    def test_Alliance_seats(self):
+        a = models.Alliance(**self.allianceParameters)
+        self.assertEqual(a.seats, ["Winterfell"])
 
+    def test_Alliance_toJSON(self):
+        instance = models.Alliance(**self.allianceParameters)
+        self.assertGreater(len(instance.toJSON()), 0)
+
+    def test_Alliance_database_add(self):
+        # Note: Test will fail if a instance already exists with the given id
+        testId = 999999
+        testName = 'test_Alliance_database_add'
+        self.allianceParameters['name'] = testName;
+        self.allianceParameters['id'] = testId;
+        model = models.Alliance
+        instance = model(**self.allianceParameters)
+
+        database.session.add(instance)
+        queryResult = database.session.query(model).filter_by(name=testName).first()
+        self.assertEqual(queryResult.name, testName)
+
+        database.session.rollback()
+
+    def test_Alliance_database_delete(self):
+        # Note: Test will fail if a instance already exists with the given id
+        testId = 999999
+        testName = 'test_Alliance_database_delete'
+        self.allianceParameters['name'] = testName;
+        self.allianceParameters['id'] = testId;
+        model = models.Alliance
+        instance = model(**self.allianceParameters)
+
+        database.session.add(instance)
+        queryResult = database.session.query(model).filter_by(name=testName).first()
+        self.assertNotEqual(queryResult, None)
+
+        database.session.delete(queryResult)
+        queryResult = database.session.query(model).filter_by(name=testName).first()
+        self.assertEqual(queryResult, None)
+
+        database.session.rollback()
 
 # ----
 # main
