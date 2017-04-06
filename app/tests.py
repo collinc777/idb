@@ -13,11 +13,9 @@
 # -------
 # imports
 # -------
-import unittest
 from unittest import main, TestCase
 from app import database
 from app import models
-from app import views
 
 # -----------
 # TestModels
@@ -143,9 +141,9 @@ class TestModels(TestCase):
         b = models.Book(**self.bookParameters)
         self.assertEqual(b.publisher, "Bantam Books")
 
-    def test_Book_toJSON(self):
+    def test_Book_toDict(self):
         instance = models.Book(**self.bookParameters)
-        self.assertGreater(len(instance.toJSON()), 0)
+        self.assertGreater(len(instance.toDict()), 0)
 
     def test_Book_database_query(self):
         # Assumes existence of at least one element in model table.
@@ -158,8 +156,8 @@ class TestModels(TestCase):
         # Note: Test will fail if a instance already exists with the given id
         testId = 999999
         testName = 'test_Book_database_add'
-        self.bookParameters['name'] = testName;
-        self.bookParameters['id'] = testId;
+        self.bookParameters['name'] = testName
+        self.bookParameters['id'] = testId
         model = models.Book
         instance = model(**self.bookParameters)
 
@@ -189,16 +187,16 @@ class TestModels(TestCase):
         c = models.Character(**self.characterParameters)
         self.assertEqual(c.titles, [])
 
-    def test_Character_toJSON(self):
+    def test_Character_toDict(self):
         instance = models.Character(**self.characterParameters)
-        self.assertGreater(len(instance.toJSON()), 0)
+        self.assertGreater(len(instance.toDict()), 0)
 
     def test_Character_database_add(self):
         # Note: Test will fail if a instance already exists with the given id
         testId = 999999
         testName = 'test_Character_database_add'
-        self.characterParameters['name'] = testName;
-        self.characterParameters['id'] = testId;
+        self.characterParameters['name'] = testName
+        self.characterParameters['id'] = testId
         model = models.Character
         instance = model(**self.characterParameters)
 
@@ -230,16 +228,16 @@ class TestModels(TestCase):
             h.swornMember_ids, [49, 92, 93, 107, 223, 265, 300, 356, 477, 508, 540, 548, 558, 572, 688, 894, 1068, 1193,
                                 1280, 1443, 1655, 1693, 1715, 1884])
 
-    def test_House_toJSON(self):
+    def test_House_toDict(self):
         instance = models.House(**self.houseParameters)
-        self.assertGreater(len(instance.toJSON()), 0)
+        self.assertGreater(len(instance.toDict()), 0)
 
     def test_House_database_add(self):
         # Note: Test will fail if a instance already exists with the given id
         testId = 999999
         testName = 'test_House_database_add'
-        self.houseParameters['name'] = testName;
-        self.houseParameters['id'] = testId;
+        self.houseParameters['name'] = testName
+        self.houseParameters['id'] = testId
         model = models.House
         instance = model(**self.houseParameters)
 
@@ -265,16 +263,16 @@ class TestModels(TestCase):
         a = models.Alliance(**self.allianceParameters)
         self.assertEqual(a.seats, ["Winterfell"])
 
-    def test_Alliance_toJSON(self):
+    def test_Alliance_toDict(self):
         instance = models.Alliance(**self.allianceParameters)
-        self.assertGreater(len(instance.toJSON()), 0)
+        self.assertGreater(len(instance.toDict()), 0)
 
     def test_Alliance_database_add(self):
         # Note: Test will fail if a instance already exists with the given id
         testId = 999999
         testName = 'test_Alliance_database_add'
-        self.allianceParameters['name'] = testName;
-        self.allianceParameters['id'] = testId;
+        self.allianceParameters['name'] = testName
+        self.allianceParameters['id'] = testId
         model = models.Alliance
         instance = model(**self.allianceParameters)
 
@@ -288,8 +286,8 @@ class TestModels(TestCase):
         # Note: Test will fail if a instance already exists with the given id
         testId = 999999
         testName = 'test_Alliance_database_delete'
-        self.allianceParameters['name'] = testName;
-        self.allianceParameters['id'] = testId;
+        self.allianceParameters['name'] = testName
+        self.allianceParameters['id'] = testId
         model = models.Alliance
         instance = model(**self.allianceParameters)
 
