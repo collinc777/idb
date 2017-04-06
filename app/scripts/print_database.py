@@ -44,7 +44,7 @@ for model in models:
     print(fronter + str(model) + ' Instances' + ender)
     modelInstances = model.query.all()
     for instance in modelInstances:
-        print(instance.toJSON())
+        print(instance.toDict())
     print('')
 
 """
