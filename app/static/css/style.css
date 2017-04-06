@@ -18,7 +18,6 @@ body {
 	background: linear-gradient(to bottom, #7f3307 0%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7f3307', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
 
-	// Sometimes when the list is empty the gradient looks weird
 	min-height: 1200px;
 }
 
@@ -60,7 +59,7 @@ h1.cursive {
 	border: 1px solid #f7f7f9;
 	border-color: #f7f7f9;
 	display: block;
-	min-width: 100px;
+	min-width: 70px;
 }
 
 .pageLinks a.disabled {
@@ -152,7 +151,7 @@ h1.cursive {
 		margin-bottom: 10px;
 
 		min-width: 200px;
-		height: 200px;	
+		height: 250px;	
 		width: 200px;	
 	}
 	#listingContainer {
@@ -161,14 +160,13 @@ h1.cursive {
 	}
 }
 
-// Large devices (desktops, 992px and up)
 @media (min-width: 992px) { 
 	.listingCard {
 		margin-top: 10px;
 		margin-bottom: 10px;
 
 		min-width: 250px;
-		height: 200px;	
+		height: 250px;	
 		width: 300px;	
 	}
 
@@ -178,7 +176,6 @@ h1.cursive {
 	}
 }
 
-// Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) {
 	#listingContainer {
 		padding-left: 150px;
