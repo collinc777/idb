@@ -84,11 +84,6 @@ def index():
 
 ### End Landing Page ###
 
-#model.convertSort("Name") returns "name"
-#model.convertSort("Number of pages") returns numberOfPages etc
-#also, I added a "model" key to each listing dictionary
-# book_listing = dict(model=Book, title="Books", url="/books", sorts=Book.getSorts())
-# like this^^
 def getDataList(listing, params=None):
     if params is None:
         return [] #should not happen due to decorator
@@ -97,23 +92,30 @@ def getDataList(listing, params=None):
     dataListing = list()
     model = listing["model"]
     page = params["page"]
+    page = max(1, page) # make sure we don't go negative
     dataQuery = model.query
 
     if "sortParam" in params:
         if "sortAscending" in params and params["sortAscending"] == 0:
-            dataQuery = model.query.order_by(desc(getattr(model, model.convertSort(params["sortParam"]))))
+            dataQuery = dataQuery.order_by(desc(getattr(model, model.convertSort(params["sortParam"]))))
         else:
-            dataQuery = model.query.order_by(getattr(model, model.convertSort(params["sortParam"])))
-        print("Books sorted by paramter: ", params["sortParam"])
+            dataQuery = dataQuery.order_by(getattr(model, model.convertSort(params["sortParam"])))
+    
     modelInstances = []
     if "filter" in params:
         #only does exact match on name for now
-        modelInstances = dataQuery.filter(model.name.match(params["filter"])).slice((page-1)*20, 20).all()
-    else:
-        modelInstances = dataQuery.slice((page-1)*20, page*20).all() #only display up to 20 results
-    jsonResults = [json.loads(c.toJSON()) for c in modelInstances]
-    print([result["name"] for result in jsonResults])
-    listing_list = [dict(cardURL=cardURL, cardID=i, cardName=res["name"]) for i, res in enumerate(jsonResults)]
+        dataQuery = dataQuery.filter(model.name.match(params["filter"]))
+
+    numberOfResults = len(dataQuery.all())
+    page_data = {"currentPage": page, "numberPages": max(numberOfResults // 20, 1)}
+
+    modelInstances = dataQuery.slice((page-1)*20, page*20).all()
+
+    dictResults = [c.toDict() for c in modelInstances]
+    print([result["name"] for result in dictResults])
+    card_data = [dict(cardURL=cardURL, cardID=res["id"], cardName=res["name"]) for i, res in enumerate(dictResults)]
+    
+    listing_list = {"pageData": page_data, "cardData": card_data}
     #modelInstances = dataQuery.slice((page-1)*20, page*20).all()
     #jsonResults = [modelInstances[i].toJSON() for i in range((page-1)*20, min(len(modelInstances), page*20))]
 
@@ -169,25 +171,25 @@ def get_books(**kwargs):
 @application.route('/characters', methods=['GET'])
 def characters():
     character_data = get_characters()
-    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing))
+    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing, {"page": 1}))
     return render_template('listing.html', **context)
 
 
 @application.route('/houses', methods=['GET'])
 def houses():
-    context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing))
+    context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing, {"page": 1}))
     return render_template('listing.html', **context)
 
 
 @application.route('/alliances', methods=['GET'])
 def alliances():
-    context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing))
+    context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing, {"page": 1}))
     return render_template('listing.html', **context)
 
 
 @application.route('/books', methods=['GET'])
 def books():
-    context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing))
+    context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing, {"page": 1}))
     return render_template('listing.html', **context)
 
 

@@ -1,8 +1,13 @@
-var updateGridData = null;
+var updateGridAndPagination = null;
 
 var ajaxModel = {
     dataURL: null,
     updateGridDataCallback: null,
+    updatePaginationCallback: null,
+    currentPage: 1,
+    currentSortParam: null,
+    currentSortAscending: null,
+    currentFilterText: null,
     getJSON: function(url, successCallback){
         console.log("Calling getWithJSON on URL: " + url);
         var settings = {
@@ -12,37 +17,54 @@ var ajaxModel = {
         };
         $.get(settings);
     },
-    sortData: function(field, ascending){
-        if(this.dataURL === null){
-            window.alert("DataURL is undefined, cannot sort");
-        }else{
-            var url = this.dataURL;
-            url += "?page=10&offset=0";
-            url += "&sortParam=" + field;
-            url += "&sortAscending=" + ascending;
-            this.getJSON(url, updateGridData);
-        }
-    },
-    filterData: function(filterText){
+    applyPageSortFilter: function(){
         if(this.dataURL === null){
             window.alert("DataURL is undefined, cannot filter");
         }else{
+            console.log("Page: " + this.currentPage + ", sort: " + this.currentSortParam);
+            console.log("Filter: " + this.currentFilterText);
+
             var url = this.dataURL;
-            url += "?page=0&offset=0";
-            url += "&filterText=" + filterText;
-            this.getJSON(url, updateGridData);
+            url += "?page=" + this.currentPage;
+            if(this.currentFilterText !== null){
+                url += "&filterText=" + this.currentFilterText;
+            }
+            if(this.currentSortParam !== null){
+                url += "&sortParam=" + this.currentSortParam;
+                url += "&sortAscending=" + this.currentSortAscending;
+            }
+            this.getJSON(url, updateGridAndPagination);
         }
+    },
+    sortData: function(field, ascending){
+        this.currentSortParam = field;
+        this.currentSortAscending = ascending;
+        this.currentPage = 1;
+        
+        this.applyPageSortFilter();
+    },
+    filterData: function(filterText){
+        this.currentFilterText = filterText;
+        this.currentPage = 1;
+
+        this.applyPageSortFilter();
+    },
+    setCurrentPage: function(page){
+        this.currentPage = page;
+
+        this.applyPageSortFilter();
     }
 };
 
 // Define this down here because it needs to reference ajaxModel
-updateGridData = function(dataOrError){
+updateGridAndPagination = function(dataOrError){
     console.log("Got data back: ");
     console.log(dataOrError);
     if(dataOrError["error"] !== undefined){
         window.alert("API request malformed: " + dataOrError["error"]);
     }else{
-        console.log("Data successful, sending to updateGridDataCallback");
-        ajaxModel.updateGridDataCallback(dataOrError);
+        console.log("Data successful, updating grid and pages");
+        ajaxModel.updateGridDataCallback(dataOrError["cardData"]);
+        ajaxModel.updatePaginationCallback(dataOrError["pageData"]);
     }
 };
