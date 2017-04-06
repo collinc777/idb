@@ -153,7 +153,10 @@ class Book(database.Model):
         return None
 
     def toJSON(self):
-        return json.dumps(dict({c.name: getattr(self, c.name) for c in self.__table__.columns}))
+        result = dict()
+        for c in self.__table__.columns:
+            result.update({c.name: getattr(self, c.name)})
+        return result
 
 
 class Character(database.Model):
@@ -234,13 +237,9 @@ class Character(database.Model):
         self.imageLink = imageLink
 
     def toJSON(self):
-        return json.dumps(dict({c.name: getattr(self, c.name) for c in self.__table__.columns}))
-
-    def toJSON2(self):
         result = dict()
         for c in self.__table__.columns:
             result.update({c.name: getattr(self, c.name)})
-
         return result
 
 
@@ -332,7 +331,10 @@ class House(database.Model):
         self.ancestralWeapons = ancestralWeapons
 
     def toJSON(self):
-        return json.dumps({c.name: getattr(self, c.name) for c in self.__table__.columns})
+        result = dict()
+        for c in self.__table__.columns:
+            result.update({c.name: getattr(self, c.name)})
+        return result
 
 
 class Alliance(database.Model):
@@ -383,4 +385,7 @@ class Alliance(database.Model):
         self.imageLink = imageLink
 
     def toJSON(self):
-        return json.dumps({c.name: getattr(self, c.name) for c in self.__table__.columns})
+        result = dict()
+        for c in self.__table__.columns:
+            result.update({c.name: getattr(self, c.name)})
+        return result
