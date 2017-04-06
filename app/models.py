@@ -196,10 +196,10 @@ class Character(database.Model):
     playedBy = Column(database.ARRAY(String(80)))
     tvSeries = Column(database.ARRAY(String(300)))
     mother_id = Column(Integer)
-    imageLink = Column(database.String(160))
+    imageLink = Column(database.String(300))
 
     def __init__(self, id, culture, titles, spouse_id, died, aliases, name, born, gender, father_id,
-                 allegiances_ids, povBook_ids, playedBy, book_ids, tvSeries, mother_id):
+                 allegiances_ids, povBook_ids, playedBy, book_ids, tvSeries, mother_id, imageLink):
         assert isinstance(culture, six.string_types)
         assert hasattr(titles, '__iter__')
         # assert isinstance(spouse_id, int)
@@ -231,6 +231,7 @@ class Character(database.Model):
         self.book_ids = book_ids
         self.tvSeries = tvSeries
         self.mother_id = mother_id
+        self.imageLink = imageLink
 
     def toJSON(self):
         return json.dumps({c.name: getattr(self, c.name) for c in self.__table__.columns})

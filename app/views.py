@@ -37,7 +37,7 @@ def load_listing(filename):
 # POV (point-of-view) characters that are in it. So we pass it the character_links array
 
 character_listing = dict(title="Characters", url="/characters", sorts=["Name", "House", "Culture", "Gender"])
-character_listing["data"] = load_listing("data/trimmed_characters.json")
+character_listing["data"] = load_listing("data/trimmed_characters.json") #this needs to be a db call?
 character_links = dict()
 for character in character_listing["data"]:
     character_links[character["id"]] = {"name": character["name"], "link": "/characters/" + str(character["id"])}
