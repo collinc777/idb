@@ -1,0 +1,19 @@
+Name                                       Stmts   Miss  Cover
+--------------------------------------------------------------
+app/__init__.py                                6      0   100%
+app/decorators.py                             32     22    31%
+app/models.py                                235     20    91%
+app/scripts/__init__.py                        0      0   100%
+app/scripts/changePovBooksToIds.py            17     17     0%
+app/scripts/checkLongestStringInModel.py       6      6     0%
+app/scripts/create_database.py                31     31     0%
+app/scripts/fill_database.py                  47     47     0%
+app/scripts/get-images.py                      0      0   100%
+app/scripts/getCharacterImages script.py      14     14     0%
+app/scripts/print_database.py                 35     35     0%
+app/scripts/testNewToJsonScript.py             6      6     0%
+app/scripts/tiecharwithimage.py               22     22     0%
+app/tests.py                                 131      0   100%
+app/views.py                                 164    100    39%
+--------------------------------------------------------------
+TOTAL                                        746    320    57%
