@@ -5,8 +5,8 @@ var ajaxModel = {
     updateGridDataCallback: null,
     updatePaginationCallback: null,
     currentPage: 1,
-    currentSortParam: null,
-    currentSortAscending: null,
+    currentSortParam: "Name",
+    currentSortAscending: 1,
     currentFilterText: null,
     getJSON: function(url, successCallback){
         console.log("Calling getWithJSON on URL: " + url);

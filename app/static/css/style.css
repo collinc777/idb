@@ -35,7 +35,7 @@ h1.cursive {
 	min-height: 1200px;
 }
 
-.details .card .card-block, .details .card .card-header {
+/*.details .card .card-block, .details .card .card-header {
 	margin-top: 10px;
 	margin-bottom: 10px;
 	background-color: #333;
@@ -49,17 +49,17 @@ h1.cursive {
 .details a {
 	color: #f7f7f9;
 }
-
+*/
 .pageLinks a {
 	background-color: #333;
     color: #f7f7f9;
     margin: auto;
-    padding: 5px;
+    padding: 3px;
     transition: background-color .3s;
 	border: 1px solid #f7f7f9;
 	border-color: #f7f7f9;
 	display: block;
-	min-width: 70px;
+	min-width: 100px;
 }
 
 .pageLinks a.disabled {
@@ -130,12 +130,17 @@ h1.cursive {
 		margin-top: 10px;
 		margin-bottom: 10px;
 
-		height: 150px;
+		height: 250px;
 	}
 
 	#listingContainer {
 		padding-left: 20px;
 		padding-right: 20px;
+	}
+
+	.pageLinks a {
+		min-width: 18px;
+		font-size: 12px;
 	}
 }
 
@@ -151,12 +156,16 @@ h1.cursive {
 		margin-bottom: 10px;
 
 		min-width: 200px;
-		height: 250px;	
+		height: 300px;	
 		width: 200px;	
 	}
 	#listingContainer {
 		padding-left: 40px;
 		padding-right: 40px;
+	}
+
+	.pageLinks a {
+		min-width: 40px;
 	}
 }
 
@@ -166,7 +175,7 @@ h1.cursive {
 		margin-bottom: 10px;
 
 		min-width: 250px;
-		height: 250px;	
+		height: 300px;	
 		width: 300px;	
 	}
 
@@ -174,12 +183,20 @@ h1.cursive {
 		padding-left: 100px;
 		padding-right: 100px;
 	}
+
+	.pageLinks a {
+		min-width: 70px;
+	}
 }
 
 @media (min-width: 1200px) {
 	#listingContainer {
 		padding-left: 150px;
 		padding-right: 150px;
+	}
+
+	.pageLinks a {
+		min-width: 100px;
 	}
 }
 

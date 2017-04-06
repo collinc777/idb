@@ -174,29 +174,31 @@ def get_books(**kwargs):
 
 ### Begin "Listing" Pages ###
 
+default_params = dict(page=1, sortParam="Name", sortAscending=1)
+
 
 @application.route('/characters', methods=['GET'])
 def characters():
     character_data = get_characters()
-    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing, {"page": 1}))
+    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing, default_params))
     return render_template('listing.html', **context)
 
 
 @application.route('/houses', methods=['GET'])
 def houses():
-    context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing, {"page": 1}))
+    context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing, default_params))
     return render_template('listing.html', **context)
 
 
 @application.route('/alliances', methods=['GET'])
 def alliances():
-    context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing, {"page": 1}))
+    context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing, default_params))
     return render_template('listing.html', **context)
 
 
 @application.route('/books', methods=['GET'])
 def books():
-    context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing, {"page": 1}))
+    context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing, default_params))
     return render_template('listing.html', **context)
 
 
