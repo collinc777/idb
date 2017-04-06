@@ -21,8 +21,8 @@ def errorJSON(error):
 def takes_query_params(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        requiredParameters = [("page", int), ("offset", int)]
-        optionalParameters = [("sortParam", str), ("sortAscending", int), ("filterText", str)]
+        requiredParameters = [("page", int)]
+        optionalParameters = [("sortParam", str), ("sortAscending", int), ("filter", str)]
         allParameters = requiredParameters + optionalParameters
 
         parameters = dict()

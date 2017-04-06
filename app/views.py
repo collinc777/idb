@@ -3,7 +3,7 @@
 from flask import render_template, request
 from app import application
 from app.decorators import returns_json, takes_query_params
-from app.models import Book
+from app.models import Book, Character, Alliance, House
 from sqlalchemy import desc
 import json
 from random import randint
@@ -36,13 +36,13 @@ def load_listing(filename):
 # links between resources. E.g. in the books/2 page we want to have links to the 
 # POV (point-of-view) characters that are in it. So we pass it the character_links array
 
-character_listing = dict(title="Characters", url="/characters", sorts=["Name", "House", "Culture", "Gender"])
+character_listing = dict(model=Character, title="Characters", url="/characters", sorts=Character.getSorts())
 character_listing["data"] = load_listing("data/trimmed_characters.json") #this needs to be a db call?
 character_links = dict()
 for character in character_listing["data"]:
     character_links[character["id"]] = {"name": character["name"], "link": "/characters/" + str(character["id"])}
 
-house_listing = dict(title="Houses", url="/houses", sorts=["Name", "Region", "Coat of Arms", "Words"])
+house_listing = dict(model=House, title="Houses", url="/houses", sorts=House.getSorts())
 house_listing["data"] = load_listing("data/trimmed_houses_alliances.json")
 house_links = dict()
 for house in house_listing["data"]:
@@ -60,7 +60,7 @@ book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswor
 # book_images is a total hack right now. Ideally this would be a field inside the book data/model
 # but for now we'll just do this. Theres only 12 books so it'll be easy to add it in manually later
 
-alliance_listing = dict(title="Alliances", url="/alliances", sorts=["Name", "Current Head House", "Number of Members"])
+alliance_listing = dict(model=Alliance, title="Alliances", url="/alliances", sorts=Alliance.getSorts())
 alliance_listing["data"] = load_listing("data/trimmed_alliances.json")
 alliance_links = dict()
 for alliance in alliance_listing["data"]:
@@ -84,36 +84,44 @@ def index():
 
 ### End Landing Page ###
 
+#model.convertSort("Name") returns "name"
+#model.convertSort("Number of pages") returns numberOfPages etc
+#also, I added a "model" key to each listing dictionary
+# book_listing = dict(model=Book, title="Books", url="/books", sorts=Book.getSorts())
+# like this^^
 def getDataList(listing, params=None):
+    if params is None:
+        return [] #should not happen due to decorator
     cardURL = listing["url"]
-    listing_list = [{"cardID": c["id"], "cardURL": cardURL, "cardName": c["name"]} for c in listing["data"]]
-    
-    if params is not None:
-        print("Params: ", params)
+    print("Params: ", params)
+    dataListing = list()
+    model = listing["model"]
+    page = params["page"]
+    dataQuery = model.query
 
-        dataListing = list()
-        model = listing["model"]
-
-        if "sortParam" in params:
-            if "sortAscending" in params and params["sortAscending"] == 0:
-                dataQuery = model.query.order_by(desc(getattr(model, model.convertSort(params["sortParam"]))))
-            else:
-                dataQuery = model.query.order_by(getattr(model, model.convertSort(params["sortParam"])))
-
-            print("Books sorted by paramter: ", params["sortParam"])
-
-        modelResults = dataQuery.all()
-        jsonResults = [json.loads(c.toJSON()) for c in modelResults]
-        print([result["name"] for result in jsonResults])
-
-        listing_list = [dict(cardURL=cardURL, cardID=i, cardName=res["name"]) for i, res in enumerate(jsonResults)]
+    if "sortParam" in params:
+        if "sortAscending" in params and params["sortAscending"] == 0:
+            dataQuery = model.query.order_by(desc(getattr(model, model.convertSort(params["sortParam"]))))
+        else:
+            dataQuery = model.query.order_by(getattr(model, model.convertSort(params["sortParam"])))
+        print("Books sorted by paramter: ", params["sortParam"])
+    modelInstances = []
+    if "filter" in params:
+        #only does exact match on name for now
+        modelInstances = dataQuery.filter(model.name.match(params["filter"])).slice((page-1)*20, 20).all()
+    else:
+        modelInstances = dataQuery.slice((page-1)*20, page*20).all() #only display up to 20 results
+    jsonResults = [json.loads(c.toJSON()) for c in modelInstances]
+    print([result["name"] for result in jsonResults])
+    listing_list = [dict(cardURL=cardURL, cardID=i, cardName=res["name"]) for i, res in enumerate(jsonResults)]
+    #modelInstances = dataQuery.slice((page-1)*20, page*20).all()
+    #jsonResults = [modelInstances[i].toJSON() for i in range((page-1)*20, min(len(modelInstances), page*20))]
 
     return listing_list
 
-
 ### Begin "API" Pages ###
-### Note: These accept POST requests, behavior will be as follows: 
-### GET /api/modeltype?page=[int]&offset=[int]
+### Note: These also accept POST requests, behavior will be as follows: 
+### GET /api/modeltype?page=[int]
 ### The following are OPTIONAL parameters
 ### GET /api/modeltype?page=[int]&offset=[int]&sortParam=[string]&sortAscending=[bool]&filter=[string]
 

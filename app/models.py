@@ -236,6 +236,19 @@ class Character(database.Model):
         self.mother_id = mother_id
         self.imageLink = imageLink
 
+
+    @staticmethod
+    def getSorts():
+        return ["Name", "House", "Culture", "Gender"]
+
+    @staticmethod
+    def convertSort(sort):
+        names = ["name", "swornHouses", "culture", "gender"]
+        for i, s in enumerate(Book.getSorts()):
+            if s == sort:
+                return names[i]
+        return None
+
     def toJSON(self):
         result = dict()
         for c in self.__table__.columns:
@@ -330,6 +343,18 @@ class House(database.Model):
         self.region = region
         self.ancestralWeapons = ancestralWeapons
 
+    @staticmethod
+    def getSorts():
+        return ["Name", "Region", "Coat of Arms", "Words"]
+
+    @staticmethod
+    def convertSort(sort):
+        names = ["name", "region", "coatOfArms", "words"]
+        for i, s in enumerate(Book.getSorts()):
+            if s == sort:
+                return names[i]
+        return None
+
     def toJSON(self):
         result = dict()
         for c in self.__table__.columns:
@@ -383,6 +408,18 @@ class Alliance(database.Model):
         self.name = name
         self.swornHouse_ids = swornHouse_ids
         self.imageLink = imageLink
+
+    @staticmethod
+    def getSorts():
+        return ["Name", "Current Head House", "Number of Members"]
+
+    @staticmethod
+    def convertSort(sort):
+        names = ["name", "headHouse_id", "cultures", "seats"]
+        for i, s in enumerate(Book.getSorts()):
+            if s == sort:
+                return names[i]
+        return None
 
     def toJSON(self):
         result = dict()
