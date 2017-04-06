@@ -14,7 +14,9 @@
 		House
 	</h4>
 	<div class="card-block">
+		{% if character.house in house_links %}
 		<a href="{{ house_links[character.house].link }}">{{ house_links[character.house].name }}</a>
+		{% endif %}
 	</div>
 </div>
 <div class="card">

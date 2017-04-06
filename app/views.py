@@ -8,6 +8,7 @@ from sqlalchemy import desc
 import json
 from random import randint
 import pdb
+from subprocess import PIPE, run
 
 navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"},
               {"url": "/houses", "name": "Houses"}, {"url": "/alliances", "name": "Alliances"},
@@ -74,6 +75,12 @@ def create_context(nav_highlight=-1, **kwargs):
     # kwargs provides a way to add additional info to the context, per-page
     return dict(navigation=navigation, nav_highlight=nav_highlight, nocache=randint(1,1000000), **kwargs)
 
+@application.route('/tests', methods=['GET'])
+def runTestsForAboutPage():
+    command = ['python', '-m', 'app.tests']
+    result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
+    print(result.stdout, result.stderr)
+    return result.stdout + "\n\n" + result.stderr
 
 ### Begin Landing Page ###
 
@@ -167,29 +174,31 @@ def get_books(**kwargs):
 
 ### Begin "Listing" Pages ###
 
+default_params = dict(page=1, sortParam="Name", sortAscending=1)
+
 
 @application.route('/characters', methods=['GET'])
 def characters():
     character_data = get_characters()
-    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing, {"page": 1}))
+    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing, default_params))
     return render_template('listing.html', **context)
 
 
 @application.route('/houses', methods=['GET'])
 def houses():
-    context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing, {"page": 1}))
+    context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing, default_params))
     return render_template('listing.html', **context)
 
 
 @application.route('/alliances', methods=['GET'])
 def alliances():
-    context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing, {"page": 1}))
+    context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing, default_params))
     return render_template('listing.html', **context)
 
 
 @application.route('/books', methods=['GET'])
 def books():
-    context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing, {"page": 1}))
+    context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing, default_params))
     return render_template('listing.html', **context)
 
 

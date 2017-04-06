@@ -51,18 +51,18 @@ class Pagination extends React.Component {
         console.log(this);
         console.log("Page: ", page);
         if(page === "Previous"){
-            this.setState({currentPage: this.state.currentPage - 1, numberPages: this.state.numberPages});
+            page = this.state.currentPage - 1;
         }else if(page === "Next"){
-            this.setState({currentPage: this.state.currentPage + 1, numberPages: this.state.numberPages});
-        }else{
-            this.setState({currentPage: page, numberPages: this.state.numberPages});
+            page = this.state.currentPage + 1;
         }
+        this.setState({currentPage: page, numberPages: this.state.numberPages});
         ajaxModel.setCurrentPage(page);
     }
 
     render() {
         console.log("Re-rendering Pagination");
-        const totalPaginationLinks = 3;
+        var currentPage = this.state.currentPage;
+        var totalPaginationLinks = Math.min(this.state.numberPages, 7);
         var paginationElements = [];
 
         var disabled = "disabled";
@@ -70,10 +70,11 @@ class Pagination extends React.Component {
         var previous = "Previous";
         var next = "Next";
 
-        var currentPage = this.state.currentPage;
-        console.log("Rerendierng currentPAge: ", currentPage);
+        console.log("Rerendering currentPage: ", currentPage);
         var firstPage = Math.max(currentPage - 3, 1);
-        var lastPage = Math.min(currentPage + 3, this.state.numberPages + 1);
+        if(firstPage + 6 > this.state.numberPages){
+            firstPage = this.state.numberPages - 6;
+        }
 
         if(currentPage == 1){
             paginationElements.push(<PageLink key={Math.random(1, 999999)} link={previous} disabled={disabled} onChange={this.handleChange}/>);
@@ -81,9 +82,8 @@ class Pagination extends React.Component {
             paginationElements.push(<PageLink key={Math.random(1, 999999)} link={previous} onChange={this.handleChange}/>);
         }
 
-        console.log("FirstPage: ", firstPage, " and lastPage: ", lastPage);
-
-        for(var i = firstPage; i < lastPage; i++){
+        var i = firstPage;
+        while(totalPaginationLinks > 0){
             (function(self, i){
                 if(i == currentPage){
                     paginationElements.push(<PageLink key={Math.random(1, 999999)} link={i} active={active} onChange={self.handleChange}/>);
@@ -91,9 +91,11 @@ class Pagination extends React.Component {
                     paginationElements.push(<PageLink key={Math.random(1, 999999)} link={i} onChange={self.handleChange}/>);
                 }
             })(this, i);
+            totalPaginationLinks--;
+            i++;
         }
 
-        if(currentPage == this.state.numberPages){
+        if(currentPage == this.state.numberPages - 1){
             paginationElements.push(<PageLink key={Math.random(1, 999999)} link={next} disabled={disabled} onChange={this.handleChange}/>);
         }else{
             paginationElements.push(<PageLink key={Math.random(1, 999999)} link={next} onChange={this.handleChange}/>);
