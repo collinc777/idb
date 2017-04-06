@@ -1,13 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
+<head>
+    <link rel="stylesheet" href="/static/css/styleB.css?nocache={{ nocache }}">
+</head>
 <div class="row text-center">
     <h1>Meet the team!</h1>
-    <br>
+    <br />
     <br />
 </div>
 <!--First row of people-->
 <div class="row text-center" style="background-color:azure">
     <div class="col-lg-4">
+        <br />
+        <br />
+        <br />
         <img class="img-circle" src="/static/img/profile-pics/brian.jpg" alt="profile-pic" width="150" height="150">
         <h2>Brian Zhu</h2>
         <p>
@@ -24,6 +30,9 @@
         </p>
     </div>
     <div class="col-lg-4">
+        <br />
+        <br />
+        <br />
         <img class="img-circle" src="/static/img/profile-pics/tim.jpg" alt="profile-pic" width="150" height="150">
         <h2>Tim Gianitsos</h2>
         <p>
@@ -40,6 +49,9 @@
         </p>
     </div>
     <div class="col-lg-4">
+        <br />
+        <br />
+        <br />
         <img class="img-circle" src="/static/img/profile-pics/collin.jpg" alt="profile-pic" width="150" height="150">
         <h2>Collin Caram</h2>
         <p>
@@ -61,6 +73,9 @@
 <!--Second row of people-->
 <div class="row text-center">
     <div class="col-lg-4">
+        <br />
+        <br />
+        <br />
         <img class="img-circle" src="/static/img/profile-pics/greg.jpg" alt="profile-pic" width="150" height="150">
         <h2>Greg McDonald</h2>
         <p>
@@ -77,6 +92,9 @@
         </p>
     </div>
     <div class="col-lg-4">
+        <br />
+        <br />
+        <br />
         <img class="img-circle" src="/static/img/profile-pics/adam.jpg" alt="profile-pic" width="150" height="150">
         <h2>Adam Poncher</h2>
         <p>
@@ -93,6 +111,9 @@
         </p>
     </div>
     <div class="col-lg-4">
+        <br />
+        <br />
+        <br />
         <img class="img-circle" src="/static/img/profile-pics/will.jpg" alt="profile-pic" width="150" height="150">
         <h2>Will Connolly</h2>
         <p>
@@ -114,6 +135,9 @@
 <!--Stats, Data, Tools-->
 <div class="row text-center" style="background-color:azure">
     <div class="col-lg-4">
+        <br />
+        <br />
+        <br />
         <h2>Stats</h2>
         <p>
             Number of commits: 91
@@ -130,6 +154,9 @@
         </p>
     </div>
     <div class="col-lg-4">
+        <br />
+        <br />
+        <br />
         <h2>Data Sources</h2>
         <p>
             <a href="https://anapioficeandfire.com/Documentation">https://anapioficeandfire.com/Documentation</a>
@@ -140,6 +167,9 @@
         </p>
     </div>
     <div class="col-lg-4">
+        <br />
+        <br />
+        <br />
         <h2>Tools</h2>
         <p>
             Bootstrap: A framework to help style the front-end of the website
@@ -159,5 +189,11 @@
             yUML: Used to create UML diagrams
         </p>
     </div>
+    <button type="button" class="btn btn-primary" style="margin: auto;">Run Tests</button>
+    <div></div>
+    <br>
+    <br>
+    <br>
+    <br>
 </div>
 {% endblock %}
