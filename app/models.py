@@ -244,7 +244,7 @@ class Character(database.Model):
     @staticmethod
     def convertSort(sort):
         names = ["name", "swornHouses", "culture", "gender"]
-        for i, s in enumerate(Book.getSorts()):
+        for i, s in enumerate(Character.getSorts()):
             if s == sort:
                 return names[i]
         return None
@@ -350,7 +350,7 @@ class House(database.Model):
     @staticmethod
     def convertSort(sort):
         names = ["name", "region", "coatOfArms", "words"]
-        for i, s in enumerate(Book.getSorts()):
+        for i, s in enumerate(House.getSorts()):
             if s == sort:
                 return names[i]
         return None
@@ -416,7 +416,7 @@ class Alliance(database.Model):
     @staticmethod
     def convertSort(sort):
         names = ["name", "headHouse_id", "cultures", "seats"]
-        for i, s in enumerate(Book.getSorts()):
+        for i, s in enumerate(Alliance.getSorts()):
             if s == sort:
                 return names[i]
         return None
