@@ -2,7 +2,7 @@
 # The other elements are the same as used in the tutorial
 # format: (user):(password)@(db_identifier).amazonaws.com:3306/(db_name)
 
-SQLALCHEMY_DATABASE_URI = 'postgres://swe16:swe16idb@idbtest.cevmyqqxetxv.us-west-2.rds.amazonaws.com:5432/Swe16db'
+SQLALCHEMY_DATABASE_URI = 'postgres://swe16:swe16idb@swe16.cevmyqqxetxv.us-west-2.rds.amazonaws.com:5432/Swe16db'
 
 # Uncomment the line below if you want to work with a local DB
 # SQLALCHEMY_DATABASE_URI = 'postgres:///test.db'
