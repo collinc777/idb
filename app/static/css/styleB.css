@@ -1,0 +1,187 @@
+/* custom styles */
+
+/* workaround for the navbar-fixed-top so it doesn't overlap content */
+
+img {
+	max-height: 400px;
+}
+
+body {
+	font-family: 'Lato', sans-serif !important;
+}
+
+.backgroundGradient {/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffd65e+0,febf04+100;Yellow+3D+%232 */
+background: #ffd65e; /* Old browsers */
+background: -moz-linear-gradient(top,  #ffd65e 0%, #febf04 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #ffd65e 0%,#febf04 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #ffd65e 0%,#febf04 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd65e', endColorstr='#febf04',GradientType=0 ); /* IE6-9 */
+}
+
+.listingTitle {
+	color: #f7f7f9;
+}
+
+h1.cursive {
+	font-family: 'Macondo', cursive;
+	font-size: 56px;
+}
+
+#contentContainer {
+	padding-top: 40px;
+	min-height: 1200px;
+}
+
+.details .card .card-block, .details .card .card-header {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background-color: #333;
+	border-color: #333;
+}
+
+.details h1, .details h2, .details h3, .details h4, .details h5 {
+	color: #f7f7f9;
+}
+
+.details a {
+	color: #f7f7f9;
+}
+
+.pageLinks a {
+	background-color: #333;
+    color: #f7f7f9;
+    margin: auto;
+    padding: 5px;
+    transition: background-color .3s;
+	border: 1px solid #f7f7f9;
+	border-color: #f7f7f9;
+	display: block;
+	min-width: 100px;
+}
+
+.pageLinks a.disabled {
+	color: #555;
+}
+
+.pageLinks a.active {
+	background-color: #f7f7f9;
+	border-color: #333;
+	color: #333;
+}
+
+.pageLinks a:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.pageLinks a:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.pageLinks {
+	clear: both;
+	position: relative;
+	text-align: center;
+}
+
+.paginationContainer {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.listingCard .card-block, .sortAndFilterCard .card-block {
+	background-color: #333;
+	border-color: #333;
+}
+
+.listingCard .card-header, .sortAndFilterCard .card-header {
+	background-color: #333;
+	border-color: #333;
+}
+
+.listingCard h1, .listingCard h2, .listingCard h3, .listingCard h4, .listingCard h5 {
+	color: #f7f7f9;
+}
+
+.sortAndFilterCard h1, .sortAndFilterCard h2, .sortAndFilterCard h3, .sortAndFilterCard h4, .sortAndFilterCard h5 {
+	color: #f7f7f9;
+}
+
+.listingCard a, .sortAndFilterCard a {
+	color: #f7f7f9;
+}
+
+.sortAndFilterCard .dropdown-menu {
+	min-width: 300px;
+	width: 300px;
+	background-color: #333;
+}
+
+@media (max-width: 576px) {
+	.card-group {
+		margin-bottom: 30px;
+	}
+
+	.listingCard {
+		margin-top: 10px;
+		margin-bottom: 10px;
+
+		height: 150px;
+	}
+
+	#listingContainer {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}
+
+@media (min-width: 577px){
+	.listingCard:first-child {
+		margin-left: 15px;
+	}
+	.listingCard:last-child {
+		margin-right: 15px;
+	}
+	.listingCard {
+		margin-top: 20px;
+		margin-bottom: 10px;
+
+		min-width: 200px;
+		height: 200px;	
+		width: 200px;	
+	}
+	#listingContainer {
+		padding-left: 40px;
+		padding-right: 40px;
+	}
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+	.listingCard {
+		margin-top: 10px;
+		margin-bottom: 10px;
+
+		min-width: 250px;
+		height: 200px;	
+		width: 300px;	
+	}
+
+	#listingContainer {
+		padding-left: 100px;
+		padding-right: 100px;
+	}
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+	#listingContainer {
+		padding-left: 150px;
+		padding-right: 150px;
+	}
+}
+
+.carousel-caption.dark {
+	color: black;
+}
