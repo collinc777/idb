@@ -20,7 +20,7 @@
 import json
 
 import six
-from sqlalchemy import Column, Integer, String, Table, ForeignKey
+from sqlalchemy import Table, Column, Integer, ForeignKey, String
 
 from app import database
 
