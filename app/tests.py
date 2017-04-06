@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-# How to run: from main directory (idb) run 'python -m app.tests'
-# How to coverage: coverage run -m app.tests (need to fix ImportError)
+# How to run: 'python -m app.tests'
+# How to coverage: 'coverage run --source=app -m app.tests'
 
 # pylint: disable = bad-whitespace
 # pylint: disable = invalid-name
@@ -23,6 +23,7 @@ from app import models
 
 
 class TestModels(TestCase):
+
     def setUp(self):
         # Perform database setup
         database.session.close()
@@ -110,14 +111,14 @@ class TestModels(TestCase):
 
         self.allianceParameters = {
             "name": "The Wardens of the North",
-            "ancestralWeapons" : ["Long Claw", "Ice"],
-            "seats" : ["Winterfell"],
-            "cultures" : ["Northman"],
-            "regions" : ["North"],
-            "id" : 1,
+            "ancestralWeapons": ["Long Claw", "Ice"],
+            "seats": ["Winterfell"],
+            "cultures": ["Northman"],
+            "regions": ["North"],
+            "id": 1,
             "headHouse_id": 362,
-            "currentLord_id" : 583,
-            "swornHouse_ids" : [362, 216, 318, 395, 401, 271, 282, 150, 236, 435, 61],
+            "currentLord_id": 583,
+            "swornHouse_ids": [362, 216, 318, 395, 401, 271, 282, 150, 236, 435, 61],
             "imageLink": "alliancebanners/North.png"
         }
 
@@ -162,7 +163,8 @@ class TestModels(TestCase):
         instance = model(**self.bookParameters)
 
         database.session.add(instance)
-        queryResult = database.session.query(model).filter_by(name=testName).first()
+        queryResult = database.session.query(
+            model).filter_by(name=testName).first()
         self.assertEqual(queryResult.name, testName)
 
         database.session.rollback()
@@ -201,7 +203,8 @@ class TestModels(TestCase):
         instance = model(**self.characterParameters)
 
         database.session.add(instance)
-        queryResult = database.session.query(model).filter_by(name=testName).first()
+        queryResult = database.session.query(
+            model).filter_by(name=testName).first()
         self.assertEqual(queryResult.name, testName)
 
         database.session.rollback()
@@ -225,7 +228,8 @@ class TestModels(TestCase):
     def test_House_swornMember_ids(self):
         h = models.House(**self.houseParameters)
         self.assertEqual(
-            h.swornMember_ids, [49, 92, 93, 107, 223, 265, 300, 356, 477, 508, 540, 548, 558, 572, 688, 894, 1068, 1193,
+            h.swornMember_ids, [
+                49, 92, 93, 107, 223, 265, 300, 356, 477, 508, 540, 548, 558, 572, 688, 894, 1068, 1193,
                                 1280, 1443, 1655, 1693, 1715, 1884])
 
     def test_House_toDict(self):
@@ -242,7 +246,8 @@ class TestModels(TestCase):
         instance = model(**self.houseParameters)
 
         database.session.add(instance)
-        queryResult = database.session.query(model).filter_by(name=testName).first()
+        queryResult = database.session.query(
+            model).filter_by(name=testName).first()
         self.assertEqual(queryResult.name, testName)
 
         database.session.rollback()
@@ -277,7 +282,8 @@ class TestModels(TestCase):
         instance = model(**self.allianceParameters)
 
         database.session.add(instance)
-        queryResult = database.session.query(model).filter_by(name=testName).first()
+        queryResult = database.session.query(
+            model).filter_by(name=testName).first()
         self.assertEqual(queryResult.name, testName)
 
         database.session.rollback()
@@ -292,11 +298,13 @@ class TestModels(TestCase):
         instance = model(**self.allianceParameters)
 
         database.session.add(instance)
-        queryResult = database.session.query(model).filter_by(name=testName).first()
+        queryResult = database.session.query(
+            model).filter_by(name=testName).first()
         self.assertNotEqual(queryResult, None)
 
         database.session.delete(queryResult)
-        queryResult = database.session.query(model).filter_by(name=testName).first()
+        queryResult = database.session.query(
+            model).filter_by(name=testName).first()
         self.assertEqual(queryResult, None)
 
         database.session.rollback()
