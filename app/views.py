@@ -80,7 +80,7 @@ def runTestsForAboutPage():
     command = ['python', '-m', 'app.tests']
     result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
     print(result.stdout, result.stderr)
-    return result.stdout
+    return result.stdout + "\n\n" + result.stderr
 
 ### Begin Landing Page ###
 
