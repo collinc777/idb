@@ -10,8 +10,6 @@ class PageLink extends React.Component {
     }
 
     handleClick(event){
-        console.log("Handling event:");
-        console.log(event);
         this.props.onChange(this.state.link);
         console.log("Changing page to: " + this.state.link); 
     }
@@ -42,6 +40,13 @@ class Pagination extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
+    componentWillMount() {
+        ajaxModel.updatePaginationCallback = (data) => {
+            console.log("Updating pagination with: ", data);
+            this.setState({currentPage: data["currentPage"], numberPages: data["numberPages"]});
+        }
+    }
+
     handleChange(page) {
         console.log(this);
         console.log("Page: ", page);
@@ -52,7 +57,7 @@ class Pagination extends React.Component {
         }else{
             this.setState({currentPage: page, numberPages: this.state.numberPages});
         }
-
+        ajaxModel.setCurrentPage(page);
     }
 
     render() {
@@ -68,8 +73,7 @@ class Pagination extends React.Component {
         var currentPage = this.state.currentPage;
         console.log("Rerendierng currentPAge: ", currentPage);
         var firstPage = Math.max(currentPage - 3, 1);
-        var lastPage = Math.min(currentPage + 7, this.state.numberPages + 1);
-        lastPage = Math.min(lastPage, firstPage + totalPaginationLinks);
+        var lastPage = Math.min(currentPage + 3, this.state.numberPages + 1);
 
         if(currentPage == 1){
             paginationElements.push(<PageLink key={Math.random(1, 999999)} link={previous} disabled={disabled} onChange={this.handleChange}/>);
@@ -79,7 +83,7 @@ class Pagination extends React.Component {
 
         console.log("FirstPage: ", firstPage, " and lastPage: ", lastPage);
 
-        for(var i = firstPage; i < firstPage + 7; i++){
+        for(var i = firstPage; i < lastPage; i++){
             (function(self, i){
                 if(i == currentPage){
                     paginationElements.push(<PageLink key={Math.random(1, 999999)} link={i} active={active} onChange={self.handleChange}/>);

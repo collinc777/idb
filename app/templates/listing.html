@@ -3,7 +3,9 @@
 <script src="/static/scripts/AjaxModel.jsx?nocache={{ nocache }}" type="text/jsx"></script>
 
 <script type="text/jsx">
-    var initialData = {{ data | tojson }};
+    var initialCardAndPageData = {{ data | tojson }};
+    var initialCardData = initialCardAndPageData["cardData"];
+    var initialPageData = initialCardAndPageData["pageData"];
     var listingTitle = "{{ listing.title }}";
     var listingSorts = {{ listing.sorts | tojson }};
     var listingFilterPlaceholder = "Name or property...";
@@ -18,7 +20,7 @@
 
 <div id="listingContainer">
     <script type="text/jsx">
-        ReactDOM.render(<ListingContainer listing_data={initialData} listing_title={listingTitle} listing_sorts={listingSorts} listing_filter_placeholder={listingFilterPlaceholder}/>, document.getElementById("listingContainer"));
+        ReactDOM.render(<ListingContainer listing_card_data={initialCardData} listing_page_data={initialPageData} listing_title={listingTitle} listing_sorts={listingSorts} listing_filter_placeholder={listingFilterPlaceholder}/>, document.getElementById("listingContainer"));
     </script>
 </div>
 {% endblock %}

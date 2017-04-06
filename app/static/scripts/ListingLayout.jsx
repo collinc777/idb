@@ -19,19 +19,19 @@ class ListingContainer extends React.Component {
         super(props);
         this.state = {
             listingTitle: props.listing_title,
-            cardData: props.listing_data,
+            cardData: props.listing_card_data,
+            pageData: props.listing_page_data,
             sorts: props.listing_sorts,
             filterPlaceholder: props.listing_filter_placeholder
         }
     }
 
     render() {
-        const numPages = 15;
         return (
                 <div>
                     <TitleLayout title={this.state.listingTitle}/>
                     <SortAndFilterCards sorts={this.state.sorts} filterPlaceholder={this.state.filterPlaceholder}/>
-                    <Pagination numberPages={numPages}/>
+                    <Pagination currentPage={this.state.pageData.currentPage} numberPages={this.state.pageData.numberPages}/>
                     <GridLayout data={this.state.cardData}/>
                 </div>);
     }
