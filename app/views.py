@@ -8,6 +8,7 @@ from sqlalchemy import desc
 import json
 from random import randint
 import pdb
+from subprocess import PIPE, run
 
 navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"},
               {"url": "/houses", "name": "Houses"}, {"url": "/alliances", "name": "Alliances"},
@@ -74,6 +75,12 @@ def create_context(nav_highlight=-1, **kwargs):
     # kwargs provides a way to add additional info to the context, per-page
     return dict(navigation=navigation, nav_highlight=nav_highlight, nocache=randint(1,1000000), **kwargs)
 
+@application.route('/tests', methods=['GET'])
+def runTestsForAboutPage():
+    command = ['python', '-m', 'app.tests']
+    result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
+    print(result.stdout, result.stderr)
+    return result.stdout
 
 ### Begin Landing Page ###
 
