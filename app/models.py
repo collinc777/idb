@@ -241,11 +241,11 @@ class Character(database.Model):
 
     @staticmethod
     def getSorts():
-        return ["Name", "House", "Culture", "Gender"]
+        return ["Name", "Culture", "Gender"]
 
     @staticmethod
     def convertSort(sort):
-        names = ["name", "swornHouses", "culture", "gender"]
+        names = ["name", "culture", "gender"]
         for i, s in enumerate(Character.getSorts()):
             if s == sort:
                 return names[i]

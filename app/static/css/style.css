@@ -37,6 +37,11 @@ h1.cursive {
 	min-height: 1200px;
 }
 
+.details .card {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 /*.details .card .card-block, .details .card .card-header {
 	margin-top: 10px;
 	margin-bottom: 10px;
