@@ -13,11 +13,11 @@
 # pylint: disable = too-many-instance-attributes
 # pylint: disable = too-few-public-methods
 # pylint: disable = too-many-locals
+# pylint: disable = redefined-builtin
 
 # -------
 # imports
 # -------
-import json
 
 import six
 from sqlalchemy import Table, Column, Integer, ForeignKey, String
@@ -94,10 +94,10 @@ class Book(database.Model):
 
     # Many-to-Many Relationships
     povCharacter_ids = Column(database.ARRAY(Integer))
-    # povCharacters = database.relationship(
-    #    "Character",
-    #   secondary=books_povCharacters_association_table,
-    #   back_populates="povBooks")
+    povCharacters = database.relationship(
+        "Character",
+        secondary=books_povCharacters_association_table,
+        back_populates="povBooks")
     character_ids = Column(database.ARRAY(Integer))
     characters = database.relationship(
         "Character",
@@ -114,7 +114,8 @@ class Book(database.Model):
     mediaType = Column(String(80))
     released = Column(String(80))
 
-    def __init__(self, id, numberOfPages, isbn, name, publisher, country, povCharacter_ids, author, mediaType, released,
+    def __init__(
+        self, id, numberOfPages, isbn, name, publisher, country, povCharacter_ids, author, mediaType, released,
                  character_ids):
         assert isinstance(id, int)
         assert isinstance(numberOfPages, int)
@@ -146,7 +147,8 @@ class Book(database.Model):
 
     @staticmethod
     def convertSort(sort):
-        names = ["name", "author", "publisher", "isbn", "numberOfPages", "released"]
+        names = ["name", "author", "publisher",
+                 "isbn", "numberOfPages", "released"]
         for i, s in enumerate(Book.getSorts()):
             if s == sort:
                 return names[i]
@@ -169,13 +171,13 @@ class Character(database.Model):
         "Book",
         secondary=books_characters_association_table,
         back_populates="characters")
-    # TODO: Greg 4/4/2017 Re-add povBook ids when issue #52 is resolved
-    # povBook_ids = Column(database.ARRAY(Integer))
-    # povBooks = database.relationship(
-    #   "Book",
-    #   secondary=books_povCharacters_association_table,
-    #   back_populates="povCharacters")
-    # Many-to-Many Relationships
+
+    povBook_ids = Column(database.ARRAY(Integer))
+    povBooks = database.relationship(
+        "Book",
+        secondary=books_povCharacters_association_table,
+        back_populates="povCharacters")
+
     swornHouses_ids = Column(database.ARRAY(Integer))
     swornHouses = database.relationship(
         "House",
@@ -201,7 +203,8 @@ class Character(database.Model):
     mother_id = Column(Integer)
     imageLink = Column(database.String(300))
 
-    def __init__(self, id, culture, titles, spouse_id, died, aliases, name, born, gender, father_id,
+    def __init__(
+        self, id, culture, titles, spouse_id, died, aliases, name, born, gender, father_id,
                  allegiances_ids, povBook_ids, playedBy, book_ids, tvSeries, mother_id, imageLink):
         assert isinstance(culture, six.string_types)
         assert hasattr(titles, '__iter__')
@@ -236,7 +239,6 @@ class Character(database.Model):
         self.mother_id = mother_id
         self.imageLink = imageLink
 
-
     @staticmethod
     def getSorts():
         return ["Name", "House", "Culture", "Gender"]
@@ -261,19 +263,6 @@ class House(database.Model):
     id = Column(Integer, primary_key=True)
 
     # Many-to-One Relationships
-    # TODO: Greg 4/4/2017 Re-make ids as ForeignKeys once all keys are present in characters table
-    # currentLord_id = Column(Integer, ForeignKey('character.id'), nullable=True)
-    # currentLord_id = Column(Integer, nullable=True)
-    # currentLord = database.relationship("Character", foreign_keys=[currentLord_id])
-    # founder_id = Column(Integer, ForeignKey('character.id'))
-    # founder = database.relationship("Character", foreign_keys=[founder_id])
-    # heir_id = Column(Integer, ForeignKey('character.id'), nullable=True)
-    # heir_id = Column(Integer, nullable=True)
-    # heir = database.relationship("Character", foreign_keys=[heir_id])
-    # overlord_id = Column(Integer, ForeignKey('character.id'), nullable=True)
-    # overlord_id = Column(Integer, nullable=True)
-    # overlord = database.relationship("Character", foreign_keys=[overlord_id])
-
     currentLord_id = Column(Integer, ForeignKey('character.id'))
     currentLord = database.relationship("Character",
                                         foreign_keys=[currentLord_id])
@@ -282,6 +271,7 @@ class House(database.Model):
     heir = database.relationship("Character", foreign_keys=[heir_id])
 
     overlord_id = Column(Integer)
+    # overlord = database.relationship("Character", foreign_keys=[overlord_id])
 
     # Many-to-Many Relationships
     swornMember_ids = Column(database.ARRAY(Integer))
@@ -311,7 +301,8 @@ class House(database.Model):
     region = Column(String(80))
     ancestralWeapons = Column(database.ARRAY(String(80)))
 
-    def __init__(self, id, currentLord_id, heir_id, founded, founder_id, diedOut, titles, coatOfArms,
+    def __init__(
+        self, id, currentLord_id, heir_id, founded, founder_id, diedOut, titles, coatOfArms,
                  words,
                  seats, overlord_id, name, swornMember_ids, alliance_id, region, ancestralWeapons):
         # assert isinstance(founder_id, Integer)
@@ -387,7 +378,8 @@ class Alliance(database.Model):
     name = Column(database.String(80))
     imageLink = Column(database.String(300))
 
-    def __init__(self, id, currentLord_id, ancestralWeapons, seats, swornHouse_ids, regions, cultures, headHouse_id,
+    def __init__(
+        self, id, currentLord_id, ancestralWeapons, seats, swornHouse_ids, regions, cultures, headHouse_id,
                  name,
                  imageLink):
         assert hasattr(ancestralWeapons, "__iter__")
