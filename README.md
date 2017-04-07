@@ -6,10 +6,13 @@ Due on Thursday, 23 Mar 2017 at 10pm
 ### Setup
 NOTE: Python version must be 3.4 because that is what works with the server  
 
-1. First create a virtual environment: ```virtualenv my_project_env```  
-2. Next, activate the virtual environment: ```source my_project_env/bin/activate```  
-3. Find this project's (idb) requirements.txt and install it: ```pip install -r requirements.txt```
-4. Use ```deactivate``` at any time to leave the virtual environment
+1. Our application runs python 3.4.2. Install it here https://www.python.org/downloads/release/python-342/
+2. Use ```which python3.4``` to obtain the path of the newly installed python 3.4.2
+3. Create a virtual environment: ```virtualenv -p <path/to/python3.4> my_project_env```  
+4. Activate the virtual environment: ```source my_project_env/bin/activate```
+5. Use ```python --version```. You should see ```Python 3.4.2```
+6. Find this project's (idb) requirements.txt and install it: ```pip install -r requirements.txt```
+7. Use ```deactivate``` at any time to leave the virtual environment
 
 ### How to Run
 Navigate to the parent directory (by default it is "idb").  
