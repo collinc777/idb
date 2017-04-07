@@ -8,7 +8,7 @@ from sqlalchemy import desc
 import json
 from random import randint
 import pdb
-from subprocess import PIPE, run
+from subprocess import PIPE, check_output, STDOUT
 
 navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"},
               {"url": "/houses", "name": "Houses"}, {"url": "/alliances", "name": "Alliances"},
@@ -78,9 +78,9 @@ def create_context(nav_highlight=-1, **kwargs):
 @application.route('/tests', methods=['GET'])
 def runTestsForAboutPage():
     command = ['python', '-m', 'app.tests']
-    result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
-    print(result.stdout, result.stderr)
-    return result.stdout + "\n\n" + result.stderr
+    result = check_output(command, stderr=STDOUT, universal_newlines=True)
+    print(result)
+    return result
 
 ### Begin Landing Page ###
 
