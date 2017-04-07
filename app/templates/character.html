@@ -11,12 +11,14 @@
 </div>
 <div class="card">
 	<h4 class="card-header">
-		House
+		Houses
 	</h4>
 	<div class="card-block">
-		{% if character.house in house_links %}
-		<a href="{{ house_links[character.house].link }}">{{ house_links[character.house].name }}</a>
-		{% endif %}
+	{% for allegiance_id in character.allegiances_ids %}
+		<h5><a href="/houses/{{ allegiance_id }}">{{ allegiance_id }}</a></h5>
+	{% else %}
+		<h5>This character belongs to no houses</h5>
+	{% endfor %}
 	</div>
 </div>
 <div class="card">
@@ -64,8 +66,8 @@
 		Books This Character Appears In
 	</h4>
 	<div class="card-block">
-	{% for book in character.books %}
-		<h5><a href="{{ book_links[book].link }}">{{ book_links[book].name }} </a></h5>
+	{% for book_id in character.book_ids %}
+		<h5><a href="/books/{{ book_id }}">{{ book_id }}</a></h5>
 	{% else %}
 		<h5>This character appears in no books</h5>
 	{% endfor %}
