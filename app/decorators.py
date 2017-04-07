@@ -22,7 +22,7 @@ def takes_query_params(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         requiredParameters = [("page", int)]
-        optionalParameters = [("sortParam", str), ("sortAscending", int), ("filter", str)]
+        optionalParameters = [("sortParam", str), ("sortAscending", int), ("filterText", str)]
         allParameters = requiredParameters + optionalParameters
 
         parameters = dict()
