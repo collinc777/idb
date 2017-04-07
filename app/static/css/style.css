@@ -144,6 +144,11 @@ h1.cursive {
 		min-width: 18px;
 		font-size: 12px;
 	}
+
+	.details {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
 }
 
 @media (min-width: 577px){
@@ -169,6 +174,11 @@ h1.cursive {
 	.pageLinks a {
 		min-width: 40px;
 	}
+
+	.details {
+		margin-left: 20px;
+		margin-right: 20px;
+	}
 }
 
 @media (min-width: 992px) { 
@@ -189,6 +199,11 @@ h1.cursive {
 	.pageLinks a {
 		min-width: 70px;
 	}
+
+	.details {
+		margin-left: 40px;
+		margin-right: 40px;
+	}
 }
 
 @media (min-width: 1200px) {
@@ -199,6 +214,11 @@ h1.cursive {
 
 	.pageLinks a {
 		min-width: 100px;
+	}
+
+	.details {
+		margin-left: 70px;
+		margin-right: 70px;
 	}
 }
 
