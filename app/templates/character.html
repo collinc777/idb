@@ -15,7 +15,7 @@
 	</h4>
 	<div class="card-block">
 	{% for allegiance_id in character.allegiances_ids %}
-		<h5><a href="/houses/{{ allegiance_id }}">{{ allegiance_id }}</a></h5>
+		<h5><a href="/houses/{{ allegiance_id }}">{{ allegiance_id }} (House)</a></h5>
 	{% else %}
 		<h5>This character belongs to no houses</h5>
 	{% endfor %}
@@ -67,7 +67,7 @@
 	</h4>
 	<div class="card-block">
 	{% for book_id in character.book_ids %}
-		<h5><a href="/books/{{ book_id }}">{{ book_id }}</a></h5>
+		<h5><a href="/books/{{ book_id }}">{{ book_id }} (Book)</a></h5>
 	{% else %}
 		<h5>This character appears in no books</h5>
 	{% endfor %}

@@ -6,7 +6,7 @@
 		<h1 class="cursive">{{ house.name }}</h1>
 	</div>
 	<div class="card-block text-center">
-		<img src="https://api.got.show/{{ house.imageLink }}">
+		<img src="/static/img/houses/{{ house.id }}.png">
 	</div>
 </div>
 <div class="card">
@@ -15,7 +15,7 @@
 	</h4>
 	<div class="card-block">
 		{% if house.currentLord_id in character_links %}
-		<a href="/characters/{{ house.currentLord_id }}">{{ house.currentLord_id }}</a>
+		<a href="/characters/{{ house.currentLord_id }}">{{ house.currentLord_id }} (Character)</a>
 		{% endif %}
 	</div>
 </div>
@@ -24,7 +24,7 @@
 		Member of Alliance
 	</h4>
 	<div class="card-block">
-		<a href="/alliances/{{ house.alliance_id }}">{{ house.alliance_id }}</a>
+		<a href="/alliances/{{ house.alliance_id }}">{{ house.alliance_id }} (Alliance)</a>
 	</div>
 </div>
 <div class="card">
@@ -56,7 +56,7 @@
 		Overlord House
 	</h4>
 	<div class="card-block">
-		<a href="/houses/{{ house.overlord_id }}">{{ house.overlord_id }} </a>
+		<a href="/houses/{{ house.overlord_id }}">{{ house.overlord_id }} (House)</a>
 	</div>
 </div>
 <div class="card">
@@ -81,7 +81,7 @@
 	</h4>
 	<div class="card-block">
 	{% for char_id in house.swornMember_ids %}
-		<h5><a href="/characters/{{ char_id }}">{{ char_id }}</a></h5>
+		<h5><a href="/characters/{{ char_id }}">{{ char_id }} (Character)</a></h5>
 	{% else %}
 		House has no sworn members
 	{% endfor %}

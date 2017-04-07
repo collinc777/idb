@@ -14,7 +14,7 @@
 		Current Lord
 	</h4>
 	<div class="card-block">
-		<a href="/characters/{{ alliance.currentLord_id }}">{{ alliance.currentLord_id }}</a>
+		<a href="/characters/{{ alliance.currentLord_id }}">{{ alliance.currentLord_id }} (Character)</a>
 	</div>
 </div>
 <div class="card">
@@ -23,7 +23,7 @@
 	</h4>
 	<div class="card-block">
 	
-		<a href="/houses/{{ alliance.headHouse_id }}">{{ alliance.headHouse_id }}</a>
+		<a href="/houses/{{ alliance.headHouse_id }}">{{ alliance.headHouse_id }} (House)</a>
 	</div>
 </div>
 <div class="card">
@@ -81,7 +81,7 @@
 	</h4>
 	<div class="card-block">
 		{% for sworn_id in alliance.swornHouse_ids %}
-			<h5><a href="/houses/{{ sworn_id }}">{{ sworn_id }}</a></h5>
+			<h5><a href="/houses/{{ sworn_id }}">{{ sworn_id }} (House)</a></h5>
 		{% else %}
 			<h5>No sworn houses in this alliance</h5>
 		{% endfor %}
