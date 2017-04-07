@@ -142,9 +142,9 @@ class TestModels(TestCase):
         b = models.Book(**self.bookParameters)
         self.assertEqual(b.publisher, "Bantam Books")
 
-    def test_Book_toDict(self):
-        instance = models.Book(**self.bookParameters)
-        self.assertGreater(len(instance.toDict()), 0)
+    # def test_Book_toDict(self):
+    #     instance = models.Book(**self.bookParameters)
+    #     self.assertGreater(len(instance.toDict()), 0)
 
     def test_Book_database_query(self):
         # Assumes existence of at least one element in model table.
@@ -189,9 +189,9 @@ class TestModels(TestCase):
         c = models.Character(**self.characterParameters)
         self.assertEqual(c.titles, [])
 
-    def test_Character_toDict(self):
-        instance = models.Character(**self.characterParameters)
-        self.assertGreater(len(instance.toDict()), 0)
+    # def test_Character_toDict(self):
+    #     instance = models.Character(**self.characterParameters)
+    #     self.assertGreater(len(instance.toDict()), 0)
 
     def test_Character_database_add(self):
         # Note: Test will fail if a instance already exists with the given id
@@ -232,9 +232,9 @@ class TestModels(TestCase):
                 49, 92, 93, 107, 223, 265, 300, 356, 477, 508, 540, 548, 558, 572, 688, 894, 1068, 1193,
                                 1280, 1443, 1655, 1693, 1715, 1884])
 
-    def test_House_toDict(self):
-        instance = models.House(**self.houseParameters)
-        self.assertGreater(len(instance.toDict()), 0)
+    # def test_House_toDict(self):
+    #     instance = models.House(**self.houseParameters)
+    #     self.assertGreater(len(instance.toDict()), 0)
 
     def test_House_database_add(self):
         # Note: Test will fail if a instance already exists with the given id
@@ -268,9 +268,9 @@ class TestModels(TestCase):
         a = models.Alliance(**self.allianceParameters)
         self.assertEqual(a.seats, ["Winterfell"])
 
-    def test_Alliance_toDict(self):
-        instance = models.Alliance(**self.allianceParameters)
-        self.assertGreater(len(instance.toDict()), 0)
+    # def test_Alliance_toDict(self):
+    #     instance = models.Alliance(**self.allianceParameters)
+    #     self.assertGreater(len(instance.toDict()), 0)
 
     def test_Alliance_database_add(self):
         # Note: Test will fail if a instance already exists with the given id
