@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module models</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>models</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/v/filer4b/v38q001/grm695/cs373/idb/app/models.py">/v/filer4b/v38q001/grm695/cs373/idb/app/models.py</a></font></td></tr></table>
+    <p><tt>#&nbsp;See&nbsp;link:&nbsp;<a href="http://docs.sqlalchemy.org/en/latest/orm/join_conditions.html">http://docs.sqlalchemy.org/en/latest/orm/join_conditions.html</a><br>
+#&nbsp;See&nbsp;link:&nbsp;<a href="http://flask-sqlalchemy.pocoo.org/2.1/models/">http://flask-sqlalchemy.pocoo.org/2.1/models/</a></tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="six.html">six</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial">flask_sqlalchemy.Model(<a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="models.html#Alliance">Alliance</a>
+</font></dt><dt><font face="helvetica, arial"><a href="models.html#Book">Book</a>
+</font></dt><dt><font face="helvetica, arial"><a href="models.html#Character">Character</a>
+</font></dt><dt><font face="helvetica, arial"><a href="models.html#House">House</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Alliance">class <strong>Alliance</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Base&nbsp;class&nbsp;for&nbsp;SQLAlchemy&nbsp;declarative&nbsp;base&nbsp;model.<br>
+&nbsp;<br>
+To&nbsp;define&nbsp;models,&nbsp;subclass&nbsp;:attr:`db.Model&nbsp;&lt;SQLAlchemy.Model&gt;`,&nbsp;not&nbsp;this&nbsp;class.<br>
+To&nbsp;customize&nbsp;``db.Model``,&nbsp;subclass&nbsp;this&nbsp;and&nbsp;pass&nbsp;it&nbsp;as&nbsp;``model_class``&nbsp;to&nbsp;:func:`SQLAlchemy`.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="models.html#Alliance">Alliance</a></dd>
+<dd>flask_sqlalchemy.Model</dd>
+<dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Alliance-__init__"><strong>__init__</strong></a>(self, id, currentLord_id, ancestralWeapons, seats, swornHouse_ids, regions, cultures, headHouse_id, name, imageLink)</dt></dl>
+
+<dl><dt><a name="Alliance-toDict"><strong>toDict</strong></a>(self)</dt></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="Alliance-convertSort"><strong>convertSort</strong></a>(sort)</dt></dl>
+
+<dl><dt><a name="Alliance-getSorts"><strong>getSorts</strong></a>()</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>cultures</strong></dt>
+</dl>
+<dl><dt><strong>currentLord</strong></dt>
+</dl>
+<dl><dt><strong>currentLord_id</strong></dt>
+</dl>
+<dl><dt><strong>headHouse</strong></dt>
+</dl>
+<dl><dt><strong>headHouse_id</strong></dt>
+</dl>
+<dl><dt><strong>id</strong></dt>
+</dl>
+<dl><dt><strong>imageLink</strong></dt>
+</dl>
+<dl><dt><strong>name</strong></dt>
+</dl>
+<dl><dt><strong>regions</strong></dt>
+</dl>
+<dl><dt><strong>seats</strong></dt>
+</dl>
+<dl><dt><strong>swornHouse_ids</strong></dt>
+</dl>
+<dl><dt><strong>weapons</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f1a1583ad68; Alliance&gt;</dl>
+
+<dl><dt><strong>__table__</strong> = Table('alliance', MetaData(bind=None), Column('i...ring(length=300), table=&lt;alliance&gt;), schema=None)</dl>
+
+<dl><dt><strong>__table_args__</strong> = {'extend_existing': True}</dl>
+
+<hr>
+Methods inherited from flask_sqlalchemy.Model:<br>
+<dl><dt><strong>query</strong></dt>
+</dl>
+
+<hr>
+Data and other attributes inherited from flask_sqlalchemy.Model:<br>
+<dl><dt><strong>metadata</strong> = MetaData(bind=None)</dl>
+
+<dl><dt><strong>query_class</strong> = &lt;class 'flask_sqlalchemy.BaseQuery'&gt;<dd><tt>SQLAlchemy&nbsp;:class:`~sqlalchemy.orm.query.Query`&nbsp;subclass&nbsp;with&nbsp;convenience&nbsp;methods&nbsp;for&nbsp;querying&nbsp;in&nbsp;a&nbsp;web&nbsp;application.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;the&nbsp;default&nbsp;:attr:`~Model.query`&nbsp;object&nbsp;used&nbsp;for&nbsp;models,&nbsp;and&nbsp;exposed&nbsp;as&nbsp;:attr:`~SQLAlchemy.Query`.<br>
+Override&nbsp;the&nbsp;query&nbsp;class&nbsp;for&nbsp;an&nbsp;individual&nbsp;model&nbsp;by&nbsp;subclassing&nbsp;this&nbsp;and&nbsp;setting&nbsp;:attr:`~Model.query_class`.</tt></dl>
+
+<hr>
+Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__tablename__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Book">class <strong>Book</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Base&nbsp;class&nbsp;for&nbsp;SQLAlchemy&nbsp;declarative&nbsp;base&nbsp;model.<br>
+&nbsp;<br>
+To&nbsp;define&nbsp;models,&nbsp;subclass&nbsp;:attr:`db.Model&nbsp;&lt;SQLAlchemy.Model&gt;`,&nbsp;not&nbsp;this&nbsp;class.<br>
+To&nbsp;customize&nbsp;``db.Model``,&nbsp;subclass&nbsp;this&nbsp;and&nbsp;pass&nbsp;it&nbsp;as&nbsp;``model_class``&nbsp;to&nbsp;:func:`SQLAlchemy`.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="models.html#Book">Book</a></dd>
+<dd>flask_sqlalchemy.Model</dd>
+<dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Book-__init__"><strong>__init__</strong></a>(self, id, numberOfPages, isbn, name, publisher, country, povCharacter_ids, author, mediaType, released, character_ids)</dt></dl>
+
+<dl><dt><a name="Book-toDict"><strong>toDict</strong></a>(self)</dt></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="Book-convertSort"><strong>convertSort</strong></a>(sort)</dt></dl>
+
+<dl><dt><a name="Book-getSorts"><strong>getSorts</strong></a>()</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>author</strong></dt>
+</dl>
+<dl><dt><strong>character_ids</strong></dt>
+</dl>
+<dl><dt><strong>country</strong></dt>
+</dl>
+<dl><dt><strong>id</strong></dt>
+</dl>
+<dl><dt><strong>isbn</strong></dt>
+</dl>
+<dl><dt><strong>mediaType</strong></dt>
+</dl>
+<dl><dt><strong>name</strong></dt>
+</dl>
+<dl><dt><strong>numberOfPages</strong></dt>
+</dl>
+<dl><dt><strong>povCharacter_ids</strong></dt>
+</dl>
+<dl><dt><strong>publisher</strong></dt>
+</dl>
+<dl><dt><strong>released</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f1a1581ab70; Book&gt;</dl>
+
+<dl><dt><strong>__table__</strong> = Table('book', MetaData(bind=None), Column('id', ...', String(length=80), table=&lt;book&gt;), schema=None)</dl>
+
+<dl><dt><strong>__table_args__</strong> = {'extend_existing': True}</dl>
+
+<hr>
+Methods inherited from flask_sqlalchemy.Model:<br>
+<dl><dt><strong>query</strong></dt>
+</dl>
+
+<hr>
+Data and other attributes inherited from flask_sqlalchemy.Model:<br>
+<dl><dt><strong>metadata</strong> = MetaData(bind=None)</dl>
+
+<dl><dt><strong>query_class</strong> = &lt;class 'flask_sqlalchemy.BaseQuery'&gt;<dd><tt>SQLAlchemy&nbsp;:class:`~sqlalchemy.orm.query.Query`&nbsp;subclass&nbsp;with&nbsp;convenience&nbsp;methods&nbsp;for&nbsp;querying&nbsp;in&nbsp;a&nbsp;web&nbsp;application.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;the&nbsp;default&nbsp;:attr:`~Model.query`&nbsp;object&nbsp;used&nbsp;for&nbsp;models,&nbsp;and&nbsp;exposed&nbsp;as&nbsp;:attr:`~SQLAlchemy.Query`.<br>
+Override&nbsp;the&nbsp;query&nbsp;class&nbsp;for&nbsp;an&nbsp;individual&nbsp;model&nbsp;by&nbsp;subclassing&nbsp;this&nbsp;and&nbsp;setting&nbsp;:attr:`~Model.query_class`.</tt></dl>
+
+<hr>
+Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__tablename__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Character">class <strong>Character</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Base&nbsp;class&nbsp;for&nbsp;SQLAlchemy&nbsp;declarative&nbsp;base&nbsp;model.<br>
+&nbsp;<br>
+To&nbsp;define&nbsp;models,&nbsp;subclass&nbsp;:attr:`db.Model&nbsp;&lt;SQLAlchemy.Model&gt;`,&nbsp;not&nbsp;this&nbsp;class.<br>
+To&nbsp;customize&nbsp;``db.Model``,&nbsp;subclass&nbsp;this&nbsp;and&nbsp;pass&nbsp;it&nbsp;as&nbsp;``model_class``&nbsp;to&nbsp;:func:`SQLAlchemy`.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="models.html#Character">Character</a></dd>
+<dd>flask_sqlalchemy.Model</dd>
+<dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Character-__init__"><strong>__init__</strong></a>(self, id, culture, titles, spouse_id, died, aliases, name, born, gender, father_id, allegiances_ids, povBook_ids, playedBy, book_ids, tvSeries, mother_id, imageLink)</dt></dl>
+
+<dl><dt><a name="Character-toDict"><strong>toDict</strong></a>(self)</dt></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="Character-convertSort"><strong>convertSort</strong></a>(sort)</dt></dl>
+
+<dl><dt><a name="Character-getSorts"><strong>getSorts</strong></a>()</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>aliases</strong></dt>
+</dl>
+<dl><dt><strong>allegiances_ids</strong></dt>
+</dl>
+<dl><dt><strong>book_ids</strong></dt>
+</dl>
+<dl><dt><strong>born</strong></dt>
+</dl>
+<dl><dt><strong>culture</strong></dt>
+</dl>
+<dl><dt><strong>died</strong></dt>
+</dl>
+<dl><dt><strong>father_id</strong></dt>
+</dl>
+<dl><dt><strong>gender</strong></dt>
+</dl>
+<dl><dt><strong>id</strong></dt>
+</dl>
+<dl><dt><strong>imageLink</strong></dt>
+</dl>
+<dl><dt><strong>mother_id</strong></dt>
+</dl>
+<dl><dt><strong>name</strong></dt>
+</dl>
+<dl><dt><strong>playedBy</strong></dt>
+</dl>
+<dl><dt><strong>povBook_ids</strong></dt>
+</dl>
+<dl><dt><strong>spouse_id</strong></dt>
+</dl>
+<dl><dt><strong>swornHouses_ids</strong></dt>
+</dl>
+<dl><dt><strong>titles</strong></dt>
+</dl>
+<dl><dt><strong>tvSeries</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f1a15827630; Character&gt;</dl>
+
+<dl><dt><strong>__table__</strong> = Table('character', MetaData(bind=None), Column('...ing(length=300), table=&lt;character&gt;), schema=None)</dl>
+
+<dl><dt><strong>__table_args__</strong> = {'extend_existing': True}</dl>
+
+<hr>
+Methods inherited from flask_sqlalchemy.Model:<br>
+<dl><dt><strong>query</strong></dt>
+</dl>
+
+<hr>
+Data and other attributes inherited from flask_sqlalchemy.Model:<br>
+<dl><dt><strong>metadata</strong> = MetaData(bind=None)</dl>
+
+<dl><dt><strong>query_class</strong> = &lt;class 'flask_sqlalchemy.BaseQuery'&gt;<dd><tt>SQLAlchemy&nbsp;:class:`~sqlalchemy.orm.query.Query`&nbsp;subclass&nbsp;with&nbsp;convenience&nbsp;methods&nbsp;for&nbsp;querying&nbsp;in&nbsp;a&nbsp;web&nbsp;application.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;the&nbsp;default&nbsp;:attr:`~Model.query`&nbsp;object&nbsp;used&nbsp;for&nbsp;models,&nbsp;and&nbsp;exposed&nbsp;as&nbsp;:attr:`~SQLAlchemy.Query`.<br>
+Override&nbsp;the&nbsp;query&nbsp;class&nbsp;for&nbsp;an&nbsp;individual&nbsp;model&nbsp;by&nbsp;subclassing&nbsp;this&nbsp;and&nbsp;setting&nbsp;:attr:`~Model.query_class`.</tt></dl>
+
+<hr>
+Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__tablename__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="House">class <strong>House</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Base&nbsp;class&nbsp;for&nbsp;SQLAlchemy&nbsp;declarative&nbsp;base&nbsp;model.<br>
+&nbsp;<br>
+To&nbsp;define&nbsp;models,&nbsp;subclass&nbsp;:attr:`db.Model&nbsp;&lt;SQLAlchemy.Model&gt;`,&nbsp;not&nbsp;this&nbsp;class.<br>
+To&nbsp;customize&nbsp;``db.Model``,&nbsp;subclass&nbsp;this&nbsp;and&nbsp;pass&nbsp;it&nbsp;as&nbsp;``model_class``&nbsp;to&nbsp;:func:`SQLAlchemy`.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="models.html#House">House</a></dd>
+<dd>flask_sqlalchemy.Model</dd>
+<dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="House-__init__"><strong>__init__</strong></a>(self, id, currentLord_id, heir_id, founded, founder_id, diedOut, titles, coatOfArms, words, seats, overlord_id, name, swornMember_ids, alliance_id, region, ancestralWeapons)</dt></dl>
+
+<dl><dt><a name="House-toDict"><strong>toDict</strong></a>(self)</dt></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="House-convertSort"><strong>convertSort</strong></a>(sort)</dt></dl>
+
+<dl><dt><a name="House-getSorts"><strong>getSorts</strong></a>()</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>alliance_id</strong></dt>
+</dl>
+<dl><dt><strong>ancestralWeapons</strong></dt>
+</dl>
+<dl><dt><strong>coatOfArms</strong></dt>
+</dl>
+<dl><dt><strong>currentLord</strong></dt>
+</dl>
+<dl><dt><strong>currentLord_id</strong></dt>
+</dl>
+<dl><dt><strong>diedOut</strong></dt>
+</dl>
+<dl><dt><strong>founded</strong></dt>
+</dl>
+<dl><dt><strong>founder</strong></dt>
+</dl>
+<dl><dt><strong>founder_id</strong></dt>
+</dl>
+<dl><dt><strong>heir</strong></dt>
+</dl>
+<dl><dt><strong>heir_id</strong></dt>
+</dl>
+<dl><dt><strong>id</strong></dt>
+</dl>
+<dl><dt><strong>name</strong></dt>
+</dl>
+<dl><dt><strong>overlord_id</strong></dt>
+</dl>
+<dl><dt><strong>region</strong></dt>
+</dl>
+<dl><dt><strong>seats</strong></dt>
+</dl>
+<dl><dt><strong>swornMember_ids</strong></dt>
+</dl>
+<dl><dt><strong>titles</strong></dt>
+</dl>
+<dl><dt><strong>words</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f1a1583a1d0; House&gt;</dl>
+
+<dl><dt><strong>__table__</strong> = Table('house', MetaData(bind=None), Column('id',...(String(length=80)), table=&lt;house&gt;), schema=None)</dl>
+
+<dl><dt><strong>__table_args__</strong> = {'extend_existing': True}</dl>
+
+<hr>
+Methods inherited from flask_sqlalchemy.Model:<br>
+<dl><dt><strong>query</strong></dt>
+</dl>
+
+<hr>
+Data and other attributes inherited from flask_sqlalchemy.Model:<br>
+<dl><dt><strong>metadata</strong> = MetaData(bind=None)</dl>
+
+<dl><dt><strong>query_class</strong> = &lt;class 'flask_sqlalchemy.BaseQuery'&gt;<dd><tt>SQLAlchemy&nbsp;:class:`~sqlalchemy.orm.query.Query`&nbsp;subclass&nbsp;with&nbsp;convenience&nbsp;methods&nbsp;for&nbsp;querying&nbsp;in&nbsp;a&nbsp;web&nbsp;application.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;the&nbsp;default&nbsp;:attr:`~Model.query`&nbsp;object&nbsp;used&nbsp;for&nbsp;models,&nbsp;and&nbsp;exposed&nbsp;as&nbsp;:attr:`~SQLAlchemy.Query`.<br>
+Override&nbsp;the&nbsp;query&nbsp;class&nbsp;for&nbsp;an&nbsp;individual&nbsp;model&nbsp;by&nbsp;subclassing&nbsp;this&nbsp;and&nbsp;setting&nbsp;:attr:`~Model.query_class`.</tt></dl>
+
+<hr>
+Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__tablename__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>database</strong> = &lt;SQLAlchemy engine=postgres://swe16:***@swe16.cevmyqqxetxv.us-west-2.rds.amazonaws.com:5432/Swe16db&gt;</td></tr></table>
+</body></html>
