@@ -22,6 +22,10 @@ Execute the command: ```python application.py```
 Navigate to the parent directory (by default it is "idb").  
 Execute the command: ```python -m app.tests```
 
+### How to fill DB
+Run with command: ```python -m app.scripts.fill_database``` (it might take quite a bit of time)
+To see what is in the DB: ```python -m app.scripts.print_database```
+
 ### Members
 [Collin Caram](https://github.com/collinc777)  
 [Greg McDonald](https://github.com/gregorymcdonald)  

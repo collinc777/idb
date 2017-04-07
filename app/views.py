@@ -109,9 +109,9 @@ def getDataList(listing, params=None):
             dataQuery = dataQuery.order_by(getattr(model, model.convertSort(params["sortParam"])))
     
     modelInstances = []
-    if "filter" in params:
+    if "filterText" in params:
         #only does exact match on name for now
-        dataQuery = dataQuery.filter(model.name.match(params["filter"]))
+        dataQuery = dataQuery.filter(model.name.contains(params["filterText"]))
 
     numberOfResults = len(dataQuery.all())
     page_data = {"currentPage": page, "numberPages": max(numberOfResults // 20, 1)}
