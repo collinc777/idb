@@ -14,8 +14,8 @@
 		Current Lord
 	</h4>
 	<div class="card-block">
-		{% if house.currentLord in character_links %}
-		<a href="{{ character_links[house.currentLord].link }}">{{ character_links[house.currentLord].name }} </a>
+		{% if house.currentLord_id in character_links %}
+		<a href="/characters/{{ house.currentLord_id }}">{{ house.currentLord_id }}</a>
 		{% endif %}
 	</div>
 </div>
@@ -24,11 +24,7 @@
 		Member of Alliance
 	</h4>
 	<div class="card-block">
-		{% if house.alliance in alliance_links %}
-		<a href="{{ alliance_links[house.alliance].link }}">{{ alliance_links[house.alliance].name }} </a>
-		{% else %}
-		House is not a member of any alliance.
-		{% endif %}
+		<a href="/alliances/{{ house.alliance_id }}">{{ house.alliance_id }}</a>
 	</div>
 </div>
 <div class="card">
@@ -60,10 +56,7 @@
 		Overlord House
 	</h4>
 	<div class="card-block">
-		{% if house.overlord in house_links %}
-		<a href="{{ house_links[house.overlord].link }}">{{ house_links[house.overlord].name }} </a>
-		
-		{% endif %}
+		<a href="/houses/{{ house.overlord_id }}">{{ house.overlord_id }} </a>
 	</div>
 </div>
 <div class="card">
@@ -87,10 +80,8 @@
 		Sworn Members
 	</h4>
 	<div class="card-block">
-	{% for char in house.swornMembers %}
-		{% if char in character_links %}
-			<h5><a href="{{ character_links[char].link }}">{{ character_links[char].name }}  </a></h5>
-		{% endif %}
+	{% for char_id in house.swornMember_ids %}
+		<h5><a href="/characters/{{ char_id }}">{{ char_id }}</a></h5>
 	{% else %}
 		House has no sworn members
 	{% endfor %}

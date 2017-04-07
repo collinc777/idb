@@ -73,11 +73,11 @@ class Pagination extends React.Component {
         console.log("Rerendering currentPage: ", currentPage);
         var firstPage = Math.max(currentPage - 3, 1);
         if(firstPage + 6 > this.state.numberPages){
-            firstPage = this.state.numberPages - 6;
+            firstPage = Math.max(this.state.numberPages - 6, 1);
         }
 
         if(currentPage == 1){
-            paginationElements.push(<PageLink key={Math.random(1, 999999)} link={previous} disabled={disabled} onChange={this.handleChange}/>);
+            paginationElements.push(<PageLink key={Math.random(1, 999999)} link={previous} disabled={disabled}/>);
         }else{
             paginationElements.push(<PageLink key={Math.random(1, 999999)} link={previous} onChange={this.handleChange}/>);
         }
@@ -95,8 +95,8 @@ class Pagination extends React.Component {
             i++;
         }
 
-        if(currentPage == this.state.numberPages - 1){
-            paginationElements.push(<PageLink key={Math.random(1, 999999)} link={next} disabled={disabled} onChange={this.handleChange}/>);
+        if(currentPage == this.state.numberPages){
+            paginationElements.push(<PageLink key={Math.random(1, 999999)} link={next} disabled={disabled}/>);
         }else{
             paginationElements.push(<PageLink key={Math.random(1, 999999)} link={next} onChange={this.handleChange}/>);
         }
