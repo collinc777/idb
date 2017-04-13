@@ -1,9 +1,14 @@
 var updateGridAndPagination = null;
+var updateSearchAndPagination = null;
 
 var ajaxModel = {
     dataURL: null,
+    modelURL: null,
     updateGridDataCallback: null,
     updatePaginationCallback: null,
+    updateResultsDataCallback: null,
+    onSearchPage: false,
+    currentSearchQuery: null,
     currentPage: 1,
     currentSortParam: "Name",
     currentSortAscending: 1,
@@ -36,6 +41,19 @@ var ajaxModel = {
             this.getJSON(url, updateGridAndPagination);
         }
     },
+    applySearchPage: function(){
+        if(this.dataURL === null){
+            window.alert("DataURL is undefined, cannot filter");
+        }else{
+            console.log("Page: " + this.currentPage);
+
+            var url = this.dataURL;
+            url += "?query=" + this.currentSearchQuery;
+            url += "&page=" + this.currentPage;
+            
+            this.getJSON(url, updateSearchAndPagination);
+        }
+    },
     sortData: function(field, ascending){
         this.currentSortParam = field;
         this.currentSortAscending = ascending;
@@ -52,7 +70,11 @@ var ajaxModel = {
     setCurrentPage: function(page){
         this.currentPage = page;
 
-        this.applyPageSortFilter();
+        if(this.onSearchPage){
+            this.applySearchPage();
+        }else{
+            this.applyPageSortFilter();
+        }
     }
 };
 
@@ -64,7 +86,19 @@ updateGridAndPagination = function(dataOrError){
         window.alert("API request malformed: " + dataOrError["error"]);
     }else{
         console.log("Data successful, updating grid and pages");
-        ajaxModel.updateGridDataCallback(dataOrError["cardData"]);
+        ajaxModel.updateGridDataCallback(dataOrError["modelData"]);
+        ajaxModel.updatePaginationCallback(dataOrError["pageData"]);
+    }
+};
+
+updateSearchAndPagination = function(dataOrError){
+    console.log("Got data back: ");
+    console.log(dataOrError);
+    if(dataOrError["error"] !== undefined){
+        window.alert("API request malformed: " + dataOrError["error"]);
+    }else{
+        console.log("Data successful, updating grid and pages");
+        ajaxModel.updateResultsDataCallback(dataOrError["resultsData"]);
         ajaxModel.updatePaginationCallback(dataOrError["pageData"]);
     }
 };

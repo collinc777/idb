@@ -1,0 +1,87 @@
+<div class="container-fluid">
+	<div class="col-md-4 col-xs-12">
+	 {{ character.name }}
+	</div>
+	<div class="col-md-4 col-xs-12">
+	 {{ character.culture }}
+	</div>
+	<div class="col-md-4 col-xs-12">
+	 {{ book.publisher }}
+	</div>
+</div>
+
+<div class="details">
+<div class="card">
+	<div class="card-header text-center">
+		<h1 class="cursive">{{ character.name }}</h1>
+	</div>
+	<div class="card-block text-center">
+		<img src="/static/img/chars/{{ character.id }}.jpg">
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Houses
+	</h4>
+	<div class="card-block">
+	{% for allegiance_id in character.allegiances_ids %}
+		<h5><a href="/houses/{{ allegiance_id }}">{{ allegiance_id }} (House)</a></h5>
+	{% else %}
+		<h5>This character belongs to no houses</h5>
+	{% endfor %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Culture
+	</h4>
+	<div class="card-block">
+		{{ character.culture }}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Gender
+	</h4>
+	<div class="card-block">
+		{% if character.male %}Male{% else %}Female{% endif %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Titles
+	</h4>
+	<div class="card-block">
+	{% for title in character.titles %}
+		<h5>{{ title }}</h5>
+	{% else %}
+		<h5>A character has no names</h5>
+	{% endfor %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Died
+	</h4>
+	<div class="card-block">
+	{% if character.died %}
+		<h5>{{ character.died }}</h5>
+	{% else %}
+		<h5>Alive... for now.</h5>
+	{% endif %}
+	</div>
+</div>
+<div class="card">
+	<h4 class="card-header">
+		Books This Character Appears In
+	</h4>
+	<div class="card-block">
+	{% for book_id in character.book_ids %}
+		<h5><a href="/books/{{ book_id }}">{{ book_id }} (Book)</a></h5>
+	{% else %}
+		<h5>This character appears in no books</h5>
+	{% endfor %}
+	</div>
+</div>
+</div>
+{% endblock %}

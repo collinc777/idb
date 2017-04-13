@@ -5,6 +5,7 @@
     <title>GoT Thrones?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css?nocache={{ nocache }}">
     <link rel="stylesheet" href="/static/css/style.css?nocache={{ nocache }}">
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
@@ -36,6 +37,14 @@
                 </li>
             {% endfor %}
         </ul>
+        <form class="form-inline">
+          <div class="input-group">
+              <input id="searchBar" class="form-control" type="text" placeholder="Search...">
+              <button id="searchButton" class="input-group-addon btn">
+                <span class="fa fa-search"></span>
+              </button>
+          </div>
+        </form>
     </div>
 </nav>
 <div id="contentContainer" class="container-fluid backgroundGradient">
@@ -43,6 +52,7 @@
 {% endblock %}
 </div>
 
+<script src="/static/scripts/base.js?nocache={{ nocache }}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>

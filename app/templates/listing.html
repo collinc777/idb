@@ -3,13 +3,16 @@
 <script src="/static/scripts/AjaxModel.jsx?nocache={{ nocache }}" type="text/jsx"></script>
 
 <script type="text/jsx">
-    var initialCardAndPageData = {{ data | tojson }};
-    var initialCardData = initialCardAndPageData["cardData"];
-    var initialPageData = initialCardAndPageData["pageData"];
+    var initialModelAndPageData = {{ data | tojson }};
+    var initialModelData = initialModelAndPageData["modelData"];
+    var initialPageData = initialModelAndPageData["pageData"];
+
     var listingTitle = "{{ listing.title }}";
     var listingSorts = {{ listing.sorts | tojson }};
     var listingFilterPlaceholder = "Name or property...";
+
     ajaxModel.dataURL = "/api{{ listing.url }}";
+    ajaxModel.modelURL = "{{ listing.url }}";
 </script>
 
 <script src="/static/scripts/GridLayout.jsx?nocache={{ nocache }}" type="text/jsx"></script>
@@ -20,7 +23,7 @@
 
 <div id="listingContainer">
     <script type="text/jsx">
-        ReactDOM.render(<ListingContainer listing_card_data={initialCardData} listing_page_data={initialPageData} listing_title={listingTitle} listing_sorts={listingSorts} listing_filter_placeholder={listingFilterPlaceholder}/>, document.getElementById("listingContainer"));
+        ReactDOM.render(<ListingContainer listing_model_data={initialModelData} listing_page_data={initialPageData} listing_title={listingTitle} listing_sorts={listingSorts} listing_filter_placeholder={listingFilterPlaceholder}/>, document.getElementById("listingContainer"));
     </script>
 </div>
 {% endblock %}

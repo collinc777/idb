@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<script src="/static/scripts/AjaxModel.jsx?nocache={{ nocache }}" type="text/jsx"></script>
+
+<script src="/static/scripts/SearchResultCard.jsx?nocache={{ nocache }}" type="text/jsx"></script>
+<script src="/static/scripts/SearchResults.jsx?nocache={{ nocache }}" type="text/jsx"></script>
+
+<script src="/static/scripts/Pagination.jsx?nocache={{ nocache }}" type="text/jsx"></script>
+<script src="/static/scripts/SearchLayout.jsx?nocache={{ nocache }}" type="text/jsx"></script>
+
+<script type="text/jsx">
+	var query = "{{ query }}";
+	var numberOfResults = {{ numberOfResults }};
+	var searchResultsData = {{ searchResults | tojson }};
+	var pageData = {{ pageData | tojson }};
+    ajaxModel.dataURL = "/api/search";
+    ajaxModel.onSearchPage = true;
+    ajaxModel.currentSearchQuery = query;
+</script>
+<div id="searchContainer">
+    <script type="text/jsx">
+        ReactDOM.render(<SearchContainer query={query} numberOfResults={numberOfResults} searchResultsData={searchResultsData} pageData={pageData}/>, document.getElementById("searchContainer"));
+    </script>
+</div>
+{% endblock %}

@@ -2,7 +2,16 @@
 {% block content %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- Carousel -->
+
+<div id="searchBarContainer" class="container text-center">
+  <div class="input-group input-group-lg">
+    <input id="frontSearchBar" type="text" class="form-control form-control-lg" placeholder="Search for characters, houses..." />
+    <button id="frontSearchButton" class="input-group-addon btn">
+    <span class="fa fa-search"></span>
+    </button>
+  </div>  
+</div>
+
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">

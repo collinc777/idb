@@ -2,7 +2,7 @@
 
 from flask import render_template, request
 from app import application
-from app.decorators import returns_json, takes_query_params
+from app.decorators import returns_json, takes_api_params, takes_search_params
 from app.models import Book, Character, Alliance, House
 from sqlalchemy import desc
 import json
@@ -21,7 +21,6 @@ HL_ALLIANCES = 3
 HL_BOOKS = 4
 HL_DEVNOTES = 5
 HL_ABOUT = 6
-
 
 def load_listing(filename):
     with open(filename) as data_file:
@@ -84,16 +83,52 @@ def runTestsForAboutPage():
 
 ### Begin Landing Page ###
 
-@application.route('/', methods=['GET', 'POST'])
+@application.route('/', methods=['GET'])
 def index():
     context = create_context(0)
     return render_template('index.html', **context)
 
 ### End Landing Page ###
 
-def getDataList(listing, params=None):
-    if params is None:
-        return [] #should not happen due to decorator
+
+### Begin Search Page and API ###
+
+fakeDetails = "Highlight the query words that were searched for. Arya Stark, House Stark of Winterfell, A Game of thrones"
+fakeHouseResult = dict(resultID=362, resultModelName="House Stark of Winterfell", resultModelType="house", resultDetails=fakeDetails)
+fakeCharacterResult = dict(resultID=148, resultModelName="Arya Stark", resultModelType="character", resultDetails=fakeDetails)
+fakeBookResult = dict(resultID=1, resultModelName="A Game of Thrones", resultModelType="book", resultDetails=fakeDetails)
+fakes = (fakeHouseResult, fakeCharacterResult, fakeBookResult)
+fakeSearchResults = [fakes[(i % 3)] for i in range(0, 60)]
+
+@application.route('/search', methods=['GET'])
+@takes_search_params
+def search(query):
+    searchResults = fakeSearchResults[:10]
+    page_data = {"currentPage": 1, "numberPages": max(len(fakeSearchResults) // 10, 1)}
+
+    context = create_context(0, query=query, numberOfResults=len(searchResults), searchResults=searchResults, pageData=page_data)
+    return render_template('search.html', **context)
+
+
+@application.route('/api/search', methods=['GET'])
+@returns_json
+@takes_search_params
+def get_search(**kwargs):
+    q = kwargs.get("query")
+    page = kwargs.get("page")
+    page = max(1, page)
+
+    pageStart = (page - 1) * 10
+    pageEnd = page * 10
+    searchResults = fakeSearchResults[pageStart:pageEnd]
+
+    page_data = {"currentPage": page, "numberPages": max(len(fakeSearchResults) // 10, 1)}
+    return json.dumps({"resultsData": searchResults, "pageData": page_data})
+
+### End Landing Page ###
+
+
+def getDataList(listing, params):
     cardURL = listing["url"]
     print("Params: ", params)
     dataListing = list()
@@ -119,10 +154,10 @@ def getDataList(listing, params=None):
     modelInstances = dataQuery.slice((page-1)*20, page*20).all()
 
     dictResults = [c.toDict() for c in modelInstances]
-    print([result["name"] for result in dictResults])
-    card_data = [dict(cardURL=cardURL, cardID=res["id"], cardName=res["name"]) for i, res in enumerate(dictResults)]
+    print(dictResults)
+    #card_data = [dict(cardURL=cardURL, cardID=res["id"], cardName=res["name"]) for i, res in enumerate(dictResults)]
     
-    listing_list = {"pageData": page_data, "cardData": card_data}
+    listing_list = {"pageData": page_data, "modelData": dictResults}
     #modelInstances = dataQuery.slice((page-1)*20, page*20).all()
     #jsonResults = [modelInstances[i].toJSON() for i in range((page-1)*20, min(len(modelInstances), page*20))]
 
@@ -139,7 +174,7 @@ def getDataList(listing, params=None):
 
 @application.route('/api/characters', methods=['GET', 'POST'])
 @returns_json
-@takes_query_params
+@takes_api_params
 def get_characters(**kwargs):
     json_out = getDataList(character_listing, kwargs)
     return json.dumps(json_out)
@@ -147,7 +182,7 @@ def get_characters(**kwargs):
 
 @application.route('/api/houses', methods=['GET', 'POST'])
 @returns_json
-@takes_query_params
+@takes_api_params
 def get_houses(**kwargs):
     json_out = getDataList(house_listing, kwargs)
     return json.dumps(json_out)
@@ -155,7 +190,7 @@ def get_houses(**kwargs):
 
 @application.route('/api/alliances', methods=['GET', 'POST'])
 @returns_json
-@takes_query_params
+@takes_api_params
 def get_alliances(**kwargs):
     json_out = getDataList(alliance_listing, kwargs)
     return json.dumps(json_out)
@@ -163,7 +198,7 @@ def get_alliances(**kwargs):
 
 @application.route('/api/books', methods=['GET', 'POST'])
 @returns_json
-@takes_query_params
+@takes_api_params
 def get_books(**kwargs):
     json_out = getDataList(book_listing, kwargs)
     return json.dumps(json_out)

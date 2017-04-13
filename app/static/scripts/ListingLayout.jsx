@@ -19,7 +19,7 @@ class ListingContainer extends React.Component {
         super(props);
         this.state = {
             listingTitle: props.listing_title,
-            cardData: props.listing_card_data,
+            modelData: props.listing_model_data,
             pageData: props.listing_page_data,
             sorts: props.listing_sorts,
             filterPlaceholder: props.listing_filter_placeholder
@@ -32,7 +32,7 @@ class ListingContainer extends React.Component {
                     <TitleLayout title={this.state.listingTitle}/>
                     <SortAndFilterCards sorts={this.state.sorts} filterPlaceholder={this.state.filterPlaceholder}/>
                     <Pagination currentPage={this.state.pageData.currentPage} numberPages={this.state.pageData.numberPages}/>
-                    <GridLayout data={this.state.cardData}/>
+                    <GridLayout modelData={this.state.modelData}/>
                 </div>);
     }
 }

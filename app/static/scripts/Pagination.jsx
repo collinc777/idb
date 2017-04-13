@@ -24,8 +24,13 @@ class PageLink extends React.Component {
             classNameIfAny += this.state.disabled + " ";
         }
 
+        var onClick = this.handleClick;
+        if(this.state.disabled !== undefined){
+            onClick="";
+        }
+
         return (
-            <a className={classNameIfAny} href="#" onClick={this.handleClick}>{this.state.link}</a>
+            <a className={classNameIfAny} href="#" onClick={onClick}>{this.state.link}</a>
         )
     }
 }
@@ -41,15 +46,13 @@ class Pagination extends React.Component {
     }
 
     componentWillMount() {
-        ajaxModel.updatePaginationCallback = (data) => {
-            console.log("Updating pagination with: ", data);
-            this.setState({currentPage: data["currentPage"], numberPages: data["numberPages"]});
+        ajaxModel.updatePaginationCallback = (pageData) => {
+            console.log("Updating pagination with: ", pageData);
+            this.setState({currentPage: pageData["currentPage"], numberPages: pageData["numberPages"]});
         }
     }
 
     handleChange(page) {
-        console.log(this);
-        console.log("Page: ", page);
         if(page === "Previous"){
             page = this.state.currentPage - 1;
         }else if(page === "Next"){
@@ -66,7 +69,7 @@ class Pagination extends React.Component {
         var paginationElements = [];
 
         var disabled = "disabled";
-        var active = "active";
+        var active = "active ";
         var previous = "Previous";
         var next = "Next";
 
