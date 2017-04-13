@@ -1,6 +1,6 @@
 # We'll define all of our views in this file. 
 
-from flask import render_template, request
+from flask import render_template, request, render_template_string
 from app import application
 from app.decorators import returns_json, takes_api_params, takes_search_params
 from app.models import Book, Character, Alliance, House
@@ -93,12 +93,17 @@ def index():
 
 ### Begin Search Page and API ###
 
-fakeDetails = "Highlight the query words that were searched for. Arya Stark, House Stark of Winterfell, A Game of thrones"
-fakeHouseResult = dict(resultID=362, resultModelName="House Stark of Winterfell", resultModelType="house", resultDetails=fakeDetails)
-fakeCharacterResult = dict(resultID=148, resultModelName="Arya Stark", resultModelType="character", resultDetails=fakeDetails)
-fakeBookResult = dict(resultID=1, resultModelName="A Game of Thrones", resultModelType="book", resultDetails=fakeDetails)
+### What i want to do here is render these templates that I have made and make them the "details" part of each results listing
+fakeHouseDetails = "stuff yo"#render_template_string("resultsTemplates/house.html", house=dict(name="House Stark of Winterfell", region="Bumfuck nowhere", words="its late as fuck"))
+fakeCharacterDetails = "stuff yo"#render_template_string("resultsTemplates/character.html", character=dict(name="Arya Stark", gender="Female"))
+fakeBookDetails = "stuff yo"#render_template_string("resultsTemplates/book.html", book=dict(name="A Game of Thrones", author="GRRMartin", publisher="UTAustin bitch"))
+
+fakeHouseResult = dict(resultID=362, resultModelName="House Stark of Winterfell", resultModelType="house", resultDetails=fakeHouseDetails)
+fakeCharacterResult = dict(resultID=148, resultModelName="Arya Stark", resultModelType="character", resultDetails=fakeCharacterDetails)
+fakeBookResult = dict(resultID=1, resultModelName="A Game of Thrones", resultModelType="book", resultDetails=fakeBookDetails)
 fakes = (fakeHouseResult, fakeCharacterResult, fakeBookResult)
 fakeSearchResults = [fakes[(i % 3)] for i in range(0, 60)]
+
 
 @application.route('/search', methods=['GET'])
 @takes_search_params
@@ -106,7 +111,7 @@ def search(query):
     searchResults = fakeSearchResults[:10]
     page_data = {"currentPage": 1, "numberPages": max(len(fakeSearchResults) // 10, 1)}
 
-    context = create_context(0, query=query, numberOfResults=len(searchResults), searchResults=searchResults, pageData=page_data)
+    context = create_context(0, query=query, numberOfResults=len(fakeSearchResults), searchResults=searchResults, pageData=page_data)
     return render_template('search.html', **context)
 
 
@@ -221,7 +226,7 @@ def characters():
 
 @application.route('/houses', methods=['GET'])
 def houses():
-    context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing, default_params))
+    context = create_context(HL_HOUSES, listing=house_listing,  data=getDataList(house_listing, default_params))
     return render_template('listing.html', **context)
 
 
