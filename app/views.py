@@ -94,20 +94,22 @@ def index():
 ### Begin Search Page and API ###
 
 ### What i want to do here is render these templates that I have made and make them the "details" part of each results listing
-fakeHouseDetails = "stuff yo"#render_template_string("resultsTemplates/house.html", house=dict(name="House Stark of Winterfell", region="Bumfuck nowhere", words="its late as fuck"))
-fakeCharacterDetails = "stuff yo"#render_template_string("resultsTemplates/character.html", character=dict(name="Arya Stark", gender="Female"))
-fakeBookDetails = "stuff yo"#render_template_string("resultsTemplates/book.html", book=dict(name="A Game of Thrones", author="GRRMartin", publisher="UTAustin bitch"))
-
-fakeHouseResult = dict(resultID=362, resultModelName="House Stark of Winterfell", resultModelType="house", resultDetails=fakeHouseDetails)
-fakeCharacterResult = dict(resultID=148, resultModelName="Arya Stark", resultModelType="character", resultDetails=fakeCharacterDetails)
-fakeBookResult = dict(resultID=1, resultModelName="A Game of Thrones", resultModelType="book", resultDetails=fakeBookDetails)
-fakes = (fakeHouseResult, fakeCharacterResult, fakeBookResult)
-fakeSearchResults = [fakes[(i % 3)] for i in range(0, 60)]
 
 
 @application.route('/search', methods=['GET'])
 @takes_search_params
 def search(query):
+
+    fakeHouseDetails = render_template("resultsTemplates/house.html", house=dict(name="House Stark of Winterfell", region="Bumfuck nowhere", words="its late as fuck"))
+    fakeCharacterDetails = render_template("resultsTemplates/character.html", character=dict(name="Arya Stark", gender="Female"))
+    fakeBookDetails = render_template("resultsTemplates/book.html", book=dict(name="A Game of Thrones", author="GRRMartin", publisher="UTAustin bitch"))
+
+    fakeHouseResult = dict(resultID=362, resultModelName="House Stark of Winterfell", resultModelType="house", resultDetails=fakeHouseDetails)
+    fakeCharacterResult = dict(resultID=148, resultModelName="Arya Stark", resultModelType="character", resultDetails=fakeCharacterDetails)
+    fakeBookResult = dict(resultID=1, resultModelName="A Game of Thrones", resultModelType="book", resultDetails=fakeBookDetails)
+    fakes = (fakeHouseResult, fakeCharacterResult, fakeBookResult)
+    fakeSearchResults = [fakes[(i % 3)] for i in range(0, 60)]
+
     searchResults = fakeSearchResults[:10]
     page_data = {"currentPage": 1, "numberPages": max(len(fakeSearchResults) // 10, 1)}
 
@@ -125,6 +127,17 @@ def get_search(**kwargs):
 
     pageStart = (page - 1) * 10
     pageEnd = page * 10
+
+    fakeHouseDetails = render_template("resultsTemplates/house.html", house=dict(name="House Stark of Winterfell", region="Bumfuck nowhere", words="its late as fuck"))
+    fakeCharacterDetails = render_template("resultsTemplates/character.html", character=dict(name="Arya Stark", gender="Female"))
+    fakeBookDetails = render_template("resultsTemplates/book.html", book=dict(name="A Game of Thrones", author="GRRMartin", publisher="UTAustin bitch"))
+
+    fakeHouseResult = dict(resultID=362, resultModelName="House Stark of Winterfell", resultModelType="house", resultDetails=fakeHouseDetails)
+    fakeCharacterResult = dict(resultID=148, resultModelName="Arya Stark", resultModelType="character", resultDetails=fakeCharacterDetails)
+    fakeBookResult = dict(resultID=1, resultModelName="A Game of Thrones", resultModelType="book", resultDetails=fakeBookDetails)
+    fakes = (fakeHouseResult, fakeCharacterResult, fakeBookResult)
+    fakeSearchResults = [fakes[(i % 3)] for i in range(0, 60)]
+
     searchResults = fakeSearchResults[pageStart:pageEnd]
 
     page_data = {"currentPage": page, "numberPages": max(len(fakeSearchResults) // 10, 1)}
