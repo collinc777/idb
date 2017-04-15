@@ -35,7 +35,7 @@ class SearchResultCard extends React.Component {
     }
 
     render() {
-        var typeCapitalized = this.state.resultModelType.charAt(0).toUpperCase() + this.state.resultModelType.slice(1);
+        var typeCapitalized = ajaxModel.capitalizeWord(this.state.resultModelType);
         var resultURL = '/' + this.state.resultModelType + 's/' + this.state.resultID;
         return (
                 <div className="card searchResultCard">

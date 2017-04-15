@@ -8,7 +8,10 @@ from sqlalchemy import desc
 import json
 from random import randint
 import pdb
+from operator import attrgetter
 from subprocess import PIPE, check_output, STDOUT
+
+import pickle
 
 navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"},
               {"url": "/houses", "name": "Houses"}, {"url": "/alliances", "name": "Alliances"},
@@ -26,10 +29,47 @@ def load_listing(filename):
     with open(filename) as data_file:
         return json.load(data_file)
 
-allHouses = House.query.all()
-allCharacters = Character.query.all()
-allBooks = Book.query.all()
-allAlliances = Alliance.query.all()
+allHouses = pickle.load(open("data/allHouses.pickle", "rb")) # House.query.all()
+allCharacters = pickle.load(open("data/allCharacters.pickle", "rb")) # Character.query.all()
+allBooks = pickle.load(open("data/allBooks.pickle", "rb")) # Book.query.all()
+allAlliances = pickle.load(open("data/allAlliances.pickle", "rb")) # Alliance.query.all()
+
+def buildInstanceLinks(models):
+    modelLinks = dict()
+    for model in models:
+        modelDict = model.toDict()
+        modelLinks[modelDict["id"]] = {"url": "/" + modelDict["modelType"] + "s/" + str(modelDict["id"]), "name": modelDict["name"]}
+    return modelLinks
+
+
+house_links_list = buildInstanceLinks(allHouses)
+character_links_list = buildInstanceLinks(allCharacters)
+book_links_list = buildInstanceLinks(allBooks)
+alliance_links_list = buildInstanceLinks(allAlliances)
+
+
+@application.context_processor
+def house_links():
+    return dict(house_links=house_links_list)
+
+@application.context_processor
+def character_links():
+    return dict(character_links=character_links_list)
+
+@application.context_processor
+def book_links():
+    return dict(book_links=book_links_list)
+
+@application.context_processor
+def alliance_links():
+    return dict(alliance_links=alliance_links_list)
+
+# @application.context_processor
+# def getIdList(links_list):
+#     def getIdListInner(links_list):
+#         for link in links_list:
+#             return link["id"]
+#     return dict(getIdList=getIdListInner())
 
 # Each Listing requires a "title" and a "properties" array
 # properties are simply 2-element arrays of a human readable name and a dictionary key
@@ -44,6 +84,7 @@ character_listing = dict(model=Character, title="Characters", url="/characters",
 house_listing = dict(model=House, title="Houses", url="/houses", sorts=House.getHumanReadableSortableProperties())
 book_listing = dict(model=Book, title="Books", url="/books", sorts=Book.getHumanReadableSortableProperties())
 alliance_listing = dict(model=Alliance, title="Alliances", url="/alliances", sorts=Alliance.getHumanReadableSortableProperties())
+
 
 book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswords.jpg", 4: "thehedgeknight.jpg",
                5: "afeastforcrows.jpg", 6: "theswornsword.jpg", 7: "themysteryknight.jpg", 8: "adancewithdragons.jpg",
@@ -87,12 +128,45 @@ def getSearchResultData(query):
 
     allModels = allHouses + allCharacters + allBooks + allAlliances
 
-    results = list()
-    for model in allModels:
-        propertyMatches = getPropertyMatches(model, query)
-        if propertyMatches is not None and len(propertyMatches):
-            modelDict = model.toDict()
-            results.append(dict(resultID=modelDict["id"], resultModelName=modelDict["name"], resultModelType=modelDict["modelType"], resultPropertyMatches=propertyMatches))
+    # list of lists of dictionaries
+    fullQueryResults = list()
+    for word in query.split(" "):
+        wordResults = list()
+        for model in allModels:
+            propertyMatches = getPropertyMatches(model, word)
+            if propertyMatches is not None and len(propertyMatches):
+                modelDict = model.toDict()
+                wordResults.append(dict(resultID=modelDict["id"], resultModelName=modelDict["name"], resultModelType=modelDict["modelType"], resultPropertyMatches=propertyMatches))
+        fullQueryResults.append(wordResults)
+
+    print("Total query results: ", sum([len(wordResults) for wordResults in fullQueryResults]))
+
+    # dictionary with added properties, 
+    # so ties can be broken in this order: weight, resultPropertMatchesLength
+
+    weightedQueryResults = dict()
+    for wordResults in fullQueryResults:
+        for wordResult in wordResults:
+            rid = wordResult["resultID"]
+            if rid in weightedQueryResults:
+                weightedQueryResults[rid]["weight"] += 1
+                weightedQueryResults[rid]["resultPropertyMatches"].extend(wordResult["resultPropertyMatches"])
+            else:
+                weightedQueryResults[rid] = wordResult
+                weightedQueryResults[rid]["weight"] = 1
+            weightedQueryResults[rid]["resultPropertyMatchesLength"] = len(weightedQueryResults[rid]["resultPropertyMatches"])
+        
+    results = list(weightedQueryResults.values())
+    print(json.dumps(results))
+    """trimmed_results = list()
+    for r in results:
+        trimmed_results.append({k:v} for k,v in r if k in ["weight", "resultModelName"]]
+        
+        
+    json.dump(trimmed_results, open("data/fuck.json", "w"))
+    """
+
+    #results = sorted(results, key=attrgetter("weight"))
 
     return results
 
@@ -130,7 +204,7 @@ def get_search(**kwargs):
 
 ### End Landing Page ###
 
-def getDataList(listing, params):
+def getDataList(listing, params, modelLinks):
     cardURL = listing["url"]
     dataListing = list()
     model = listing["model"]
@@ -168,7 +242,7 @@ def getDataList(listing, params):
 
     dictResults = [c.toDict() for c in modelInstances]
     
-    listing_list = {"pageData": page_data, "modelData": dictResults}
+    listing_list = dict(pageData=page_data, modelData=dictResults, modelLinks=modelLinks)
     return listing_list
 
 ### Begin "API" Pages ###
@@ -219,29 +293,35 @@ def get_books(**kwargs):
 
 default_params = dict(page=1, sortParam="name", sortAscending=1)
 
-
 @application.route('/characters', methods=['GET'])
 def characters():
     character_data = get_characters()
-    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing, default_params))
+    # characters link to other characters, houses, books
+    model_links = dict(characters=character_links, houses=house_links, books=book_links)
+
+    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing, default_params, model_links))
     return render_template('listing.html', **context)
 
 
 @application.route('/houses', methods=['GET'])
 def houses():
-    context = create_context(HL_HOUSES, listing=house_listing,  data=getDataList(house_listing, default_params))
+    model_links = dict(characters=character_links, houses=house_links, alliances=alliance_links)
+
+    context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing, default_params, model_links))
     return render_template('listing.html', **context)
 
 
 @application.route('/alliances', methods=['GET'])
 def alliances():
-    context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing, default_params))
+    model_links = dict(characters=character_links, houses=house_links)
+    context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing, default_params, model_links))
     return render_template('listing.html', **context)
 
 
 @application.route('/books', methods=['GET'])
 def books():
-    context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing, default_params))
+    model_links = dict(characters=character_links)
+    context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing, default_params, model_links))
     return render_template('listing.html', **context)
 
 
@@ -249,7 +329,6 @@ def books():
 
 
 ### Begin "Detail" Pages ###
-
 @application.route("/characters/<charid>")
 def character(charid):
     global allCharacters
@@ -262,7 +341,7 @@ def character(charid):
 
     character = None
     for c in allCharacters:
-        if str(c.id) == str(charid):
+        if c.id == charid:
             character = c
     if character is None:
         context = create_context(HL_CHARACTERS, entity="Character", entity_id=charid)
@@ -285,6 +364,7 @@ def house(houseid):
     for h in allHouses:
         if h.id == houseid:
             house = h
+
     if house is None:
         context = create_context(HL_HOUSES, entity="House", entity_id=houseid)
         return render_template('notfound.html', **context)
@@ -303,9 +383,10 @@ def book(bookid):
         return render_template('notfound.html', **create_context(1, entity="Book", entity_id=bookid))
 
     book = None
-    for b in book_listing["data"]:
-        if b["id"] == bookid:
+    for b in allBooks:
+        if b.id == bookid:
             book = b
+
     if book is None:
         context = create_context(HL_BOOKS, entity="Book", entity_id=bookid)
         return render_template('notfound.html', **context)
@@ -324,9 +405,10 @@ def alliance(allianceid):
         return render_template('notfound.html', **create_context(1, entity="Alliance", entity_id=allianceid))
 
     alliance = None
-    for a in alliance_listing["data"]:
-        if a["id"] == allianceid:
+    for a in allAlliances:
+        if a.id == allianceid:
             alliance = a
+
     if alliance is None:
         context = create_context(HL_ALLIANCES, entity="Alliance", entity_id=allianceid)
         return render_template('notfound.html', **context)

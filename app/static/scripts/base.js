@@ -77,6 +77,9 @@ var ajaxModel = {
             this.applyPageSortFilter();
         }
     },
+    capitalizeWord: function(word){
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    },
     highlightPropertyMatches: function(){
         var resultPropertyMatchValues = $(".resultPropertyMatchValue");
         var lowercaseQuery = this.currentSearchQuery.toLowerCase();

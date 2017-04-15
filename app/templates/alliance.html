@@ -1,5 +1,3 @@
-{% extends "base.html" %}
-{% block content %}
 <div class="details">
 <div id="name" class="card">
 	<div class="card-header text-center">
@@ -14,7 +12,7 @@
 		Current Lord
 	</h4>
 	<div class="card-block">
-		<a href="/characters/{{ alliance.currentLord_id }}">{{ alliance.currentLord_id }} (Character)</a>
+		<a href="{{ character_links[alliance.currentLord_id]['url'] }}">{{ character_links[alliance.currentLord_id]['name'] }} (Character)</a>
 	</div>
 </div>
 <div id="headHouse_id" class="card">
@@ -23,7 +21,7 @@
 	</h4>
 	<div class="card-block">
 	
-		<a href="/houses/{{ alliance.headHouse_id }}">{{ alliance.headHouse_id }} (House)</a>
+		<a href="{{ house_links[alliance.headHouse_id]['url'] }}">{{ house_links[alliance.headHouse_id]['name'] }} (House)</a>
 	</div>
 </div>
 <div id="ancestralWeapons" class="card">
@@ -81,7 +79,7 @@
 	</h4>
 	<div class="card-block">
 		{% for sworn_id in alliance.swornHouse_ids %}
-			<h5><a href="/houses/{{ sworn_id }}">{{ sworn_id }} (House)</a></h5>
+			<h5><a href="{{ house_links[sworn_id]['url'] }}">{{ house_links[sworn_id]['name'] }} (House)</a></h5>
 		{% else %}
 			<h5>No sworn houses in this alliance</h5>
 		{% endfor %}
