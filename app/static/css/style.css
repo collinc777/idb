@@ -33,8 +33,6 @@ body {
 
 /* 3px margin is to space it out so the space actually appears */
 .searchResultCard a.searchResultHighlight {
-	margin-left: 3px;
-	margin-right: 3px;
 	font-weight: bold;
 	color: red;
 	text-decoration: underline;
@@ -57,6 +55,19 @@ body {
 @media (min-width: 768px){
 	.resultPropertyMatchValue {
 		border-left: solid gray 1px;
+	}
+}
+
+@media (max-width: 992px){
+	.smallSearchContainer {
+		margin-top: 10px;
+
+		width: 100%;
+	}
+
+	.smallSearchContainer .input-group {
+		width: 100% !important;
+		margin-right: -10px;
 	}
 }
 
@@ -87,10 +98,10 @@ body {
 .searchResultCard div, .searchResultCard a {
 	color: #f7f7f9;
 }
-
+/*
 .searchResultCard a {
 	text-decoration: underline;
-}
+}*/
 
 .searchResultCard a:hover {
 	color: #999;

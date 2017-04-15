@@ -75,26 +75,16 @@ def index():
 
 ### Begin Search Page and API ###
 
-allHouses = None
-allCharacters = None
-allBooks = None
-allAlliances = None
+allHouses = House.query.all()
+allCharacters = Character.query.all()
+allBooks = Book.query.all()
+allAlliances = Alliance.query.all()
 
 def getSearchResultData(query):
     global allHouses
     global allCharacters
     global allBooks
     global allAlliances
-
-    if allHouses is None:
-        # Cache so it doesn't have to grab ALL of them every time
-        # NOTE: This is an awful, awful way of doing things, because
-        # In a real, changing database, this would never reflect updates
-
-        allHouses = House.query.all()
-        allCharacters = Character.query.all()
-        allBooks = Book.query.all()
-        allAlliances = Alliance.query.all()
 
     allModels = allHouses + allCharacters + allBooks + allAlliances
 
@@ -105,16 +95,6 @@ def getSearchResultData(query):
             modelDict = model.toDict()
             results.append(dict(resultID=modelDict["id"], resultModelName=modelDict["name"], resultModelType=modelDict["modelType"], resultPropertyMatches=propertyMatches))
 
-
-    # fakeHousePropertyMatches = [{"propertyName":k, "propertyValue":v} for k,v in fakeHouse.items() if type(v) is str and len(v)]
-    # fakeCharacterPropertyMatches = [{"propertyName":k, "propertyValue":v} for k,v in fakeCharacter.items() if type(v) is str and len(v)]
-    # fakeBookPropertyMatches = [{"propertyName":k, "propertyValue":v} for k,v in fakeBook.items() if type(v) is str and len(v)]
-
-    # fakeHouseResult = dict(resultID=362, resultModelName="House Stark of Winterfell", resultModelType="house", resultPropertyMatches=fakeHousePropertyMatches)
-    # fakeCharacterResult = dict(resultID=148, resultModelName="Arya Stark", resultModelType="character", resultPropertyMatches=fakeCharacterPropertyMatches)
-    # fakeBookResult = dict(resultID=1, resultModelName="A Game of Thrones", resultModelType="book", resultPropertyMatches=fakeBookPropertyMatches)
-    # fakes = (fakeHouseResult, fakeCharacterResult, fakeBookResult)
-
     return results
 
 @application.route('/search', methods=['GET'])
@@ -122,8 +102,8 @@ def getSearchResultData(query):
 def search(query):
     searchResults = getSearchResultData(query)
 
-    searchResults = searchResults[:10]
-    page_data = {"currentPage": 1, "numberPages": max(len(searchResults) // 10, 1)}
+    searchResults = searchResults[:5]
+    page_data = {"currentPage": 1, "numberPages": max(len(searchResults) // 5, 1)}
 
     context = create_context(0, query=query, numberOfResults=len(searchResults), searchResults=searchResults, pageData=page_data)
     return render_template('search.html', **context)
@@ -137,13 +117,13 @@ def get_search(**kwargs):
     page = kwargs.get("page")
     page = max(1, page)
 
-    pageStart = (page - 1) * 10
-    pageEnd = page * 10
+    pageStart = (page - 1) * 5
+    pageEnd = page * 5
 
     searchResults = getSearchResultData(query)
     searchResults = searchResults[pageStart:pageEnd]
 
-    page_data = {"currentPage": page, "numberPages": max(len(searchResults) // 10, 1)}
+    page_data = {"currentPage": page, "numberPages": max(len(searchResults) // 5, 1)}
     return json.dumps({"resultsData": searchResults, "pageData": page_data})
 
 ### End Landing Page ###
@@ -268,26 +248,29 @@ def books():
 
 @application.route("/characters/<charid>")
 def character(charid):
+    global allCharacters
     try:
         charid = int(charid)
     except ValueError:
         # Could not even convert to an integer, return empty page for now
         return render_template('notfound.html', **create_context(1, entity="Character", entity_id=charid))
 
+
     character = None
-    for c in character_listing["data"]:
-        if c["id"] == charid:
+    for c in allCharacters:
+        if str(c.id) == str(charid):
             character = c
     if character is None:
         context = create_context(HL_CHARACTERS, entity="Character", entity_id=charid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_CHARACTERS, character=character, book_links=book_links, house_links=house_links)
+        context = create_context(HL_CHARACTERS, character=character)
         return render_template('character.html', **context)
 
 
 @application.route("/houses/<houseid>")
 def house(houseid):
+    global allHouses
     try:
         houseid = int(houseid)
     except ValueError:
@@ -295,20 +278,20 @@ def house(houseid):
         return render_template('notfound.html', **create_context(1, entity="House", entity_id=houseid))
 
     house = None
-    for h in house_listing["data"]:
-        if h["id"] == houseid:
+    for h in allHouses:
+        if h.id == houseid:
             house = h
     if house is None:
         context = create_context(HL_HOUSES, entity="House", entity_id=houseid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_HOUSES, house=house, character_links=character_links, house_links=house_links,
-                                 alliance_links=alliance_links)
+        context = create_context(HL_HOUSES, house=house)#, character_links=character_links, house_links=house_links,alliance_links=alliance_links)
         return render_template('house.html', **context)
 
 
 @application.route("/books/<bookid>")
 def book(bookid):
+    global allBooks
     try:
         bookid = int(bookid)
     except ValueError:
@@ -323,13 +306,13 @@ def book(bookid):
         context = create_context(HL_BOOKS, entity="Book", entity_id=bookid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_BOOKS, book=book, character_links=character_links, house_links=house_links,
-                                 book_images=book_images)
+        context = create_context(HL_BOOKS, book=book, book_images=book_images)
         return render_template('book.html', **context)
 
 
 @application.route("/alliances/<allianceid>")
 def alliance(allianceid):
+    global allAlliances
     try:
         allianceid = int(allianceid)
     except ValueError:
@@ -344,8 +327,7 @@ def alliance(allianceid):
         context = create_context(HL_ALLIANCES, entity="Alliance", entity_id=allianceid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_ALLIANCES, alliance=alliance, character_links=character_links,
-                                 house_links=house_links)
+        context = create_context(HL_ALLIANCES, alliance=alliance)
         return render_template('alliance.html', **context)
 
 ### End "Detail" Pages ###

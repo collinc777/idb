@@ -93,7 +93,7 @@ def getPropertyMatches(model, query):
 
         for c in model.__table__.columns:
             if c.name in humanReadableProperties:
-                propertyMatch = dict(propertyName=humanReadableProperties[c.name])
+                propertyMatch = dict(propertyName=c.name, propertyReadable=humanReadableProperties[c.name])
                 value = getattr(model, c.name)
 
                 if value is not None:

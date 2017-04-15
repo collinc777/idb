@@ -77,16 +77,16 @@ var ajaxModel = {
         }
     },
     highlightPropertyMatches: function(){
-        console.log("Highlighting matches");
         var resultPropertyMatchValues = $(".resultPropertyMatchValue");
         var lowercaseQuery = this.currentSearchQuery.toLowerCase();
 
         resultPropertyMatchValues.each(function(){
             var originalElement = $(this);
             var originalText = originalElement.text();
-
             var newHTML = "";
-            var words = originalText.split(/[ .,();]/);
+
+            // ? lookahead keeps the delimiters as part of the string
+            var words = originalText.split(/(\\?[ .,();_?\:])/);
             for(var i = 0; i < words.length; i++){
                 var lowercaseWord = words[i].toLowerCase();
 
@@ -96,10 +96,20 @@ var ajaxModel = {
                 }else{
                     newHTML += words[i];
                 }
-                newHTML += " ";
             }
             originalElement.html(newHTML);
         });
+    },
+    scrollToSelectedProperty: function(elementID){
+        console.log("Scrolling to: " + elementID);
+
+        if(elementID !== undefined && elementID.length > 1){
+            var selectedPropertyOffset = $(elementID).offset()["top"];
+            console.log("Selected property location: " + selectedPropertyOffset);
+            $("body").animate({scrollTop: selectedPropertyOffset - 50}, {complete: function(){
+                console.log("Finished scrolling: " + selectedPropertyOffset);
+            }});
+        }
     }
 };
 
@@ -128,7 +138,7 @@ updateSearchAndPagination = function(dataOrError){
     }
 };
 
-$(document).ready(function(){
+$(window).on("load", function(){
     $("#searchButton").on("click", function(event){
         event.preventDefault();
         var searchBarText = $("#searchBar").val();
@@ -144,4 +154,5 @@ $(document).ready(function(){
         window.location.replace(redirectURL);
     });
 
+    ajaxModel.scrollToSelectedProperty(window.location.hash);
 });

@@ -4,6 +4,7 @@ class ResultPropertyMatch extends React.Component {
         this.state = {
             resultURL: props.resultURL,
             propertyName: props.propertyName,
+            propertyReadable: props.propertyReadable,
             propertyValue: props.propertyValue
         }
     }
@@ -12,7 +13,7 @@ class ResultPropertyMatch extends React.Component {
         return (
                 <div className="row resultPropertyMatchRow" data-url={this.state.resultURL + "#" + this.state.propertyName}>
                     <div className="col-md-3 col-xs-12">
-                        <h5>{this.state.propertyName}</h5>
+                        <h5>{this.state.propertyReadable}</h5>
                     </div>
                     <div className="col-md-9 col-xs-12 resultPropertyMatchValue">
                         {this.state.propertyValue}
@@ -25,6 +26,8 @@ class ResultPropertyMatch extends React.Component {
 class SearchResultCard extends React.Component {
     constructor(props) {
         super(props);
+        console.log("RPM:");
+        console.log(props.resultPropertyMatches);
         this.state = {
             resultID: props.resultID,
             resultModelName: props.resultModelName,
@@ -44,7 +47,7 @@ class SearchResultCard extends React.Component {
                     </div>
                     <div className="card-block">
                         <div className="container-fluid">
-                            {this.state.resultPropertyMatches.map((rpm) => <ResultPropertyMatch key={Math.random(1, 999999)} propertyName={rpm.propertyName} propertyValue={rpm.propertyValue} resultURL={resultURL} />)} 
+                            {this.state.resultPropertyMatches.map((rpm) => <ResultPropertyMatch key={Math.random(1, 999999)} propertyName={rpm.propertyName} propertyReadable={rpm.propertyReadable} propertyValue={rpm.propertyValue} resultURL={resultURL} />)} 
                         </div>
                     </div>
                 </div>
