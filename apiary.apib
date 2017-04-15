@@ -5,95 +5,124 @@ HOST: http://gotthrones.me/api/
 
 Api to navigate the wonderful world of Westeros
 
-## Character [/character/{id}]
+## Character Page [/characters?{page}&{sortParam}&{sortAscending}&{filter}]
 
-### Get a single character [GET]
+### Gets information for a page of Characters [GET]
+Gets the characters to display on a certain page of the application
 
-+Parameters
-    + id - The id of a character in the form of an integer
++ Parameters
+    + page (number, `page=1`) ... Page number of the characters
+    + sortParam (optional, string, `sortParam=Name`) ... Parameter you are sorting by; can be Name, House, Culture, Gender
+    + sortAscending (optional, number, `sortAscending=1`) ... Whether to sort by ascending
+    + filter (optional, string, `filter=Varys`) ... Word to filter by
+    
     
 + Response 200 (application/json)
 
         {
-            "name" : "Samwell Tarly",
-            "mother" : "",
-            "povBooks" : [
-
-            ],
-            "house" : "Night's Watch",
-            "books" : [
-
-            ],
-            "allegiances" : [
-
-            ],
-            "gender" : "Male",
-            "titles" : [
-
-            ],
-            "playedBy" : [
-
-            ],
-            "tvSeries" : [
-
-            ],
-            "spouse" : "",
-            "dateOfDeath" : 0,
-            "father" : "",
-            "died" : "",
-            "born" : "",
-            "aliases" : [
-                "Sam"
-            ],
-            "culture" : "",
-            "male" : true
+            "pageData": 
+            {
+                "currentPage": 1, 
+                "numberPages": 1
+            }, 
+            "cardData": 
+            [
+                {
+                    "cardURL": "/characters", 
+                    "cardName": "Varys", 
+                    "cardID": 2069
+                }
+            ]
         }
 
-## Book [/book/{id}]
+## Book Page [/books?{page}&{sortParam}&{sortAscending}&{filter}]
 
-### Get a single Book [GET]
+### Gets information for a page of Books [GET]
+Gets the books to display on a certain page of the application
 
-+Parameters
-    + id - The id of a book in the form of an integer
++ Parameters
+    + page (number, `page=1`) ... Page number of the books
+    + sortParam (optional, string, `sortParam=Name`) ... Parameter you are sorting by; can be Name, Author, Publisher, ISBN, Number%20of%20Pages, Release%20Date
+    + sortAscending (optional, number, `sortAscending=1`) ... Whether to sort by ascending
+    + filter (optional, string, `filter=Clash`) ... Word to filter by
+    
     
 + Response 200 (application/json)
 
         {
-            "mediaType" : "Hardcover",
-            "characters" : [2, 12, 13],
-            "author" : "George R.R. Martin",
-            "publisher" : "Bantam Books",
-            "name" : "A Game of Thrones",
-            "isbn" : "978-0553103540",
-            "released" : "1996",
-            "numberOfPages" : 694,
-            "povCharacters" : [148, 208, 232],
-            "country" : "United States"
+            "pageData": 
+            {
+                "currentPage": 1, 
+                "numberPages": 1
+            }, 
+            "cardData": 
+            [
+                {
+                    "cardURL": "/books", 
+                    "cardName": "A Clash of Kings", 
+                    "cardID": 2
+                }
+            ]
         }
+        
+## House Page [/houses?{page}&{sortParam}&{sortAscending}&{filter}]
 
-## House [/house/{id}]
+### Gets information for a page of Houses [GET]
+Gets the houses to display on a certain page of the application
 
-### Get a single House [GET]
-
-+Parameters
-    + id - The id of a house in the form of an integer
++ Parameters
+    + page (number, `page=1`) ... Page number of the houses
+    + sortParam (optional, string, `sortParam=Name`) ... Parameter you are sorting by; can be Name, Region, Coat%20of%20Arms, Words
+    + sortAscending (optional, number, `sortAscending=1`) ... Whether to sort by ascending
+    + filter (optional, string, `filter=Stark`) ... Word to filter by
+    
     
 + Response 200 (application/json)
 
         {
-            "overlord" : 17,
-            "diedOut" : "",
-            "founded" : "",
-            "name" : "House Buckler of Bronzegate",
-            "coatOfArms" : "Three brass buckles, on a blue field(Azure, three buckles or)",
-            "words" : "",
-            "founder" : "",
-            "region" : "The Stormlands",
-            "currentLord" : 848,
-            "ancestralWeapons" : [],
-            "swornMembers" : [234, 848],
-            "titles" : [],
-            "cadetBranches" : [],
-            "heir" : "",
-            "seats" : ["Bronzegate"]
+            "pageData": 
+            {
+                "currentPage": 1, 
+                "numberPages": 1
+            }, 
+            "cardData": 
+            [
+                [
+                    {
+                        "cardURL": "/houses", 
+                        "cardName": "House Stark of Winterfell", 
+                        "cardID": 362
+                    }
+                ]
+            ]
+        }
+        
+## Alliance Page [/alliances?{page}&{sortParam}&{sortAscending}&{filter}]
+
+### Gets information for a page of Alliances [GET]
+Gets the alliances to display on a certain page of the application
+
++ Parameters
+    + page (number, `page=1`) ... Page number of the alliances
+    + sortParam (optional, string, `sortParam=Name`) ... Parameter you are sorting by; can be Name, Current%20Head%20House, Number%of%20Members
+    + sortAscending (optional, number, `sortAscending=1`) ... Whether to sort by ascending
+    + filter (optional, string, `filter=ruler`) ... Word to filter by
+    
+    
++ Response 200 (application/json)
+
+        {
+            "pageData": 
+            {
+                "currentPage": 1, 
+                "numberPages": 1
+            }, 
+            "cardData": 
+            [
+                {
+                    "cardURL": "/alliances", 
+                    "cardName": "The Rightful Ruler of the Seven Kingdoms", 
+                    "cardID": 3
+                }
+            ]
         }

@@ -10,7 +10,6 @@ from random import randint
 import pdb
 from operator import attrgetter
 from subprocess import PIPE, check_output, STDOUT
-
 import pickle
 
 navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"},
@@ -104,9 +103,12 @@ def create_context(nav_highlight=-1, **kwargs):
 @application.route('/tests', methods=['GET'])
 def runTestsForAboutPage():
     command = ['python', '-m', 'app.tests']
-    result = check_output(command, stderr=STDOUT, universal_newlines=True)
-    print(result)
-    return result
+    env = os.environ.copy()
+    env['PYTHONPATH'] = ':'.join(sys.path)
+    result = Popen(command, stdout=PIPE, stderr=PIPE, universal_newlines=True, env=env)
+    (stdout, stderr) = result.communicate()
+    print(stderr)
+    return stderr
 
 ### Begin Landing Page ###
 
