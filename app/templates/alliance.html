@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="details">
-<div class="card">
+<div id="name" class="card">
 	<div class="card-header text-center">
 		<h1 class="cursive">{{ alliance.name }}</h1>
 	</div>
@@ -9,7 +9,7 @@
 		<img src="/static/img/{{ alliance.imageLink }}">
 	</div>
 </div>
-<div class="card">
+<div id="currentLord_id" class="card">
 	<h4 class="card-header">
 		Current Lord
 	</h4>
@@ -17,7 +17,7 @@
 		<a href="/characters/{{ alliance.currentLord_id }}">{{ alliance.currentLord_id }} (Character)</a>
 	</div>
 </div>
-<div class="card">
+<div id="headHouse_id" class="card">
 	<h4 class="card-header">
 		Current Head House
 	</h4>
@@ -26,7 +26,7 @@
 		<a href="/houses/{{ alliance.headHouse_id }}">{{ alliance.headHouse_id }} (House)</a>
 	</div>
 </div>
-<div class="card">
+<div id="ancestralWeapons" class="card">
 	<h4 class="card-header">
 		Ancestral Weapons this Alliance Has Access To
 	</h4>
@@ -34,11 +34,11 @@
 		{% for weapon in alliance.ancestralWeapons %}
 		<h5>{{ weapon }}</h5>
 		{% else %}
-		<h5>This alliance has access to noi ancestral weapons</h5>
+		<h5>This alliance has access to no ancestral weapons</h5>
 		{% endfor %}
 	</div>
 </div>
-<div class="card">
+<div id="seats" class="card">
 	<h4 class="card-header">
 		Seats (Castles) Available to this Alliance
 	</h4>
@@ -51,7 +51,7 @@
 		{% endfor %}
 	</div>
 </div>
-<div class="card">
+<div id="cultures" class="card">
 	<h4 class="card-header">
 		Cultures This Alliance Encompasses
 	</h4>
@@ -63,7 +63,7 @@
 		{% endfor %}
 	</div>
 </div>
-<div class="card">
+<div id="regions" class="card">
 	<h4 class="card-header">
 		Regions This Alliance Encompasses
 	</h4>
@@ -75,7 +75,7 @@
 		{% endfor %}
 	</div>
 </div>
-<div class="card">
+<div id="swornHouse_ids" class="card">
 	<h4 class="card-header">
 		Houses That Are Part of This Alliance
 	</h4>

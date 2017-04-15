@@ -26,10 +26,11 @@ class SearchContainer extends React.Component {
     }
 
     render() {
+        const top = 0;
         return (
                 <div>
                     <SearchQueryLayout query={this.state.query} numberOfResults={this.state.numberOfResults}/>
-                    <Pagination currentPage={this.state.pageData.currentPage} numberPages={this.state.pageData.numberPages}/>
+                    <Pagination whichPage={top} currentPage={this.state.pageData.currentPage} numberPages={this.state.pageData.numberPages}/>
                     <SearchResults resultsData={this.state.searchResultsData}/>
                 </div>);
     }

@@ -116,7 +116,6 @@ def getPropertyMatches(model, query):
 
         return propertyMatches
 
-
 # -------
 # Models
 # -------

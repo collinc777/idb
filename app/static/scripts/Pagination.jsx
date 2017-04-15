@@ -47,12 +47,12 @@ class Pagination extends React.Component {
     }
 
     componentWillMount() {
-        if(this.state.whichPagination === 1){
-            ajaxModel.updatePaginationCallback1 = (pageData) => {
+        if(this.state.whichPagination === 0){
+            ajaxModel.updatePaginationCallback0 = (pageData) => {
                 this.setState({currentPage: pageData["currentPage"], numberPages: pageData["numberPages"]});
             };
         }else{
-            ajaxModel.updatePaginationCallback2 = (pageData) => {
+            ajaxModel.updatePaginationCallback1 = (pageData) => {
                 this.setState({currentPage: pageData["currentPage"], numberPages: pageData["numberPages"]});
             };
         }

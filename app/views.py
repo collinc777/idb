@@ -26,6 +26,10 @@ def load_listing(filename):
     with open(filename) as data_file:
         return json.load(data_file)
 
+allHouses = House.query.all()
+allCharacters = Character.query.all()
+allBooks = Book.query.all()
+allAlliances = Alliance.query.all()
 
 # Each Listing requires a "title" and a "properties" array
 # properties are simply 2-element arrays of a human readable name and a dictionary key
@@ -75,11 +79,6 @@ def index():
 
 ### Begin Search Page and API ###
 
-allHouses = House.query.all()
-allCharacters = Character.query.all()
-allBooks = Book.query.all()
-allAlliances = Alliance.query.all()
-
 def getSearchResultData(query):
     global allHouses
     global allCharacters
@@ -102,10 +101,10 @@ def getSearchResultData(query):
 def search(query):
     searchResults = getSearchResultData(query)
 
-    searchResults = searchResults[:5]
+    pagedSearchResults = searchResults[:5]
     page_data = {"currentPage": 1, "numberPages": max(len(searchResults) // 5, 1)}
 
-    context = create_context(0, query=query, numberOfResults=len(searchResults), searchResults=searchResults, pageData=page_data)
+    context = create_context(0, query=query, numberOfResults=len(searchResults), searchResults=pagedSearchResults, pageData=page_data)
     return render_template('search.html', **context)
 
 
@@ -120,11 +119,14 @@ def get_search(**kwargs):
     pageStart = (page - 1) * 5
     pageEnd = page * 5
 
+    array = ["a","b","C","d"]
+    array[2] = "C"
+
     searchResults = getSearchResultData(query)
-    searchResults = searchResults[pageStart:pageEnd]
+    pagedSearchResults = searchResults[pageStart:pageEnd]
 
     page_data = {"currentPage": page, "numberPages": max(len(searchResults) // 5, 1)}
-    return json.dumps({"resultsData": searchResults, "pageData": page_data})
+    return json.dumps({"resultsData": pagedSearchResults, "pageData": page_data})
 
 ### End Landing Page ###
 
