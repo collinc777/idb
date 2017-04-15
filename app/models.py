@@ -82,6 +82,40 @@ allegiances_houses_association_table = Table(
     Column('allegiances', Integer, ForeignKey('house.id'))
 )
 
+# -------
+# Search Functionality
+# -------
+
+def getPropertyMatches(model, query):
+        propertyMatches = list()
+        query = query.lower()
+        humanReadableProperties = model.getHumanReadableProperties()
+
+        for c in model.__table__.columns:
+            if c.name in humanReadableProperties:
+                propertyMatch = dict(propertyName=humanReadableProperties[c.name])
+                value = getattr(model, c.name)
+
+                if value is not None:
+                    try:
+                        if isinstance(value, str):
+                            if query in value.lower() and len(value):
+                                propertyMatch["propertyValue"] = value
+                        elif isinstance(value, list):
+                            for subValue in value:
+                                subValue = str(subValue)
+                                if query in subValue.lower() and len(subValue):
+                                    propertyMatch["propertyValue"] = subValue
+                        elif str(query) == str(value):
+                            propertyMatch["propertyValue"] = str(value)
+                    except ValueError:
+                        print("Hit a ValueError in column: ", c.name, " with value: ", value)
+
+                    if "propertyValue" in propertyMatch:
+                        propertyMatches.append(propertyMatch)
+
+        return propertyMatches
+
 
 # -------
 # Models
@@ -142,22 +176,22 @@ class Book(database.Model):
         self.character_ids = character_ids
 
     @staticmethod
-    def getSorts():
-        return ["Name", "Author", "Publisher", "ISBN", "Number of Pages", "Release Date"]
+    def getHumanReadableProperties():
+        names = ["name", "author", "publisher", "isbn", "numberOfPages", "released"]
+        readables = ["Name", "Author", "Publisher", "ISBN", "Number of Pages", "Release Date"]
+        return {name:readables[i] for i, name in enumerate(names)}
 
     @staticmethod
-    def convertSort(sort):
-        names = ["name", "author", "publisher",
-                 "isbn", "numberOfPages", "released"]
-        for i, s in enumerate(Book.getSorts()):
-            if s == sort:
-                return names[i]
-        return None
+    def getHumanReadableSortableProperties():
+        lookup = Book.getHumanReadableProperties()
+        sortables = ["name", "author", "isbn", "publisher", "country", "released"]
+        return [[k, lookup[k]] for k in lookup.keys() if k in sortables]
 
     def toDict(self):
         result = dict()
         for c in self.__table__.columns:
             result.update({c.name: getattr(self, c.name)})
+        result["modelType"] = self.__tablename__
         return result
 
 
@@ -239,22 +273,25 @@ class Character(database.Model):
         self.mother_id = mother_id
         self.imageLink = imageLink
 
-    @staticmethod
-    def getSorts():
-        return ["Name", "Culture", "Gender"]
 
     @staticmethod
-    def convertSort(sort):
-        names = ["name", "culture", "gender"]
-        for i, s in enumerate(Character.getSorts()):
-            if s == sort:
-                return names[i]
-        return None
+    def getHumanReadableProperties():
+        names = ["culture", "titles", "spouses", "died", "aliases", "name", "born", "gender", "father_id", "allegiances_ids", "povBook_ids", "playedBy", "book_ids", "tvSeries", "mother_id", "imageLink"]
+        readables = ["Culture", "Titles", "Spouses", "Died", "Aliases", "Name", "Born", "Gender", "Father", "Allegiances", "Books This Character Has POV Chapters In", "Played By (in the TV Show)", "Books This Character Appears In", "TV Series", "Mother", "ImageLink"]
 
+        return {name:readables[i] for i, name in enumerate(names)}
+
+    @staticmethod
+    def getHumanReadableSortableProperties():
+        lookup = Character.getHumanReadableProperties()
+        sortables = ["name", "region", "culture", "gender", "died"]
+        return [[k, lookup[k]] for k in lookup.keys() if k in sortables]
+        
     def toDict(self):
         result = dict()
         for c in self.__table__.columns:
             result.update({c.name: getattr(self, c.name)})
+        result["modelType"] = self.__tablename__
         return result
 
 
@@ -335,21 +372,23 @@ class House(database.Model):
         self.ancestralWeapons = ancestralWeapons
 
     @staticmethod
-    def getSorts():
-        return ["Name", "Region", "Coat of Arms", "Words"]
+    def getHumanReadableProperties():
+        names = ["currentLord_id", "heir_id", "founder_id", "founded", "diedOut", "titles", "coatOfArms", "words", "seats", "overlord_id", "alliance_id", "name", "swornMember_ids", "region", "ancestralWeapons"]
+        readables = ["Current Lord", "Heir", "Founder", "Founded", "Died Out", "Titles", "Coat of Arms", "Words", "Seats", "Overlord", "Alliance This House Belongs To", "Name", "Sworn Members", "Region", "Ancestral Weapons"]
+
+        return {name:readables[i] for i, name in enumerate(names)}
 
     @staticmethod
-    def convertSort(sort):
-        names = ["name", "region", "coatOfArms", "words"]
-        for i, s in enumerate(House.getSorts()):
-            if s == sort:
-                return names[i]
-        return None
+    def getHumanReadableSortableProperties():
+        lookup = House.getHumanReadableProperties()
+        sortables = ["name", "region", "coatOfArms", "words"]
+        return [[k, lookup[k]] for k in lookup.keys() if k in sortables]
 
     def toDict(self):
         result = dict()
         for c in self.__table__.columns:
             result.update({c.name: getattr(self, c.name)})
+        result["modelType"] = self.__tablename__
         return result
 
 
@@ -402,19 +441,21 @@ class Alliance(database.Model):
         self.imageLink = imageLink
 
     @staticmethod
-    def getSorts():
-        return ["Name", "Current Head House", "Number of Members"]
+    def getHumanReadableProperties():
+        names = ["currentLord_id", "ancestralWeapons", "seats", "regions", "headHouse_id", "name", "swornHouse_ids", "imageLink"]
+        readables = ["Current Lord", "Ancestral Weapons", "Seats", "Regions", "Head House", "Name", "Sworn Houses", "Image Link"]
+
+        return {name:readables[i] for i, name in enumerate(names)}
 
     @staticmethod
-    def convertSort(sort):
-        names = ["name", "headHouse_id", "cultures", "seats"]
-        for i, s in enumerate(Alliance.getSorts()):
-            if s == sort:
-                return names[i]
-        return None
+    def getHumanReadableSortableProperties():
+        lookup = Alliance.getHumanReadableProperties()
+        sortables = ["name", "cultures", "seats"]
+        return [[k, lookup[k]] for k in lookup.keys() if k in sortables]
 
     def toDict(self):
         result = dict()
         for c in self.__table__.columns:
             result.update({c.name: getattr(self, c.name)})
+        result["modelType"] = self.__tablename__
         return result

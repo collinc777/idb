@@ -3,7 +3,7 @@
 from flask import render_template, request, render_template_string
 from app import application
 from app.decorators import returns_json, takes_api_params, takes_search_params
-from app.models import Book, Character, Alliance, House
+from app.models import Book, Character, Alliance, House, getPropertyMatches
 from sqlalchemy import desc
 import json
 from random import randint
@@ -36,35 +36,17 @@ def load_listing(filename):
 # links between resources. E.g. in the books/2 page we want to have links to the 
 # POV (point-of-view) characters that are in it. So we pass it the character_links array
 
-character_listing = dict(model=Character, title="Characters", url="/characters", sorts=Character.getSorts())
-character_listing["data"] = load_listing("data/trimmed_characters.json") #this needs to be a db call?
-character_links = dict()
-for character in character_listing["data"]:
-    character_links[character["id"]] = {"name": character["name"], "link": "/characters/" + str(character["id"])}
+character_listing = dict(model=Character, title="Characters", url="/characters", sorts=Character.getHumanReadableSortableProperties())
+house_listing = dict(model=House, title="Houses", url="/houses", sorts=House.getHumanReadableSortableProperties())
+book_listing = dict(model=Book, title="Books", url="/books", sorts=Book.getHumanReadableSortableProperties())
+alliance_listing = dict(model=Alliance, title="Alliances", url="/alliances", sorts=Alliance.getHumanReadableSortableProperties())
 
-house_listing = dict(model=House, title="Houses", url="/houses", sorts=House.getSorts())
-house_listing["data"] = load_listing("data/trimmed_houses_alliances.json")
-house_links = dict()
-for house in house_listing["data"]:
-    house_links[house["id"]] = {"name": house["name"], "link": "/houses/" + str(house["id"])}
-
-book_listing = dict(model=Book, title="Books", url="/books", sorts=Book.getSorts())
-book_listing["data"] = load_listing("data/trimmed_books.json")
-book_links = dict()
-for book in book_listing["data"]:
-    book_links[book["id"]] = {"name": book["name"], "link": "/books/" + str(book["id"])}
 book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswords.jpg", 4: "thehedgeknight.jpg",
                5: "afeastforcrows.jpg", 6: "theswornsword.jpg", 7: "themysteryknight.jpg", 8: "adancewithdragons.jpg",
                9: "theprincessandthequeen.jpg", 10: "therogueprince.jpg", 11: "theworldoficeandfire.png",
                12: "aknightofthesevenkingdoms.jpg"}
 # book_images is a total hack right now. Ideally this would be a field inside the book data/model
 # but for now we'll just do this. Theres only 12 books so it'll be easy to add it in manually later
-
-alliance_listing = dict(model=Alliance, title="Alliances", url="/alliances", sorts=Alliance.getSorts())
-alliance_listing["data"] = load_listing("data/trimmed_alliances.json")
-alliance_links = dict()
-for alliance in alliance_listing["data"]:
-    alliance_links[alliance["id"]] = {"name": alliance["name"], "link": "/alliances/" + str(alliance["id"])}
 
 
 # Build a base "context" dictionary for passing to any given template
@@ -93,27 +75,58 @@ def index():
 
 ### Begin Search Page and API ###
 
-### What i want to do here is render these templates that I have made and make them the "details" part of each results listing
+allHouses = None
+allCharacters = None
+allBooks = None
+allAlliances = None
 
+def getSearchResultData(query):
+    global allHouses
+    global allCharacters
+    global allBooks
+    global allAlliances
+
+    if allHouses is None:
+        # Cache so it doesn't have to grab ALL of them every time
+        # NOTE: This is an awful, awful way of doing things, because
+        # In a real, changing database, this would never reflect updates
+
+        allHouses = House.query.all()
+        # allCharacters = Character.query.all()
+        # allBooks = Book.query.all()
+        # allAlliances = Alliance.query.all()
+
+    # allModels = allHouses + allCharacters + allBooks + allAlliances
+
+    results = list()
+    for model in allHouses:
+        propertyMatches = getPropertyMatches(model, query)
+        if propertyMatches is not None and len(propertyMatches):
+            print("Property matches: ", propertyMatches)
+            modelDict = model.toDict()
+            results.append(dict(resultID=modelDict["id"], resultModelName=modelDict["name"], resultModelType=modelDict["modelType"], resultPropertyMatches=propertyMatches))
+
+
+    # fakeHousePropertyMatches = [{"propertyName":k, "propertyValue":v} for k,v in fakeHouse.items() if type(v) is str and len(v)]
+    # fakeCharacterPropertyMatches = [{"propertyName":k, "propertyValue":v} for k,v in fakeCharacter.items() if type(v) is str and len(v)]
+    # fakeBookPropertyMatches = [{"propertyName":k, "propertyValue":v} for k,v in fakeBook.items() if type(v) is str and len(v)]
+
+    # fakeHouseResult = dict(resultID=362, resultModelName="House Stark of Winterfell", resultModelType="house", resultPropertyMatches=fakeHousePropertyMatches)
+    # fakeCharacterResult = dict(resultID=148, resultModelName="Arya Stark", resultModelType="character", resultPropertyMatches=fakeCharacterPropertyMatches)
+    # fakeBookResult = dict(resultID=1, resultModelName="A Game of Thrones", resultModelType="book", resultPropertyMatches=fakeBookPropertyMatches)
+    # fakes = (fakeHouseResult, fakeCharacterResult, fakeBookResult)
+
+    return results
 
 @application.route('/search', methods=['GET'])
 @takes_search_params
 def search(query):
+    searchResults = getSearchResultData(query)
 
-    fakeHouseDetails = render_template("resultsTemplates/house.html", house=dict(name="House Stark of Winterfell", region="Bumfuck nowhere", words="its late as fuck"))
-    fakeCharacterDetails = render_template("resultsTemplates/character.html", character=dict(name="Arya Stark", gender="Female"))
-    fakeBookDetails = render_template("resultsTemplates/book.html", book=dict(name="A Game of Thrones", author="GRRMartin", publisher="UTAustin bitch"))
+    searchResults = searchResults[:10]
+    page_data = {"currentPage": 1, "numberPages": max(len(searchResults) // 10, 1)}
 
-    fakeHouseResult = dict(resultID=362, resultModelName="House Stark of Winterfell", resultModelType="house", resultDetails=fakeHouseDetails)
-    fakeCharacterResult = dict(resultID=148, resultModelName="Arya Stark", resultModelType="character", resultDetails=fakeCharacterDetails)
-    fakeBookResult = dict(resultID=1, resultModelName="A Game of Thrones", resultModelType="book", resultDetails=fakeBookDetails)
-    fakes = (fakeHouseResult, fakeCharacterResult, fakeBookResult)
-    fakeSearchResults = [fakes[(i % 3)] for i in range(0, 60)]
-
-    searchResults = fakeSearchResults[:10]
-    page_data = {"currentPage": 1, "numberPages": max(len(fakeSearchResults) // 10, 1)}
-
-    context = create_context(0, query=query, numberOfResults=len(fakeSearchResults), searchResults=searchResults, pageData=page_data)
+    context = create_context(0, query=query, numberOfResults=len(searchResults), searchResults=searchResults, pageData=page_data)
     return render_template('search.html', **context)
 
 
@@ -121,34 +134,23 @@ def search(query):
 @returns_json
 @takes_search_params
 def get_search(**kwargs):
-    q = kwargs.get("query")
+    query = kwargs.get("query")
     page = kwargs.get("page")
     page = max(1, page)
 
     pageStart = (page - 1) * 10
     pageEnd = page * 10
 
-    fakeHouseDetails = render_template("resultsTemplates/house.html", house=dict(name="House Stark of Winterfell", region="Bumfuck nowhere", words="its late as fuck"))
-    fakeCharacterDetails = render_template("resultsTemplates/character.html", character=dict(name="Arya Stark", gender="Female"))
-    fakeBookDetails = render_template("resultsTemplates/book.html", book=dict(name="A Game of Thrones", author="GRRMartin", publisher="UTAustin bitch"))
+    searchResults = getSearchResultData(query)
+    searchResults = searchResults[pageStart:pageEnd]
 
-    fakeHouseResult = dict(resultID=362, resultModelName="House Stark of Winterfell", resultModelType="house", resultDetails=fakeHouseDetails)
-    fakeCharacterResult = dict(resultID=148, resultModelName="Arya Stark", resultModelType="character", resultDetails=fakeCharacterDetails)
-    fakeBookResult = dict(resultID=1, resultModelName="A Game of Thrones", resultModelType="book", resultDetails=fakeBookDetails)
-    fakes = (fakeHouseResult, fakeCharacterResult, fakeBookResult)
-    fakeSearchResults = [fakes[(i % 3)] for i in range(0, 60)]
-
-    searchResults = fakeSearchResults[pageStart:pageEnd]
-
-    page_data = {"currentPage": page, "numberPages": max(len(fakeSearchResults) // 10, 1)}
+    page_data = {"currentPage": page, "numberPages": max(len(searchResults) // 10, 1)}
     return json.dumps({"resultsData": searchResults, "pageData": page_data})
 
 ### End Landing Page ###
 
-
 def getDataList(listing, params):
     cardURL = listing["url"]
-    print("Params: ", params)
     dataListing = list()
     model = listing["model"]
     page = params["page"]
@@ -156,11 +158,16 @@ def getDataList(listing, params):
     dataQuery = model.query
 
     if "sortParam" in params:
-        if "sortAscending" in params and params["sortAscending"] == 0:
-            dataQuery = dataQuery.order_by(desc(getattr(model, model.convertSort(params["sortParam"]))))
-        else:
-            dataQuery = dataQuery.order_by(getattr(model, model.convertSort(params["sortParam"])))
-    
+        try:
+            if "sortAscending" in params and params["sortAscending"] == 0:
+                dataQuery = dataQuery.order_by(desc(getattr(model, params["sortParam"])))
+            else:
+                dataQuery = dataQuery.order_by(getattr(model, params["sortParam"]))
+        except:
+            print("Sort Parameter: ", params["sortParam"], " is incorrect")
+            return None
+
+
     modelInstances = []
     if "filterText" in params:
         #only does exact match on name for now
@@ -227,7 +234,7 @@ def get_books(**kwargs):
 
 ### Begin "Listing" Pages ###
 
-default_params = dict(page=1, sortParam="Name", sortAscending=1)
+default_params = dict(page=1, sortParam="name", sortAscending=1)
 
 
 @application.route('/characters', methods=['GET'])

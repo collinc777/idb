@@ -1,3 +1,27 @@
+class ResultPropertyMatch extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            resultURL: props.resultURL,
+            propertyName: props.propertyName,
+            propertyValue: props.propertyValue
+        }
+    }
+
+    render() {
+        return (
+                <div className="row resultPropertyMatchRow" data-url={this.state.resultURL + "#" + this.state.propertyName}>
+                    <div className="col-md-3 col-xs-12">
+                        <h5>{this.state.propertyName}</h5>
+                    </div>
+                    <div className="col-md-9 col-xs-12 resultPropertyMatchValue">
+                        {this.state.propertyValue}
+                    </div>
+                </div>
+        );
+    }
+}
+
 class SearchResultCard extends React.Component {
     constructor(props) {
         super(props);
@@ -5,20 +29,23 @@ class SearchResultCard extends React.Component {
             resultID: props.resultID,
             resultModelName: props.resultModelName,
             resultModelType: props.resultModelType,
-            resultDetails: props.resultDetails
+            resultPropertyMatches: props.resultPropertyMatches
         }
     }
 
     render() {
         var typeCapitalized = this.state.resultModelType.charAt(0).toUpperCase() + this.state.resultModelType.slice(1);
-        var innerHTML = {__html: this.state.resultDetails};
+        var resultURL = '/' + this.state.resultModelType + 's/' + this.state.resultID;
         return (
                 <div className="card searchResultCard">
                     <div className="card-header">
-                        <h4><a href={'/' + this.state.resultModelType + 's/' + this.state.resultID}>| {typeCapitalized} | {this.state.resultModelName}</a>
+                        <h4><a href={resultURL}>| {typeCapitalized} | {this.state.resultModelName}</a>
                         </h4>
                     </div>
-                    <div dangerouslySetInnerHTML={innerHTML} className="card-block">
+                    <div className="card-block">
+                        <div className="container-fluid">
+                            {this.state.resultPropertyMatches.map((rpm) => <ResultPropertyMatch key={Math.random(1, 999999)} propertyName={rpm.propertyName} propertyValue={rpm.propertyValue} resultURL={resultURL} />)} 
+                        </div>
                     </div>
                 </div>
         );

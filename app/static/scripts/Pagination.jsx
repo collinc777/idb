@@ -47,7 +47,6 @@ class Pagination extends React.Component {
 
     componentWillMount() {
         ajaxModel.updatePaginationCallback = (pageData) => {
-            console.log("Updating pagination with: ", pageData);
             this.setState({currentPage: pageData["currentPage"], numberPages: pageData["numberPages"]});
         }
     }
@@ -63,7 +62,6 @@ class Pagination extends React.Component {
     }
 
     render() {
-        console.log("Re-rendering Pagination");
         var currentPage = this.state.currentPage;
         var totalPaginationLinks = Math.min(this.state.numberPages, 7);
         var paginationElements = [];
@@ -73,7 +71,6 @@ class Pagination extends React.Component {
         var previous = "Previous";
         var next = "Next";
 
-        console.log("Rerendering currentPage: ", currentPage);
         var firstPage = Math.max(currentPage - 3, 1);
         if(firstPage + 6 > this.state.numberPages){
             firstPage = Math.max(this.state.numberPages - 6, 1);

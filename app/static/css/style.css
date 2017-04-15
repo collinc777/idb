@@ -31,15 +31,71 @@ body {
 	padding-right: 40px;
 }
 
-.searchResultCard {
-	margin-top: 20px;
-	margin-bottom: 20px;
+/* 3px margin is to space it out so the space actually appears */
+.searchResultCard a.searchResultHighlight {
+	margin-left: 3px;
+	margin-right: 3px;
+	font-weight: bold;
+	color: red;
+	text-decoration: underline;
+}
+
+.resultPropertyMatchRow {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 20px;
+	padding-bottom: 10px;
+	border-bottom: solid gray 1px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.resultPropertyMatchRow:first-child {
+	padding-top: 0px;
+}
+
+@media (min-width: 768px){
+	.resultPropertyMatchValue {
+		border-left: solid gray 1px;
+	}
 }
 
 .searchResultsContainer {
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
+
+.searchResultCard {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.searchResultCard .card-block {
+	background-color: #333;
+	border-color: #333;
+}
+
+.searchResultCard .card-header {
+	background-color: #333;
+	border-bottom: 1px solid #f7f7f9;
+}
+
+.searchResultCard h1, .searchResultCard h2, .searchResultCard h3, .searchResultCard h4, .searchResultCard h5 {
+	color: #f7f7f9;
+}
+
+.searchResultCard div, .searchResultCard a {
+	color: #f7f7f9;
+}
+
+.searchResultCard a {
+	text-decoration: underline;
+}
+
+.searchResultCard a:hover {
+	color: #999;
+}
+
 
 .listingTitle {
 	color: #f7f7f9;
@@ -98,6 +154,10 @@ h1.cursive {
 	color: #333;
 }
 
+.pageLinks a:hover {
+	color: #999;
+}
+
 .pageLinks a:first-child {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -126,7 +186,7 @@ h1.cursive {
 
 .listingCard .card-header, .sortAndFilterCard .card-header {
 	background-color: #333;
-	border-color: #333;
+	border-bottom: 1px solid #f7f7f9;
 }
 
 .listingCard h1, .listingCard h2, .listingCard h3, .listingCard h4, .listingCard h5 {
@@ -139,6 +199,10 @@ h1.cursive {
 
 .listingCard a, .sortAndFilterCard a {
 	color: #f7f7f9;
+}
+
+.listingCard a:hover, .sortAndFilterCard a:hover {
+	color: #999;
 }
 
 .sortAndFilterCard .dropdown-menu {

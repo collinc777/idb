@@ -2,16 +2,13 @@ class SearchQueryLayout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: props.query,
-            numberOfResults: props.numberOfResults
+            query: props.query
         }
     }
 
     render() {
         return (<div className="text-center">
             <h1 className="cursive listingTitle">"{this.state.query}"</h1>
-            <br/>
-            <h3>Number of results: {this.state.numberOfResults}</h3>
             <br/>
         </div>);
     }

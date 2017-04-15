@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="details">
-<div class="card">
+<div id="name" class="card">
 	<div class="card-header text-center">
 		<h1 class="cursive">{{ character.name }}</h1>
 	</div>
@@ -9,7 +9,7 @@
 		<img src="/static/img/chars/{{ character.id }}.jpg">
 	</div>
 </div>
-<div class="card">
+<div id="houses" class="card">
 	<h4 class="card-header">
 		Houses
 	</h4>
@@ -21,7 +21,7 @@
 	{% endfor %}
 	</div>
 </div>
-<div class="card">
+<div id="culture" class="card">
 	<h4 class="card-header">
 		Culture
 	</h4>
@@ -29,7 +29,15 @@
 		{{ character.culture }}
 	</div>
 </div>
-<div class="card">
+<div id="founded" class="card">
+	<h4 class="card-header">
+		Founded
+	</h4>
+	<div class="card-block">
+		{% if character.founded %}{{ character.founded }}{% else %}Unknown{% endif %}
+	</div>
+</div>
+<div id="gender" class="card">
 	<h4 class="card-header">
 		Gender
 	</h4>
@@ -37,7 +45,7 @@
 		{% if character.male %}Male{% else %}Female{% endif %}
 	</div>
 </div>
-<div class="card">
+<div id="titles" class="card">
 	<h4 class="card-header">
 		Titles
 	</h4>
@@ -49,7 +57,7 @@
 	{% endfor %}
 	</div>
 </div>
-<div class="card">
+<div id="died" class="card">
 	<h4 class="card-header">
 		Died
 	</h4>

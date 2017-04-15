@@ -5,6 +5,8 @@
     <title>GoT Thrones?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <link rel="shortcut icon" href="/static/favicon.ico">
+
     <link rel="stylesheet" href="/static/css/font-awesome.min.css?nocache={{ nocache }}">
     <link rel="stylesheet" href="/static/css/style.css?nocache={{ nocache }}">
     
@@ -32,8 +34,7 @@
                 {% else %}
                 <li class="nav-item">
                 {% endif %}
-                    <a class="
-                    nav-link" href="{{ nav.url }}">{{ nav.name }}</a>
+                    <a class="nav-link" href="{{ nav.url }}">{{ nav.name }}</a>
                 </li>
             {% endfor %}
         </ul>
@@ -47,14 +48,14 @@
         </form>
     </div>
 </nav>
+<script src="/static/scripts/base.js?nocache={{ nocache }}" type="text/javascript"></script>
+
 <div id="contentContainer" class="container-fluid backgroundGradient">
 {% block content %}
 {% endblock %}
 </div>
-
-<script src="/static/scripts/base.js?nocache={{ nocache }}" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
 </body>
 </html>
