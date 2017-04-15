@@ -92,17 +92,16 @@ def getSearchResultData(query):
         # In a real, changing database, this would never reflect updates
 
         allHouses = House.query.all()
-        # allCharacters = Character.query.all()
-        # allBooks = Book.query.all()
-        # allAlliances = Alliance.query.all()
+        allCharacters = Character.query.all()
+        allBooks = Book.query.all()
+        allAlliances = Alliance.query.all()
 
-    # allModels = allHouses + allCharacters + allBooks + allAlliances
+    allModels = allHouses + allCharacters + allBooks + allAlliances
 
     results = list()
-    for model in allHouses:
+    for model in allModels:
         propertyMatches = getPropertyMatches(model, query)
         if propertyMatches is not None and len(propertyMatches):
-            print("Property matches: ", propertyMatches)
             modelDict = model.toDict()
             results.append(dict(resultID=modelDict["id"], resultModelName=modelDict["name"], resultModelType=modelDict["modelType"], resultPropertyMatches=propertyMatches))
 
