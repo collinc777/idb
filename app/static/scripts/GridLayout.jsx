@@ -2,14 +2,17 @@ class GridLayout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: props.data
+            modelData: props.modelData
         }
 
     }
 
     componentWillMount() {
-        ajaxModel.updateGridDataCallback = (data) => {
-            this.setState({data: data});
+        ajaxModel.updateGridDataCallback = (modelData) => {
+            if(modelData === undefined){
+                window.alert("modelData is undefined!");
+            }
+            this.setState({modelData: modelData});
         }
     }
 
@@ -19,8 +22,8 @@ class GridLayout extends React.Component {
     render() {
         return (
                 <div className="card-deck text-center">
-                    {this.state.data.map((gc) => <GridCard key={gc.cardID} cardID={gc.cardID}
-                                                           cardName={gc.cardName} cardURL={gc.cardURL}/>)}
+                    {this.state.modelData.map((gc) => <GridCard key={Math.random(1,99999)} modelID={gc.id}
+                                                           modelName={gc.name} modelURL={ajaxModel.modelURL}/>)}
                 </div>
         );
     }

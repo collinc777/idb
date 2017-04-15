@@ -2,9 +2,9 @@ class GridCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            cardID: props.cardID,
-            cardName: props.cardName,
-            cardURL: props.cardURL
+            modelID: props.modelID,
+            modelName: props.modelName,
+            modelURL: props.modelURL
         }
     }
 
@@ -12,12 +12,12 @@ class GridCard extends React.Component {
         return (
                 <div className="card listingCard">
                     <div className="card-header">
-                        <h4><a href={this.state.cardURL + '/' + this.state.cardID}>{this.state.cardName}</a>
+                        <h4><a href={this.state.modelURL + '/' + this.state.modelID}>{this.state.modelName}</a>
                         </h4>
                     </div>
                     <div className="card-block">
                         <a className="btn btn-block btn-default"
-                           href={this.state.cardURL + '/' + this.state.cardID}>Details</a>
+                           href={this.state.modelURL + '/' + this.state.modelID}>Details</a>
                     </div>
                 </div>
         );

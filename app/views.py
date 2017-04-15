@@ -1,9 +1,9 @@
 # We'll define all of our views in this file. 
 
-from flask import render_template, request
+from flask import render_template, request, render_template_string
 from app import application
-from app.decorators import returns_json, takes_query_params
-from app.models import Book, Character, Alliance, House
+from app.decorators import returns_json, takes_api_params, takes_search_params
+from app.models import Book, Character, Alliance, House, getPropertyMatches
 from sqlalchemy import desc
 import json
 from random import randint
@@ -24,11 +24,14 @@ HL_BOOKS = 4
 HL_DEVNOTES = 5
 HL_ABOUT = 6
 
-
 def load_listing(filename):
     with open(filename) as data_file:
         return json.load(data_file)
 
+allHouses = House.query.all()
+allCharacters = Character.query.all()
+allBooks = Book.query.all()
+allAlliances = Alliance.query.all()
 
 # Each Listing requires a "title" and a "properties" array
 # properties are simply 2-element arrays of a human readable name and a dictionary key
@@ -39,35 +42,17 @@ def load_listing(filename):
 # links between resources. E.g. in the books/2 page we want to have links to the 
 # POV (point-of-view) characters that are in it. So we pass it the character_links array
 
-character_listing = dict(model=Character, title="Characters", url="/characters", sorts=Character.getSorts())
-character_listing["data"] = load_listing("data/trimmed_characters.json") #this needs to be a db call?
-character_links = dict()
-for character in character_listing["data"]:
-    character_links[character["id"]] = {"name": character["name"], "link": "/characters/" + str(character["id"])}
+character_listing = dict(model=Character, title="Characters", url="/characters", sorts=Character.getHumanReadableSortableProperties())
+house_listing = dict(model=House, title="Houses", url="/houses", sorts=House.getHumanReadableSortableProperties())
+book_listing = dict(model=Book, title="Books", url="/books", sorts=Book.getHumanReadableSortableProperties())
+alliance_listing = dict(model=Alliance, title="Alliances", url="/alliances", sorts=Alliance.getHumanReadableSortableProperties())
 
-house_listing = dict(model=House, title="Houses", url="/houses", sorts=House.getSorts())
-house_listing["data"] = load_listing("data/trimmed_houses_alliances.json")
-house_links = dict()
-for house in house_listing["data"]:
-    house_links[house["id"]] = {"name": house["name"], "link": "/houses/" + str(house["id"])}
-
-book_listing = dict(model=Book, title="Books", url="/books", sorts=Book.getSorts())
-book_listing["data"] = load_listing("data/trimmed_books.json")
-book_links = dict()
-for book in book_listing["data"]:
-    book_links[book["id"]] = {"name": book["name"], "link": "/books/" + str(book["id"])}
 book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswords.jpg", 4: "thehedgeknight.jpg",
                5: "afeastforcrows.jpg", 6: "theswornsword.jpg", 7: "themysteryknight.jpg", 8: "adancewithdragons.jpg",
                9: "theprincessandthequeen.jpg", 10: "therogueprince.jpg", 11: "theworldoficeandfire.png",
                12: "aknightofthesevenkingdoms.jpg"}
 # book_images is a total hack right now. Ideally this would be a field inside the book data/model
 # but for now we'll just do this. Theres only 12 books so it'll be easy to add it in manually later
-
-alliance_listing = dict(model=Alliance, title="Alliances", url="/alliances", sorts=Alliance.getSorts())
-alliance_listing["data"] = load_listing("data/trimmed_alliances.json")
-alliance_links = dict()
-for alliance in alliance_listing["data"]:
-    alliance_links[alliance["id"]] = {"name": alliance["name"], "link": "/alliances/" + str(alliance["id"])}
 
 
 # Build a base "context" dictionary for passing to any given template
@@ -89,18 +74,69 @@ def runTestsForAboutPage():
 
 ### Begin Landing Page ###
 
-@application.route('/', methods=['GET', 'POST'])
+@application.route('/', methods=['GET'])
 def index():
     context = create_context(0)
     return render_template('index.html', **context)
 
 ### End Landing Page ###
 
-def getDataList(listing, params=None):
-    if params is None:
-        return [] #should not happen due to decorator
+
+### Begin Search Page and API ###
+
+def getSearchResultData(query):
+    global allHouses
+    global allCharacters
+    global allBooks
+    global allAlliances
+
+    allModels = allHouses + allCharacters + allBooks + allAlliances
+
+    results = list()
+    for model in allModels:
+        propertyMatches = getPropertyMatches(model, query)
+        if propertyMatches is not None and len(propertyMatches):
+            modelDict = model.toDict()
+            results.append(dict(resultID=modelDict["id"], resultModelName=modelDict["name"], resultModelType=modelDict["modelType"], resultPropertyMatches=propertyMatches))
+
+    return results
+
+@application.route('/search', methods=['GET'])
+@takes_search_params
+def search(query):
+    searchResults = getSearchResultData(query)
+
+    pagedSearchResults = searchResults[:5]
+    page_data = {"currentPage": 1, "numberPages": max(len(searchResults) // 5, 1)}
+
+    context = create_context(0, query=query, numberOfResults=len(searchResults), searchResults=pagedSearchResults, pageData=page_data)
+    return render_template('search.html', **context)
+
+
+@application.route('/api/search', methods=['GET'])
+@returns_json
+@takes_search_params
+def get_search(**kwargs):
+    query = kwargs.get("query")
+    page = kwargs.get("page")
+    page = max(1, page)
+
+    pageStart = (page - 1) * 5
+    pageEnd = page * 5
+
+    array = ["a","b","C","d"]
+    array[2] = "C"
+
+    searchResults = getSearchResultData(query)
+    pagedSearchResults = searchResults[pageStart:pageEnd]
+
+    page_data = {"currentPage": page, "numberPages": max(len(searchResults) // 5, 1)}
+    return json.dumps({"resultsData": pagedSearchResults, "pageData": page_data})
+
+### End Landing Page ###
+
+def getDataList(listing, params):
     cardURL = listing["url"]
-    print("Params: ", params)
     dataListing = list()
     model = listing["model"]
     page = params["page"]
@@ -108,29 +144,36 @@ def getDataList(listing, params=None):
     dataQuery = model.query
 
     if "sortParam" in params:
-        if "sortAscending" in params and params["sortAscending"] == 0:
-            dataQuery = dataQuery.order_by(desc(getattr(model, model.convertSort(params["sortParam"]))))
-        else:
-            dataQuery = dataQuery.order_by(getattr(model, model.convertSort(params["sortParam"])))
-    
-    modelInstances = []
+        try:
+            if "sortAscending" in params and params["sortAscending"] == 0:
+                dataQuery = dataQuery.order_by(desc(getattr(model, params["sortParam"])))
+            else:
+                dataQuery = dataQuery.order_by(getattr(model, params["sortParam"]))
+        except:
+            print("Sort Parameter: ", params["sortParam"], " is incorrect")
+            return None
+
+    modelInstances = dataQuery.all()
+
     if "filterText" in params:
-        #only does exact match on name for now
-        dataQuery = dataQuery.filter(model.name.contains(params["filterText"]))
+        # use property match Search API for filtering now
+        filteredModelInstances = []
+        query = params["filterText"]
+        for m in modelInstances:
+            matches = getPropertyMatches(m, query)
+            if len(matches) > 0:
+                modelInstances.append(m)
+        if len(filteredModelInstances) > 0:
+            modelInstances = filteredModelInstances
 
-    numberOfResults = len(dataQuery.all())
-    page_data = {"currentPage": page, "numberPages": max(numberOfResults // 20, 1)}
+    numberOfResults = len(modelInstances)
+    page_data = {"currentPage": page, "numberPages": max(numberOfResults // 21, 1)}
 
-    modelInstances = dataQuery.slice((page-1)*20, page*20).all()
+    modelInstances = modelInstances[(page-1)*21:page*21]
 
     dictResults = [c.toDict() for c in modelInstances]
-    print([result["name"] for result in dictResults])
-    card_data = [dict(cardURL=cardURL, cardID=res["id"], cardName=res["name"]) for i, res in enumerate(dictResults)]
     
-    listing_list = {"pageData": page_data, "cardData": card_data}
-    #modelInstances = dataQuery.slice((page-1)*20, page*20).all()
-    #jsonResults = [modelInstances[i].toJSON() for i in range((page-1)*20, min(len(modelInstances), page*20))]
-
+    listing_list = {"pageData": page_data, "modelData": dictResults}
     return listing_list
 
 ### Begin "API" Pages ###
@@ -144,7 +187,7 @@ def getDataList(listing, params=None):
 
 @application.route('/api/characters', methods=['GET', 'POST'])
 @returns_json
-@takes_query_params
+@takes_api_params
 def get_characters(**kwargs):
     json_out = getDataList(character_listing, kwargs)
     return json.dumps(json_out)
@@ -152,7 +195,7 @@ def get_characters(**kwargs):
 
 @application.route('/api/houses', methods=['GET', 'POST'])
 @returns_json
-@takes_query_params
+@takes_api_params
 def get_houses(**kwargs):
     json_out = getDataList(house_listing, kwargs)
     return json.dumps(json_out)
@@ -160,7 +203,7 @@ def get_houses(**kwargs):
 
 @application.route('/api/alliances', methods=['GET', 'POST'])
 @returns_json
-@takes_query_params
+@takes_api_params
 def get_alliances(**kwargs):
     json_out = getDataList(alliance_listing, kwargs)
     return json.dumps(json_out)
@@ -168,7 +211,7 @@ def get_alliances(**kwargs):
 
 @application.route('/api/books', methods=['GET', 'POST'])
 @returns_json
-@takes_query_params
+@takes_api_params
 def get_books(**kwargs):
     json_out = getDataList(book_listing, kwargs)
     return json.dumps(json_out)
@@ -179,7 +222,7 @@ def get_books(**kwargs):
 
 ### Begin "Listing" Pages ###
 
-default_params = dict(page=1, sortParam="Name", sortAscending=1)
+default_params = dict(page=1, sortParam="name", sortAscending=1)
 
 
 @application.route('/characters', methods=['GET'])
@@ -191,7 +234,7 @@ def characters():
 
 @application.route('/houses', methods=['GET'])
 def houses():
-    context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing, default_params))
+    context = create_context(HL_HOUSES, listing=house_listing,  data=getDataList(house_listing, default_params))
     return render_template('listing.html', **context)
 
 
@@ -214,26 +257,29 @@ def books():
 
 @application.route("/characters/<charid>")
 def character(charid):
+    global allCharacters
     try:
         charid = int(charid)
     except ValueError:
         # Could not even convert to an integer, return empty page for now
         return render_template('notfound.html', **create_context(1, entity="Character", entity_id=charid))
 
+
     character = None
-    for c in character_listing["data"]:
-        if c["id"] == charid:
+    for c in allCharacters:
+        if str(c.id) == str(charid):
             character = c
     if character is None:
         context = create_context(HL_CHARACTERS, entity="Character", entity_id=charid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_CHARACTERS, character=character, book_links=book_links, house_links=house_links)
+        context = create_context(HL_CHARACTERS, character=character)
         return render_template('character.html', **context)
 
 
 @application.route("/houses/<houseid>")
 def house(houseid):
+    global allHouses
     try:
         houseid = int(houseid)
     except ValueError:
@@ -241,20 +287,20 @@ def house(houseid):
         return render_template('notfound.html', **create_context(1, entity="House", entity_id=houseid))
 
     house = None
-    for h in house_listing["data"]:
-        if h["id"] == houseid:
+    for h in allHouses:
+        if h.id == houseid:
             house = h
     if house is None:
         context = create_context(HL_HOUSES, entity="House", entity_id=houseid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_HOUSES, house=house, character_links=character_links, house_links=house_links,
-                                 alliance_links=alliance_links)
+        context = create_context(HL_HOUSES, house=house)#, character_links=character_links, house_links=house_links,alliance_links=alliance_links)
         return render_template('house.html', **context)
 
 
 @application.route("/books/<bookid>")
 def book(bookid):
+    global allBooks
     try:
         bookid = int(bookid)
     except ValueError:
@@ -269,13 +315,13 @@ def book(bookid):
         context = create_context(HL_BOOKS, entity="Book", entity_id=bookid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_BOOKS, book=book, character_links=character_links, house_links=house_links,
-                                 book_images=book_images)
+        context = create_context(HL_BOOKS, book=book, book_images=book_images)
         return render_template('book.html', **context)
 
 
 @application.route("/alliances/<allianceid>")
 def alliance(allianceid):
+    global allAlliances
     try:
         allianceid = int(allianceid)
     except ValueError:
@@ -290,8 +336,7 @@ def alliance(allianceid):
         context = create_context(HL_ALLIANCES, entity="Alliance", entity_id=allianceid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_ALLIANCES, alliance=alliance, character_links=character_links,
-                                 house_links=house_links)
+        context = create_context(HL_ALLIANCES, alliance=alliance)
         return render_template('alliance.html', **context)
 
 ### End "Detail" Pages ###

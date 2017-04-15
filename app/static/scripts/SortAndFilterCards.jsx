@@ -8,7 +8,6 @@ class FilterCard extends React.Component {
     }
 
     handleChange(event){
-        console.log(event.target.value);
         this.setState({
             value: event.target.value
         });
@@ -29,8 +28,10 @@ class FilterCard extends React.Component {
 class SortCard extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props.sorts);
         this.state = {
-            selectedSortName: props.sorts[0] + " Ascending",
+            sorts: props.sorts,
+            selectedSortName: props.sorts[0][1] + " Ascending",
             selectedSort: 0,
             ascending: 1
         }
@@ -38,7 +39,7 @@ class SortCard extends React.Component {
     }
 
     getSortName(selectedSort, ascending){
-        var name = this.props.sorts[selectedSort];
+        var name = this.props.sorts[selectedSort][1];
         if(ascending === 0){
             name += " Descending";
         }else{
@@ -48,10 +49,8 @@ class SortCard extends React.Component {
     }
 
     onSortData(selectedSort, ascending){
-        console.log("Sorting data for sort: " + selectedSort + " and ascending: " + ascending);
-        var sort = this.props.sorts[selectedSort];
+        var sort = this.props.sorts[selectedSort][0];
         var sortName = this.getSortName(selectedSort, ascending);
-        console.log("SortName: " + sortName);
         this.setState({
             selectedSortName: sortName,
             selectedSort: selectedSort,
@@ -70,9 +69,9 @@ class SortCard extends React.Component {
         var sortsElements = [];
         for(var i = 0; i < this.props.sorts.length; i++){
             (function(sortCardInstance, i){
-                var sort = sortCardInstance.props.sorts[i];
-                sortsElements.push(<a className="dropdown-item" href="#" onClick onClick={() => sortCardInstance.onSortData(i, 1)}>{sort} Ascending</a>);
-                sortsElements.push(<a className="dropdown-item" href="#" onClick onClick={() => sortCardInstance.onSortData(i, 0)}>{sort} Descending</a>);
+                var sort = sortCardInstance.props.sorts[i][1];
+                sortsElements.push(<a key={Math.random(0, 999999)} className="dropdown-item" href="#" onClick onClick={() => sortCardInstance.onSortData(i, 1)}>{sort} Ascending</a>);
+                sortsElements.push(<a key={Math.random(0, 999999)} className="dropdown-item" href="#" onClick onClick={() => sortCardInstance.onSortData(i, 0)}>{sort} Descending</a>);
             })(this, i);
         }
         return (<div className="card sortAndFilterCard text-center">

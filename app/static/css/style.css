@@ -22,6 +22,97 @@ body {
 	padding-bottom: 40px;
 }
 
+#searchBarContainer {
+	margin-bottom: 30px;
+}
+
+#searchButton {
+	padding-left: 40px;
+	padding-right: 40px;
+}
+
+/* 3px margin is to space it out so the space actually appears */
+.searchResultCard a.searchResultHighlight {
+	font-weight: bold;
+	color: red;
+	text-decoration: underline;
+}
+
+.resultPropertyMatchRow {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 20px;
+	padding-bottom: 10px;
+	border-bottom: solid gray 1px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.resultPropertyMatchRow:only-child {
+	border: none;
+}
+
+.resultPropertyMatchRow:first-child {
+	padding-top: 0px;
+}
+
+@media (min-width: 768px){
+	.resultPropertyMatchValue {
+		border-left: solid gray 1px;
+	}
+}
+
+@media (max-width: 992px){
+	.smallSearchContainer {
+		margin-top: 15px;
+		margin-bottom: 10px;
+
+		width: 100%;
+	}
+
+	.smallSearchContainer .input-group {
+		width: 100% !important;
+		margin-right: -10px;
+	}
+}
+
+.searchResultsContainer {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.searchResultCard {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.searchResultCard .card-block {
+	background-color: #333;
+	border-color: #333;
+}
+
+.searchResultCard .card-header {
+	background-color: #333;
+	border-bottom: 1px solid #f7f7f9;
+}
+
+.searchResultCard h1, .searchResultCard h2, .searchResultCard h3, .searchResultCard h4, .searchResultCard h5 {
+	color: #f7f7f9;
+}
+
+.searchResultCard div, .searchResultCard a {
+	color: #f7f7f9;
+}
+/*
+.searchResultCard a {
+	text-decoration: underline;
+}*/
+
+.searchResultCard a:hover {
+	color: #999;
+}
+
+
 .listingTitle {
 	color: #f7f7f9;
 }
@@ -35,11 +126,6 @@ h1.cursive {
 	padding-top: 40px;
 	padding-bottom: 40px;
 	min-height: 1200px;
-}
-
-.details .card {
-	margin-top: 10px;
-	margin-bottom: 10px;
 }
 
 /*.details .card .card-block, .details .card .card-header {
@@ -57,6 +143,30 @@ h1.cursive {
 	color: #f7f7f9;
 }
 */
+
+.details .card {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.details .card .card-block {
+	background-color: #333;
+	border-color: #333;
+}
+
+.details .card .card-header {
+	background-color: #333;
+	border-bottom: 1px solid #f7f7f9;
+}
+
+.details .card h1, .details .card h2, .details .card h3, .details .card h4, .details .card h5 {
+	color: #f7f7f9;
+}
+
+.details .card div, .details .card a {
+	color: #f7f7f9;
+}
+
 .pageLinks a {
 	background-color: #333;
     color: #f7f7f9;
@@ -77,6 +187,10 @@ h1.cursive {
 	background-color: #f7f7f9;
 	border-color: #333;
 	color: #333;
+}
+
+.pageLinks a:hover {
+	color: #999;
 }
 
 .pageLinks a:first-child {
@@ -107,7 +221,7 @@ h1.cursive {
 
 .listingCard .card-header, .sortAndFilterCard .card-header {
 	background-color: #333;
-	border-color: #333;
+	border-bottom: 1px solid #f7f7f9;
 }
 
 .listingCard h1, .listingCard h2, .listingCard h3, .listingCard h4, .listingCard h5 {
@@ -120,6 +234,10 @@ h1.cursive {
 
 .listingCard a, .sortAndFilterCard a {
 	color: #f7f7f9;
+}
+
+.listingCard a:hover, .sortAndFilterCard a:hover {
+	color: #999;
 }
 
 .sortAndFilterCard .dropdown-menu {
