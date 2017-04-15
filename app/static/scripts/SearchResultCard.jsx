@@ -26,8 +26,6 @@ class ResultPropertyMatch extends React.Component {
 class SearchResultCard extends React.Component {
     constructor(props) {
         super(props);
-        console.log("RPM:");
-        console.log(props.resultPropertyMatches);
         this.state = {
             resultID: props.resultID,
             resultModelName: props.resultModelName,

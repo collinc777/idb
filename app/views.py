@@ -150,17 +150,21 @@ def getDataList(listing, params):
 
 
     modelInstances = []
-    if "filterText" in params:
-        #only does exact match on name for now
-        dataQuery = dataQuery.filter(model.name.contains(params["filterText"]))
 
-    numberOfResults = len(dataQuery.all())
+    if "filterText" in params:
+        # use property match Search API for filtering now
+        query = params["filterText"]
+        for m in dataQuery.all():
+            matches = getPropertyMatches(m, query)
+            if len(matches) > 0:
+                modelInstances.append(m)
+
+    numberOfResults = len(modelInstances)
     page_data = {"currentPage": page, "numberPages": max(numberOfResults // 21, 1)}
 
-    modelInstances = dataQuery.slice((page-1)*21, page*21).all()
+    modelInstances = modelInstances[(page-1)*21:page*21]
 
     dictResults = [c.toDict() for c in modelInstances]
-    print(dictResults)
     
     listing_list = {"pageData": page_data, "modelData": dictResults}
     return listing_list

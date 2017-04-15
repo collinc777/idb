@@ -87,34 +87,34 @@ allegiances_houses_association_table = Table(
 # -------
 
 def getPropertyMatches(model, query):
-        propertyMatches = list()
-        query = query.lower()
-        humanReadableProperties = model.getHumanReadableProperties()
+    propertyMatches = list()
+    query = query.lower()
+    humanReadableProperties = model.getHumanReadableProperties()
 
-        for c in model.__table__.columns:
-            if c.name in humanReadableProperties:
-                propertyMatch = dict(propertyName=c.name, propertyReadable=humanReadableProperties[c.name])
-                value = getattr(model, c.name)
+    for c in model.__table__.columns:
+        if c.name in humanReadableProperties:
+            propertyMatch = dict(propertyName=c.name, propertyReadable=humanReadableProperties[c.name])
+            value = getattr(model, c.name)
 
-                if value is not None:
-                    try:
-                        if isinstance(value, str):
-                            if query in value.lower() and len(value):
-                                propertyMatch["propertyValue"] = value
-                        elif isinstance(value, list):
-                            for subValue in value:
-                                subValue = str(subValue)
-                                if query in subValue.lower() and len(subValue):
-                                    propertyMatch["propertyValue"] = subValue
-                        elif str(query) == str(value):
-                            propertyMatch["propertyValue"] = str(value)
-                    except ValueError:
-                        print("Hit a ValueError in column: ", c.name, " with value: ", value)
+            if value is not None:
+                try:
+                    if isinstance(value, str):
+                        if query in value.lower() and len(value):
+                            propertyMatch["propertyValue"] = value
+                    elif isinstance(value, list):
+                        for subValue in value:
+                            subValue = str(subValue)
+                            if query in subValue.lower() and len(subValue):
+                                propertyMatch["propertyValue"] = subValue
+                    elif str(query) == str(value):
+                        propertyMatch["propertyValue"] = str(value)
+                except ValueError:
+                    print("Hit a ValueError in column: ", c.name, " with value: ", value)
 
-                    if "propertyValue" in propertyMatch:
-                        propertyMatches.append(propertyMatch)
+                if "propertyValue" in propertyMatch:
+                    propertyMatches.append(propertyMatch)
 
-        return propertyMatches
+    return propertyMatches
 
 # -------
 # Models
