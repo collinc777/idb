@@ -148,16 +148,18 @@ def getDataList(listing, params):
             print("Sort Parameter: ", params["sortParam"], " is incorrect")
             return None
 
-
-    modelInstances = []
+    modelInstances = dataQuery.all()
 
     if "filterText" in params:
         # use property match Search API for filtering now
+        filteredModelInstances = []
         query = params["filterText"]
-        for m in dataQuery.all():
+        for m in modelInstances:
             matches = getPropertyMatches(m, query)
             if len(matches) > 0:
                 modelInstances.append(m)
+        if len(filteredModelInstances) > 0:
+            modelInstances = filteredModelInstances
 
     numberOfResults = len(modelInstances)
     page_data = {"currentPage": page, "numberPages": max(numberOfResults // 21, 1)}
