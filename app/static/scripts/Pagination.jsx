@@ -40,14 +40,21 @@ class Pagination extends React.Component {
         super(props);
         this.state = {
             currentPage: 1,
-            numberPages: props.numberPages
+            numberPages: props.numberPages,
+            whichPagination: props.whichPagination
         }
         this.handleChange = this.handleChange.bind(this);
     }
 
     componentWillMount() {
-        ajaxModel.updatePaginationCallback = (pageData) => {
-            this.setState({currentPage: pageData["currentPage"], numberPages: pageData["numberPages"]});
+        if(this.state.whichPagination === 1){
+            ajaxModel.updatePaginationCallback1 = (pageData) => {
+                this.setState({currentPage: pageData["currentPage"], numberPages: pageData["numberPages"]});
+            };
+        }else{
+            ajaxModel.updatePaginationCallback2 = (pageData) => {
+                this.setState({currentPage: pageData["currentPage"], numberPages: pageData["numberPages"]});
+            };
         }
     }
 

@@ -27,12 +27,15 @@ class ListingContainer extends React.Component {
     }
 
     render() {
+        const top = 0;
+        const bottom = 1;
         return (
                 <div>
                     <TitleLayout title={this.state.listingTitle}/>
                     <SortAndFilterCards sorts={this.state.sorts} filterPlaceholder={this.state.filterPlaceholder}/>
-                    <Pagination currentPage={this.state.pageData.currentPage} numberPages={this.state.pageData.numberPages}/>
+                    <Pagination whichPagination={top} currentPage={this.state.pageData.currentPage} numberPages={this.state.pageData.numberPages}/>
                     <GridLayout modelData={this.state.modelData}/>
+                    <Pagination whichPagination={bottom} currentPage={this.state.pageData.currentPage} numberPages={this.state.pageData.numberPages}/>
                 </div>);
     }
 }

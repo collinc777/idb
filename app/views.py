@@ -153,18 +153,14 @@ def getDataList(listing, params):
         dataQuery = dataQuery.filter(model.name.contains(params["filterText"]))
 
     numberOfResults = len(dataQuery.all())
-    page_data = {"currentPage": page, "numberPages": max(numberOfResults // 20, 1)}
+    page_data = {"currentPage": page, "numberPages": max(numberOfResults // 21, 1)}
 
-    modelInstances = dataQuery.slice((page-1)*20, page*20).all()
+    modelInstances = dataQuery.slice((page-1)*21, page*21).all()
 
     dictResults = [c.toDict() for c in modelInstances]
     print(dictResults)
-    #card_data = [dict(cardURL=cardURL, cardID=res["id"], cardName=res["name"]) for i, res in enumerate(dictResults)]
     
     listing_list = {"pageData": page_data, "modelData": dictResults}
-    #modelInstances = dataQuery.slice((page-1)*20, page*20).all()
-    #jsonResults = [modelInstances[i].toJSON() for i in range((page-1)*20, min(len(modelInstances), page*20))]
-
     return listing_list
 
 ### Begin "API" Pages ###

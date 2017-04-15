@@ -5,7 +5,8 @@ var ajaxModel = {
     dataURL: null,
     modelURL: null,
     updateGridDataCallback: null,
-    updatePaginationCallback: null,
+    updatePaginationCallback1: null,
+    updatePaginationCallback2: null,
     updateResultsDataCallback: null,
     onSearchPage: false,
     currentSearchQuery: null,
@@ -110,6 +111,12 @@ var ajaxModel = {
                 console.log("Finished scrolling: " + selectedPropertyOffset);
             }});
         }
+    },
+    callUpdatePaginationCallbacks: function(pageData){
+        this.updatePaginationCallback1(pageData);
+        if(this.updatePaginationCallback2 !== null){
+            this.updatePaginationCallback2(pageData);
+        }
     }
 };
 
@@ -121,8 +128,8 @@ updateGridAndPagination = function(dataOrError){
         window.alert("API request malformed: " + dataOrError["error"]);
     }else{
         console.log("Data successful, updating grid and pages");
+        ajaxModel.callUpdatePaginationCallbacks(dataOrError["pageData"]);
         ajaxModel.updateGridDataCallback(dataOrError["modelData"]);
-        ajaxModel.updatePaginationCallback(dataOrError["pageData"]);
     }
 };
 
@@ -133,8 +140,8 @@ updateSearchAndPagination = function(dataOrError){
         window.alert("API request malformed: " + dataOrError["error"]);
     }else{
         console.log("Data successful, updating grid and pages");
+        ajaxModel.callUpdatePaginationCallbacks(dataOrError["pageData"]);
         ajaxModel.updateResultsDataCallback(dataOrError["resultsData"]);
-        ajaxModel.updatePaginationCallback(dataOrError["pageData"]);
     }
 };
 
@@ -142,6 +149,13 @@ $(window).on("load", function(){
     $("#searchButton").on("click", function(event){
         event.preventDefault();
         var searchBarText = $("#searchBar").val();
+
+        var redirectURL = "/search?query=" + searchBarText;
+        window.location.replace(redirectURL);
+    });
+    $("#smallSearchButton").on("click", function(event){
+        event.preventDefault();
+        var searchBarText = $("#smallSearchBar").val();
 
         var redirectURL = "/search?query=" + searchBarText;
         window.location.replace(redirectURL);

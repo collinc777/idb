@@ -48,6 +48,10 @@ body {
 	border-bottom-right-radius: 10px;
 }
 
+.resultPropertyMatchRow:only-child {
+	border: none;
+}
+
 .resultPropertyMatchRow:first-child {
 	padding-top: 0px;
 }
