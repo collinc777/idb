@@ -4,6 +4,7 @@ var updateSearchAndPagination = null;
 var ajaxModel = {
     dataURL: null,
     modelURL: null,
+    modelLinks: window.allModelLinks,
     updateGridDataCallback: null,
     updatePaginationCallback1: null,
     updatePaginationCallback2: null,
@@ -108,11 +109,19 @@ var ajaxModel = {
         console.log("Scrolling to: " + elementID);
 
         if(elementID !== undefined && elementID.length > 1){
-            var selectedPropertyOffset = $(elementID).offset()["top"];
-            console.log("Selected property location: " + selectedPropertyOffset);
-            $("body").animate({scrollTop: selectedPropertyOffset - 50}, {complete: function(){
-                console.log("Finished scrolling: " + selectedPropertyOffset);
-            }});
+            var selectedElement = $(elementID);
+            console.log("Selected elemment:");
+            console.log(selectedElement);
+
+            if(selectedElement !== undefined && selectedElement !== null){
+                var selectedPropertyOffset = selectedElement.offset()["top"];
+                console.log("Selected property location: " + selectedPropertyOffset);
+                $("body").animate({scrollTop: selectedPropertyOffset - 50}, {complete: function(){
+                    console.log("Finished scrolling: " + selectedPropertyOffset);
+                }});
+            }else{
+                console.log(selectedElement);
+            }
         }
     },
     callUpdatePaginationCallbacks: function(pageData){
@@ -120,6 +129,14 @@ var ajaxModel = {
         if(this.updatePaginationCallback2 !== null){
             this.updatePaginationCallback2(pageData);
         }
+    },
+    getModelLink: function(modelLinkString, propertyKey){
+        var modelLink = this.modelLinks[modelLinkString];
+        console.log("Getting " + modelLinkString + "[" + propertyKey + "]");
+        if(modelLink !== undefined && modelLink !== null && propertyKey in modelLink){
+            return modelLink[propertyKey];
+        }
+        
     }
 };
 
@@ -171,5 +188,4 @@ $(window).on("load", function(){
         window.location.replace(redirectURL);
     });
 
-    ajaxModel.scrollToSelectedProperty(window.location.hash);
 });

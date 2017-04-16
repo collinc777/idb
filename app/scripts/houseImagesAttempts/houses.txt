@@ -1,0 +1,444 @@
+1,algood
+2,allyrion godsgrace
+3,amber
+4,ambrose
+5,appleton appleton
+6,arryn gulltown
+7,arryn the eyrie
+8,ashford ashford
+9,ashwood
+10,baelish harrenhal
+11,baelish the fingers
+12,ball
+13,banefort banefort
+14,bar emmon sharp point
+15,baratheon dragonstone
+16,baratheon king's landing
+17,baratheon storm's end
+18,beesbury honeyholt
+19,belmore strongsong
+20,bettley
+21,bigglestone
+22,blackbar bandallon
+23,blackfyre king's landing
+24,blackmont blackmont
+25,blackmyre
+26,blacktyde blacktyde
+27,blackwood raventree hall
+28,blanetree
+157,goodbrother shatterstone
+29,blount
+30,boggs
+31,boggs crackclaw point
+32,bole
+33,bolling
+34,bolton the dreadfort
+35,borrell sweetsister
+36,botley lordsport
+37,bracken stone hedge
+38,branch
+39,branfield
+40,brax hornvale
+41,breakstone
+42,briar
+43,bridges
+44,brightstone
+45,brook
+46,broom
+47,brownhill
+48,brune brownhollow
+49,brune the dyre den
+50,buckler bronzegate
+51,buckwell the antlers
+52,bulwer blackcrown
+53,burley
+54,bushy
+55,butterwell
+56,byrch
+57,bywater
+58,cafferen fawnton
+59,cargyll
+60,caron nightsong
+61,cassel
+62,casterly casterly rock
+63,caswell bitterbridge
+64,cave
+65,celtigar claw isle
+66,cerwyn cerwyn
+67,chambers
+68,charlton
+69,chelsted
+70,chester greenshield
+71,chyttering
+72,clegane
+73,clifton
+74,cockshaw
+75,codd
+76,coldwater coldwater burn
+77,cole
+78,condon
+79,conklyn
+80,connington griffin's roost
+81,corbray heart's home
+82,cordwayner hammerhal
+83,costayne three towers
+84,cox saltpans
+85,crabb
+86,crakehall crakehall
+87,crane red lake
+88,cray
+89,cressey
+90,crowl deepdown
+91,cuy sun
+92,dalt lemonwood
+93,dargood
+94,darke
+95,darklyn duskendale
+96,darkwood
+432,woods
+97,darry darry
+98,dayne high hermitage
+99,dayne starfall
+100,deddings
+101,doggett
+102,dondarrion blackhaven
+103,donniger
+104,drinkwater
+105,drox
+106,drumm old wyk
+107,dryland
+108,dunn
+109,durrandon
+110,durwell
+111,dustin barrowton
+112,edgerton
+113,egen
+114,elesham the paps
+115,erenford
+116,errol haystack hall
+117,estermont greenstone
+118,estren wyndhall
+119,falwell
+120,farman faircastle
+121,farring
+122,farwynd sealskin point
+123,farwynd the lonely light
+124,fell felwood
+125,fenn
+126,ferren
+127,fisher
+128,fisher the stony shore
+129,flint  the mountains
+130,flint breakstone hill
+131,flint flint's finger
+132,flint widow's watch
+133,florent brightwater keep
+134,follard
+135,foote
+136,foote nightsong
+137,footly tumbleton
+138,forrester
+139,fossoway cider hall
+140,fossoway new barrel
+141,fowler skyreach
+142,frey riverrun
+143,frey the crossing
+144,frost
+145,gardener highgarden
+146,gargalen salt shore
+147,garner
+148,gaunt
+149,glenmore
+150,glover deepwood motte
+151,goodbrook
+152,goodbrother corpse lake
+153,goodbrother crow spike keep
+154,goodbrother downdelving
+155,goodbrother hammerhorn
+156,goodbrother orkmont
+433,woodwright
+158,gower
+159,graceford holyhall
+160,grafton gulltown
+161,grandison grandview
+162,graves
+163,greenfield greenfield
+164,greengood
+165,greenwood
+166,grell
+167,grey
+168,greyiron orkmont
+169,greyjoy pyke
+170,greystark wolf's den
+171,grimm greyshield
+172,haigh
+173,hamell
+174,harclay
+175,hardy
+176,hardyng
+177,harlaw grey garden
+178,harlaw harlaw
+179,harlaw harlaw hall
+180,harlaw harridan hill
+181,harlaw the tower glimmering
+182,harlton
+183,harroway harrenhal
+184,harte
+185,hastwyck
+186,hasty
+187,hawick saltpans
+188,hawthorne
+189,hayford hayford
+190,heddle
+191,herston
+192,hersy newkeep
+193,hetherspoon
+194,hewett oakenshield
+195,hightower the hightower
+196,hoare orkmont
+197,hogg sow's horn
+198,hollard
+199,holt
+200,holt
+201,hook
+202,hornwood hornwood
+203,horpe
+204,hull
+205,humble
+206,hunt
+207,hunter longbow hall
+208,hutcheson
+209,inchfield
+210,ironmaker
+211,ironsmith
+212,jast
+213,jordayne the tor
+214,justman
+215,karstark karhold
+216,keath
+217,kellington
+218,kenning harlaw
+219,kenning kayce
+220,kettleblack
+221,kidwell ivy hall
+222,knott
+223,kyndall
+224,ladybright
+225,lake
+226,lake
+227,langward
+228,lannett
+229,lannister casterly rock
+230,lannister darry
+231,lannister lannisport
+232,lanny
+233,lantell
+234,lefford the golden tooth
+235,leygood
+236,liddle
+237,lightfoot
+238,lipps
+239,locke oldcastle
+240,lolliston
+241,long
+242,longthorpe longsister
+243,longwaters
+244,lonmouth
+245,lorch
+246,lothston harrenhal
+247,lowther
+248,lyberr
+249,lychester
+250,lydden deep den
+251,lynderly the snakewood
+252,magnar kings
+253,mallery
+254,mallister seagard
+255,manderly white harbor
+256,manning
+257,manwoody kingsgrave
+258,marbrand ashemark
+259,marsh
+260,massey stonedance
+261,meadows grassy vale
+262,melcolm old anchor
+263,merlyn pebbleton
+264,merryweather longtable
+265,mertyns mistwood
+266,middlebury
+267,mollen
+268,moore
+269,mooton maidenpool
+270,moreland
+271,mormont bear island
+272,morrigen crow's nest
+273,moss
+274,mudd oldstones
+275,mullendore uplands
+276,musgood
+277,myatt
+278,myre harlaw
+279,nayland hag's mire
+280,netley
+281,norcross
+282,norrey
+283,norridge
+284,nutt
+285,nymeros martell sunspear
+434,woolfield
+286,oakheart old oak
+287,oldflowers
+288,orkwood orkmont
+289,orme
+290,osgrey leafy lake
+291,osgrey standfast
+292,overton
+293,paege
+294,parren
+295,payne
+296,peake starpike
+297,peasebury poddingfield
+298,peat
+299,peckledon
+300,penrose parchments
+301,perryn
+302,piper pinkmaiden
+303,plumm
+304,pommingham
+305,poole
+306,prester feastfires
+307,pryor pebble
+308,pyle
+309,pyne
+310,qoherys harrenhal
+311,qorgyle sandstone
+312,quagg
+313,rambton
+314,redbeard
+315,redding
+316,redfort redfort
+317,redwyne the arbor
+318,reed greywater watch
+319,reyne castamere
+320,rhysling
+321,risley
+322,rogers amberly
+323,rollingford
+324,roote lord harroway's town
+325,rosby rosby
+326,rowan goldengrove
+327,roxton the ring
+328,royce runestone
+329,royce the gates the moon
+330,ruthermont
+331,ruttiger
+332,ryder the rills
+333,ryger willow wood
+334,rykker duskendale
+335,ryswell the rills
+336,saltcliffe saltcliffe
+337,santagar spottswood
+338,sarsfield sarsfield
+339,sarwyck
+340,seaworth cape wrath
+341,selmy harvest hall
+342,serrett silverhill
+343,serry southshield
+344,sharp
+345,shawney
+346,shell
+347,shell
+348,shepherd
+349,shermer smithyton
+350,shett gull tower
+351,shett gulltown
+352,slate blackpool
+353,sloane
+354,slynt harrenhal
+355,smallwood acorn hall
+356,sparr great wyk
+357,spicer castamere
+358,stack
+359,stackspear
+360,staedmon broad arch
+361,stane driftwood hall
+362,stark winterfell
+363,staunton rook's rest
+364,stokeworth stokeworth
+365,stone old wyk
+366,stonetree harlaw
+367,stout goldgrass
+368,strickland
+369,strong harrenhal
+370,sunderland the three sisters
+371,sunderly saltcliffe
+372,sunglass sweetport sound
+373,swann stonehelm
+374,swyft cornfield
+375,swygert
+435,wull
+376,tallhart torrhen's square
+377,tarbeck tarbeck hall
+378,targaryen king's landing
+379,tarly horn hill
+380,tarth evenfall hall
+381,tawney orkmont
+382,teague
+383,templeton
+384,terrick
+385,thenn
+386,thorne
+387,toland ghost hill
+388,tollett the grey glen
+389,torrent littlesister
+390,towers
+391,towers harrenhal
+392,toyne
+393,trant gallowsgrey
+394,tudbury
+395,tully riverrun
+396,turnberry
+397,tyrell brightwater keep
+398,tyrell highgarden
+399,uffering
+400,uller hellholt
+401,umber the last hearth
+402,upcliff
+403,vaith the red dunes
+404,vance atranta
+405,vance wayfarer's rest
+406,varner
+407,velaryon driftmark
+408,vikary
+409,volmark
+410,vypren
+411,vyrwel darkdell
+412,wade
+413,wagstaff
+414,waterman
+415,waxley wickenden
+416,wayn
+417,waynwood ironoaks
+418,weaver
+419,webber coldmoat
+420,wells
+421,wells
+422,wendwater
+423,wensington
+424,westbrook
+425,westerling the crag
+426,westford
+427,whent harrenhal
+428,whitehill
+429,willum
+430,wode
+431,woodfoot bear island
+436,wydman
+437,wyl the boneway
+438,wylde rain 
+439,wynch iron holt
+440,wythers
+441,yarwyck
+442,yelshire
+443,yew
+444,yronwood yronwood

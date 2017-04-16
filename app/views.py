@@ -28,10 +28,21 @@ def load_listing(filename):
     with open(filename) as data_file:
         return json.load(data_file)
 
-allHouses = pickle.load(open("data/allHouses.pickle", "rb")) # House.query.all()
-allCharacters = pickle.load(open("data/allCharacters.pickle", "rb")) # Character.query.all()
-allBooks = pickle.load(open("data/allBooks.pickle", "rb")) # Book.query.all()
-allAlliances = pickle.load(open("data/allAlliances.pickle", "rb")) # Alliance.query.all()
+
+# allHouses = pickle.load(open("data/allHouses.pickle", "rb")) # House.query.all()
+# allCharacters = pickle.load(open("data/allCharacters.pickle", "rb")) # Character.query.all()
+# allBooks = pickle.load(open("data/allBooks.pickle", "rb")) # Book.query.all()
+# allAlliances = pickle.load(open("data/allAlliances.pickle", "rb")) # Alliance.query.all()
+
+allHouses = House.query.all()
+allCharacters = Character.query.all()
+allBooks = Book.query.all()
+allAlliances = Alliance.query.all()
+# pickle.dump(allHouses, open("data/allHouses.pickle", "wb"))
+# pickle.dump(allCharacters, open("data/allCharacters.pickle", "wb"))
+# pickle.dump(allBooks, open("data/allBooks.pickle", "wb"))
+# pickle.dump(allAlliances, open("data/allAlliances.pickle", "wb"))
+
 
 def buildInstanceLinks(models):
     modelLinks = dict()
@@ -46,6 +57,8 @@ character_links_list = buildInstanceLinks(allCharacters)
 book_links_list = buildInstanceLinks(allBooks)
 alliance_links_list = buildInstanceLinks(allAlliances)
 
+
+### This makes all links available on all pages ###
 
 @application.context_processor
 def house_links():
@@ -83,7 +96,6 @@ character_listing = dict(model=Character, title="Characters", url="/characters",
 house_listing = dict(model=House, title="Houses", url="/houses", sorts=House.getHumanReadableSortableProperties())
 book_listing = dict(model=Book, title="Books", url="/books", sorts=Book.getHumanReadableSortableProperties())
 alliance_listing = dict(model=Alliance, title="Alliances", url="/alliances", sorts=Alliance.getHumanReadableSortableProperties())
-
 
 book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswords.jpg", 4: "thehedgeknight.jpg",
                5: "afeastforcrows.jpg", 6: "theswornsword.jpg", 7: "themysteryknight.jpg", 8: "adancewithdragons.jpg",
@@ -206,7 +218,7 @@ def get_search(**kwargs):
 
 ### End Landing Page ###
 
-def getDataList(listing, params, modelLinks):
+def getDataList(listing, params):
     cardURL = listing["url"]
     dataListing = list()
     model = listing["model"]
@@ -233,7 +245,7 @@ def getDataList(listing, params, modelLinks):
         for m in modelInstances:
             matches = getPropertyMatches(m, query)
             if len(matches) > 0:
-                modelInstances.append(m)
+                filteredModelInstances.append(m)
         if len(filteredModelInstances) > 0:
             modelInstances = filteredModelInstances
 
@@ -244,7 +256,7 @@ def getDataList(listing, params, modelLinks):
 
     dictResults = [c.toDict() for c in modelInstances]
     
-    listing_list = dict(pageData=page_data, modelData=dictResults, modelLinks=modelLinks)
+    listing_list = dict(pageData=page_data, modelData=dictResults)
     return listing_list
 
 ### Begin "API" Pages ###
@@ -298,10 +310,7 @@ default_params = dict(page=1, sortParam="name", sortAscending=1)
 @application.route('/characters', methods=['GET'])
 def characters():
     character_data = get_characters()
-    # characters link to other characters, houses, books
-    model_links = dict(characters=character_links, houses=house_links, books=book_links)
-
-    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing, default_params, model_links))
+    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing, default_params))
     return render_template('listing.html', **context)
 
 
@@ -309,25 +318,76 @@ def characters():
 def houses():
     model_links = dict(characters=character_links, houses=house_links, alliances=alliance_links)
 
-    context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing, default_params, model_links))
+    context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing, default_params))
     return render_template('listing.html', **context)
 
 
 @application.route('/alliances', methods=['GET'])
 def alliances():
     model_links = dict(characters=character_links, houses=house_links)
-    context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing, default_params, model_links))
+    context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing, default_params))
     return render_template('listing.html', **context)
 
 
 @application.route('/books', methods=['GET'])
 def books():
     model_links = dict(characters=character_links)
-    context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing, default_params, model_links))
+    context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing, default_params))
     return render_template('listing.html', **context)
 
 
 ### End "Listing" Pages ###
+
+### Start "Details page data builder" ###
+def createDetailsWithQuery(model, instance, query=None):
+    lookup = model.getHumanReadableProperties()
+    instance = instance.toDict() 
+    modelLinks = model.getModelLinks()
+
+    # copied from DetailsCard.jsx
+    # propertyType possible values: 
+    # "linkarray": combines the next two, value will be array of ids, modelLinks will have links to the models
+    # "link": link to another model, value will be ID, modelLinks will have links to the models
+    # "array": array of elements, value will be array
+    # "default": just display readable name and then the value in text
+
+    properties = list()
+    for name, readable in lookup.items():
+        prop = dict(readableName=readable, propertyName=name)
+        value = instance.get(name, "")
+
+        shouldDisplay = False
+        if "_ids" in name:
+            # linkarray
+            prop["propertyType"] = "linkarray"
+            prop["propertyValue"] = value
+            prop["propertyModelLinks"] = modelLinks[name]
+            if value and len(value):
+                shouldDisplay = True
+        elif "_id" in name:
+            # link
+            prop["propertyType"] = "link"
+            prop["propertyValue"] = value
+            prop["propertyModelLinks"] = modelLinks[name]
+            if value and len(str(value)):
+                shouldDisplay = True
+        elif isinstance(value, list):
+            # array
+            prop["propertyType"] = "array"
+            prop["propertyValue"] = value
+            if value and len(value):
+                shouldDisplay = True
+        else: 
+            # default
+            prop["propertyType"] = "default"
+            prop["propertyValue"] = value
+            if value and len(str(value)):
+                shouldDisplay = True
+        if shouldDisplay:
+            properties.append(prop)
+    return properties
+
+### End "Details page data builder" ###
 
 
 ### Begin "Detail" Pages ###
@@ -340,17 +400,17 @@ def character(charid):
         # Could not even convert to an integer, return empty page for now
         return render_template('notfound.html', **create_context(1, entity="Character", entity_id=charid))
 
-
     character = None
     for c in allCharacters:
         if c.id == charid:
             character = c
+
     if character is None:
         context = create_context(HL_CHARACTERS, entity="Character", entity_id=charid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_CHARACTERS, character=character)
-        return render_template('character.html', **context)
+        context = create_context(HL_CHARACTERS, details_name=character.name, details_image_link="/static/img/chars/" + str(character.id) + ".jpg", details_data=createDetailsWithQuery(Character, character))
+        return render_template('details.html', **context)
 
 
 @application.route("/houses/<houseid>")
@@ -371,8 +431,8 @@ def house(houseid):
         context = create_context(HL_HOUSES, entity="House", entity_id=houseid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_HOUSES, house=house)#, character_links=character_links, house_links=house_links,alliance_links=alliance_links)
-        return render_template('house.html', **context)
+        context = create_context(HL_HOUSES, details_name=house.name, details_image_link= "/static/img/houses/" + str(house.id) + ".png", details_data=createDetailsWithQuery(House, house))
+        return render_template('details.html', **context)
 
 
 @application.route("/books/<bookid>")
@@ -393,8 +453,8 @@ def book(bookid):
         context = create_context(HL_BOOKS, entity="Book", entity_id=bookid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_BOOKS, book=book, book_images=book_images)
-        return render_template('book.html', **context)
+        context = create_context(HL_BOOKS, details_name=book.name, details_image_link="/static/img/books/" + str(book.id) + ".jpg", details_data=createDetailsWithQuery(Book, book))
+        return render_template('details.html', **context)
 
 
 @application.route("/alliances/<allianceid>")
@@ -415,8 +475,8 @@ def alliance(allianceid):
         context = create_context(HL_ALLIANCES, entity="Alliance", entity_id=allianceid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_ALLIANCES, alliance=alliance)
-        return render_template('alliance.html', **context)
+        context = create_context(HL_ALLIANCES, details_name=alliance.name, details_image_link="/static/img/alliances/" + str(alliance.id) + ".png", details_data=createDetailsWithQuery(Alliance, alliance))
+        return render_template('details.html', **context)
 
 ### End "Detail" Pages ###
 

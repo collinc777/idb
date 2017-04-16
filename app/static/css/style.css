@@ -128,30 +128,15 @@ h1.cursive {
 	min-height: 1200px;
 }
 
-/*.details .card .card-block, .details .card .card-header {
+.details .card {
 	margin-top: 10px;
 	margin-bottom: 10px;
-	background-color: #333;
-	border-color: #333;
-}
-
-.details h1, .details h2, .details h3, .details h4, .details h5 {
-	color: #f7f7f9;
-}
-
-.details a {
-	color: #f7f7f9;
-}
-*/
-
-.details .card {
-	margin-top: 20px;
-	margin-bottom: 20px;
 }
 
 .details .card .card-block {
 	background-color: #333;
 	border-color: #333;
+	font-size: 1.25rem;
 }
 
 .details .card .card-header {
@@ -165,6 +150,15 @@ h1.cursive {
 
 .details .card div, .details .card a {
 	color: #f7f7f9;
+}
+
+.details .card a {
+	border-bottom: 1px solid #f7f7f9;
+}
+
+.details .card a:hover {
+	text-decoration: none;
+	color: #999;
 }
 
 .pageLinks a {

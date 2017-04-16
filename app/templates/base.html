@@ -60,6 +60,10 @@
 
 </nav>
 
+<script type="text/javascript">
+var allModelLinks = {house_links: {{ house_links | tojson }}, character_links: {{ character_links | tojson }}, book_links: {{ book_links | tojson }}, alliance_links: {{ alliance_links | tojson }}};
+</script>
+
 <script src="/static/scripts/base.js?nocache={{ nocache }}" type="text/javascript"></script>
 
 <div id="contentContainer" class="container-fluid backgroundGradient">

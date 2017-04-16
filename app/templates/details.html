@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript">
+    var detailsName = "{{ details_name }}";
+    var detailsImageLink = "{{ details_image_link }}";
+    var detailsData = {{ details_data | tojson }};
+</script>
+
+<script src="/static/scripts/DetailsCard.jsx?nocache={{ nocache }}" type="text/jsx"></script>
+<script src="/static/scripts/DetailsLayout.jsx?nocache={{ nocache }}" type="text/jsx"></script>
+
+<div id="detailsContainer" class="container-fluid">
+    <script type="text/jsx">
+        ReactDOM.render(<DetailsContainer details_name={detailsName} details_image_link={detailsImageLink} details_data={detailsData} />, document.getElementById("detailsContainer"));
+    </script>
+</div>
+{% endblock %}

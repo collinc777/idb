@@ -111,6 +111,7 @@ def getPropertyMatches(model, query):
                 except ValueError:
                     print("Hit a ValueError in column: ", c.name, " with value: ", value)
 
+                # We found a match and set a value
                 if "propertyValue" in propertyMatch:
                     propertyMatches.append(propertyMatch)
 
@@ -176,8 +177,8 @@ class Book(database.Model):
 
     @staticmethod
     def getHumanReadableProperties():
-        names = ["name", "author", "publisher", "isbn", "numberOfPages", "released"]
-        readables = ["Name", "Author", "Publisher", "ISBN", "Number of Pages", "Release Date"]
+        names = ["name", "author", "publisher", "isbn", "numberOfPages", "released", "povCharacter_ids", "character_ids"]
+        readables = ["Name", "Author", "Publisher", "ISBN", "Number of Pages", "Release Date", "Characters With POV Chapters In This Book", "Characters That Appear In This Book"]
         return {name:readables[i] for i, name in enumerate(names)}
 
     @staticmethod
@@ -185,6 +186,12 @@ class Book(database.Model):
         lookup = Book.getHumanReadableProperties()
         sortables = ["name", "author", "isbn", "publisher", "country", "released"]
         return [[k, lookup[k]] for k in lookup.keys() if k in sortables]
+
+
+    @staticmethod
+    def getModelLinks():
+        modelLinks = dict(povCharacter_ids="character_links", character_ids="character_links")
+        return modelLinks
 
     def toDict(self):
         result = dict()
@@ -272,11 +279,10 @@ class Character(database.Model):
         self.mother_id = mother_id
         self.imageLink = imageLink
 
-
     @staticmethod
     def getHumanReadableProperties():
-        names = ["culture", "titles", "spouses", "died", "aliases", "name", "born", "gender", "father_id", "allegiances_ids", "povBook_ids", "playedBy", "book_ids", "tvSeries", "mother_id", "imageLink"]
-        readables = ["Culture", "Titles", "Spouses", "Died", "Aliases", "Name", "Born", "Gender", "Father", "Allegiances", "Books This Character Has POV Chapters In", "Played By (in the TV Show)", "Books This Character Appears In", "TV Series", "Mother", "ImageLink"]
+        names = ["name", "culture", "titles", "spouse_id", "died", "aliases", "born", "gender", "allegiances_ids", "povBook_ids", "book_ids", "playedBy", "tvSeries"]
+        readables = ["Name", "Culture", "Titles", "Spouse", "Died", "Aliases", "Born", "Gender", "Allegiances", "Books This Character Has POV Chapters In", "Books This Character Appears In", "Played By (in the TV Show)", "TV Seasons This Character Appears In"]
 
         return {name:readables[i] for i, name in enumerate(names)}
 
@@ -285,7 +291,13 @@ class Character(database.Model):
         lookup = Character.getHumanReadableProperties()
         sortables = ["name", "region", "culture", "gender", "died"]
         return [[k, lookup[k]] for k in lookup.keys() if k in sortables]
-        
+
+
+    @staticmethod
+    def getModelLinks():
+        modelLinks = dict(book_ids="book_links", allegiances_ids="house_links", father_id="character_links", mother_id="character_links", spouse_id="character_links", povBook_ids="book_links")
+        return modelLinks
+
     def toDict(self):
         result = dict()
         for c in self.__table__.columns:
@@ -371,9 +383,14 @@ class House(database.Model):
         self.ancestralWeapons = ancestralWeapons
 
     @staticmethod
+    def getModelLinks():
+        modelLinks = dict(alliance_id="alliance_links", currentLord_id="character_links", heir_id="character_links", founder_id="character_links", overlord_id="house_links", swornMember_ids="character_links")
+        return modelLinks
+
+    @staticmethod
     def getHumanReadableProperties():
-        names = ["currentLord_id", "heir_id", "founder_id", "founded", "diedOut", "titles", "coatOfArms", "words", "seats", "overlord_id", "alliance_id", "name", "swornMember_ids", "region", "ancestralWeapons"]
-        readables = ["Current Lord", "Heir", "Founder", "Founded", "Died Out", "Titles", "Coat of Arms", "Words", "Seats", "Overlord", "Alliance This House Belongs To", "Name", "Sworn Members", "Region", "Ancestral Weapons"]
+        names = ["name", "currentLord_id", "heir_id", "founder_id", "founded", "diedOut", "titles", "coatOfArms", "words", "seats", "overlord_id", "alliance_id", "name", "swornMember_ids", "region", "ancestralWeapons"]
+        readables = ["Name", "Current Lord", "Heir", "Founder", "Founded", "Died Out", "Titles", "Coat of Arms", "Words", "Seats", "Overlord", "Alliance This House Belongs To", "Name", "Sworn Members", "Region", "Ancestral Weapons"]
 
         return {name:readables[i] for i, name in enumerate(names)}
 
@@ -440,9 +457,14 @@ class Alliance(database.Model):
         self.imageLink = imageLink
 
     @staticmethod
+    def getModelLinks():
+        modelLinks = dict(headHouse_id="house_links", currentLord_id="character_links", swornHouse_ids="house_links", founder_id="character_links")
+        return modelLinks
+
+    @staticmethod
     def getHumanReadableProperties():
-        names = ["currentLord_id", "ancestralWeapons", "seats", "regions", "headHouse_id", "name", "swornHouse_ids", "imageLink"]
-        readables = ["Current Lord", "Ancestral Weapons", "Seats", "Regions", "Head House", "Name", "Sworn Houses", "Image Link"]
+        names = ["name", "currentLord_id", "ancestralWeapons", "seats", "regions", "headHouse_id", "name", "swornHouse_ids"]
+        readables = ["name", "Current Lord", "Ancestral Weapons", "Seats", "Regions", "Head House", "Name", "Sworn Houses"]
 
         return {name:readables[i] for i, name in enumerate(names)}
 
