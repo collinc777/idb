@@ -6,8 +6,8 @@ var ajaxModel = {
     modelURL: null,
     modelLinks: window.allModelLinks,
     updateGridDataCallback: null,
+    updatePaginationCallback0: null,
     updatePaginationCallback1: null,
-    updatePaginationCallback2: null,
     updateResultsDataCallback: null,
     onSearchPage: false,
     currentSearchQuery: null,
@@ -83,39 +83,68 @@ var ajaxModel = {
     },
     highlightPropertyMatches: function(){
         var resultPropertyMatchValues = $(".resultPropertyMatchValue");
-        var lowercaseQuery = this.currentSearchQuery.toLowerCase();
+        var queryWords = this.currentSearchQuery.split(/[\s]/gi);
 
         resultPropertyMatchValues.each(function(){
             var originalElement = $(this);
             var originalText = originalElement.text();
+            var linkToProperty = originalElement.closest(".resultPropertyMatchRow").data("url");
             var newHTML = "";
 
-            // ? lookahead keeps the delimiters as part of the string
-            var words = originalText.split(/(\\?[ .,();_?\:])/);
-            for(var i = 0; i < words.length; i++){
-                var lowercaseWord = words[i].toLowerCase();
-
-                if(lowercaseWord === (lowercaseQuery)){
-                    var linkToProperty = originalElement.closest(".resultPropertyMatchRow").data("url");
-                    newHTML += '<a href="' + linkToProperty + '" class="searchResultHighlight">' + words[i] + '</a>';
-                }else{
-                    newHTML += words[i];
-                }
+            var compoundHighlightRegexes = [];
+            for(var i = 0; i < queryWords.length; i++){
+                compoundHighlightRegexes.push('(\\b' + queryWords[i] + '\\b)');
             }
+            compoundHighlightRegexes.push();
+
+            compoundHighlightRegexes = compoundHighlightRegexes.join("|")
+            console.log("compoundHighlightRegexes: ");
+            console.log(compoundHighlightRegexes);
+
+            var highlightRe = new RegExp(compoundHighlightRegexes, "gi");
+            console.log(highlightRe.toString());
+            var matches = originalText.match(highlightRe);
+            console.log(matches);
+            var replaceRe = '<a href="' + linkToProperty + '" class="searchResultHighlight">$&</a>';
+            var newHTML = originalText.replace(highlightRe, replaceRe);            
+
+            console.log(newHTML);
+
+            // if(matches){
+            //     console.log(matches);
+            //     for(var i = 1; i < matches.length; i++){
+                    
+            //     }
+            // }
+
+            // window.alert("Hi");
+
+            // // ? lookahead keeps the delimiters (punctuation) as part of the string
+            // for(var i = 0; i < words.length; i++){
+            //     var wordMatchesAnyQuery = false;
+            //     for(var j = 0; j < lowercaseQueryWords.length; lowercaseQueryWords++){
+            //         if(lowercaseWord === lowercaseQueryWords[j].trim()){
+            //             wordMatchesAnyQuery = true;
+            //             break;
+            //         }
+            //     }
+
+            //     if(wordMatchesAnyQuery === true){
+                    
+            //         newHTML += ;
+            //     }else{
+            //         newHTML += words[i];
+            //     }
+            // }
             originalElement.html(newHTML);
         });
     },
     scrollToSelectedProperty: function(elementID){
-        console.log("Scrolling to: " + elementID);
-
         if(elementID !== undefined && elementID.length > 1){
             var selectedElement = $(elementID);
-            console.log("Selected elemment:");
-            console.log(selectedElement);
 
             if(selectedElement !== undefined && selectedElement !== null){
                 var selectedPropertyOffset = selectedElement.offset()["top"];
-                console.log("Selected property location: " + selectedPropertyOffset);
                 $("body").animate({scrollTop: selectedPropertyOffset - 50}, {complete: function(){
                     console.log("Finished scrolling: " + selectedPropertyOffset);
                 }});
@@ -125,9 +154,9 @@ var ajaxModel = {
         }
     },
     callUpdatePaginationCallbacks: function(pageData){
-        this.updatePaginationCallback1(pageData);
-        if(this.updatePaginationCallback2 !== null){
-            this.updatePaginationCallback2(pageData);
+        this.updatePaginationCallback0(pageData);
+        if(this.updatePaginationCallback1 !== null){
+            this.updatePaginationCallback1(pageData);
         }
     },
     getModelLink: function(modelLinkString, propertyKey){

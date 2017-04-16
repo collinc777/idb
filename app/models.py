@@ -23,6 +23,7 @@ import six
 from sqlalchemy import Table, Column, Integer, ForeignKey, String
 
 from app import database
+import re
 
 # -------------------
 # Association Tables
@@ -86,9 +87,15 @@ allegiances_houses_association_table = Table(
 # Search Functionality
 # -------
 
+# Query is already a single word, but value could be a sentence
+def checkIfPropertyMatches(query, value):
+    return re.search(r"(\b" + query + r"\b)", value, re.I)
+
+# Get the list of properties that match the given search query
+# NOTE: this query variable is only a single word a a time. 
+
 def getPropertyMatches(model, query):
     propertyMatches = list()
-    query = query.lower()
     humanReadableProperties = model.getHumanReadableProperties()
 
     for c in model.__table__.columns:
@@ -99,14 +106,18 @@ def getPropertyMatches(model, query):
             if value is not None:
                 try:
                     if isinstance(value, str):
-                        if query in value.lower() and len(value):
+                        if len(value) and checkIfPropertyMatches(query, value):
                             propertyMatch["propertyValue"] = value
                     elif isinstance(value, list):
+                        matchingSubValues = list()
                         for subValue in value:
                             subValue = str(subValue)
-                            if query in subValue.lower() and len(subValue):
-                                propertyMatch["propertyValue"] = subValue
-                    elif str(query) == str(value):
+                            if len(subValue) and checkIfPropertyMatches(query, subValue):
+                                matchingSubValues.append(subValue)
+
+                        if len(matchingSubValues):
+                            propertyMatch["propertyValue"] = "<br />" .join(matchingSubValues)
+                    elif checkIfPropertyMatches(query, str(value)):
                         propertyMatch["propertyValue"] = str(value)
                 except ValueError:
                     print("Hit a ValueError in column: ", c.name, " with value: ", value)
@@ -114,8 +125,21 @@ def getPropertyMatches(model, query):
                 # We found a match and set a value
                 if "propertyValue" in propertyMatch:
                     propertyMatches.append(propertyMatch)
-
     return propertyMatches
+
+# If House Stark of Winterfell was searched for "stark winterfell",
+# it would be added twice, so we have to code special logic to combine the propertyMatch arrays
+def combinePropertyMatches(prevPM, newPM):
+    combined = list(prevPM)
+    for npm in newPM:
+        if not any([ppm["propertyName"] == npm["propertyName"] for ppm in prevPM]):
+            combined.append(npm)
+        else:
+            print("=== Attempting to update property match and conflicted on: ", npm["propertyName"])
+            print(prevPM)
+            print(newPM)
+            print("Leaving old property for now.")
+    return combined
 
 # -------
 # Models

@@ -9,7 +9,10 @@ class DetailsContainer extends React.Component {
     }
 
     componentDidMount(){
-	    ajaxModel.scrollToSelectedProperty(window.location.hash);
+    	// Wait 300 milliseconds then scroll to the selected property
+    	window.setTimeout(function(){
+    		ajaxModel.scrollToSelectedProperty(window.location.hash);
+    	}, 300);
     }
 	
     render() {

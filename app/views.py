@@ -3,7 +3,7 @@
 from flask import render_template, request, render_template_string
 from app import application
 from app.decorators import returns_json, takes_api_params, takes_search_params
-from app.models import Book, Character, Alliance, House, getPropertyMatches
+from app.models import Book, Character, Alliance, House, getPropertyMatches, combinePropertyMatches
 from sqlalchemy import desc
 import json
 from random import randint
@@ -57,7 +57,11 @@ character_links_list = buildInstanceLinks(allCharacters)
 book_links_list = buildInstanceLinks(allBooks)
 alliance_links_list = buildInstanceLinks(allAlliances)
 
-
+# character_links, house_links and book_links are used to provide human readable
+# they ARE duplicated data... but they make our lives much easier
+# links between resources. E.g. in the books/2 page we want to have links to the 
+# POV (point-of-view) characters that are in it. So we pass it the character_links array
+# Luckily, jinja2 templates allow us to inject these into every page ! 
 ### This makes all links available on all pages ###
 
 @application.context_processor
@@ -76,33 +80,11 @@ def book_links():
 def alliance_links():
     return dict(alliance_links=alliance_links_list)
 
-# @application.context_processor
-# def getIdList(links_list):
-#     def getIdListInner(links_list):
-#         for link in links_list:
-#             return link["id"]
-#     return dict(getIdList=getIdListInner())
-
-# Each Listing requires a "title" and a "properties" array
-# properties are simply 2-element arrays of a human readable name and a dictionary key
-# e.g. ["Image", "imageLink"] -> Image (for table header) and house["imageLink"] when accessed
-
-# character_links, house_links and book_links are used to provide human readable
-# they ARE duplicated data... but they make our lives much easier
-# links between resources. E.g. in the books/2 page we want to have links to the 
-# POV (point-of-view) characters that are in it. So we pass it the character_links array
 
 character_listing = dict(model=Character, title="Characters", url="/characters", sorts=Character.getHumanReadableSortableProperties())
 house_listing = dict(model=House, title="Houses", url="/houses", sorts=House.getHumanReadableSortableProperties())
 book_listing = dict(model=Book, title="Books", url="/books", sorts=Book.getHumanReadableSortableProperties())
 alliance_listing = dict(model=Alliance, title="Alliances", url="/alliances", sorts=Alliance.getHumanReadableSortableProperties())
-
-book_images = {1: "agameofthrones.jpg", 2: "aclashofkings.jpg", 3: "astormofswords.jpg", 4: "thehedgeknight.jpg",
-               5: "afeastforcrows.jpg", 6: "theswornsword.jpg", 7: "themysteryknight.jpg", 8: "adancewithdragons.jpg",
-               9: "theprincessandthequeen.jpg", 10: "therogueprince.jpg", 11: "theworldoficeandfire.png",
-               12: "aknightofthesevenkingdoms.jpg"}
-# book_images is a total hack right now. Ideally this would be a field inside the book data/model
-# but for now we'll just do this. Theres only 12 books so it'll be easy to add it in manually later
 
 
 # Build a base "context" dictionary for passing to any given template
@@ -153,34 +135,31 @@ def getSearchResultData(query):
                 wordResults.append(dict(resultID=modelDict["id"], resultModelName=modelDict["name"], resultModelType=modelDict["modelType"], resultPropertyMatches=propertyMatches))
         fullQueryResults.append(wordResults)
 
-    print("Total query results: ", sum([len(wordResults) for wordResults in fullQueryResults]))
+    #print("Total query results: ", sum([len(wordResults) for wordResults in fullQueryResults]))
 
-    # dictionary with added properties, 
+    # dictionary with added properties, for sorting based on relevance AND/OR basically
     # so ties can be broken in this order: weight, resultPropertMatchesLength
 
     weightedQueryResults = dict()
     for wordResults in fullQueryResults:
         for wordResult in wordResults:
             rid = wordResult["resultID"]
-            if rid in weightedQueryResults:
-                weightedQueryResults[rid]["weight"] += 1
-                weightedQueryResults[rid]["resultPropertyMatches"].extend(wordResult["resultPropertyMatches"])
+            rmn = wordResult["resultModelType"]
+            k = (rid, rmn)
+            if k in weightedQueryResults:
+                weightedQueryResults[k]["weight"] += 1
+                cpm = combinePropertyMatches(weightedQueryResults[k]["resultPropertyMatches"], wordResult["resultPropertyMatches"])
+                weightedQueryResults[k]["resultPropertyMatches"] = cpm
             else:
-                weightedQueryResults[rid] = wordResult
-                weightedQueryResults[rid]["weight"] = 1
-            weightedQueryResults[rid]["resultPropertyMatchesLength"] = len(weightedQueryResults[rid]["resultPropertyMatches"])
-        
+                weightedQueryResults[k] = wordResult
+                weightedQueryResults[k]["weight"] = 1
+            weightedQueryResults[k]["resultPropertyMatchesLength"] = len(weightedQueryResults[k]["resultPropertyMatches"])
+    
     results = list(weightedQueryResults.values())
-    print(json.dumps(results))
-    """trimmed_results = list()
-    for r in results:
-        trimmed_results.append({k:v} for k,v in r if k in ["weight", "resultModelName"]]
-        
-        
-    json.dump(trimmed_results, open("data/fuck.json", "w"))
-    """
+    results = sorted(results, key=lambda r: str(r["resultPropertyMatchesLength"]) + str(r["weight"]) , reverse=True)
 
-    #results = sorted(results, key=attrgetter("weight"))
+    for w in results[:10]:
+        print("[ID: ", w["resultID"],"] [", w["resultModelName"], "]  [SearchRank:", str(w["resultPropertyMatchesLength"]) + str(w["weight"]))
 
     return results
 
@@ -189,8 +168,8 @@ def getSearchResultData(query):
 def search(query):
     searchResults = getSearchResultData(query)
 
-    pagedSearchResults = searchResults[:5]
-    page_data = {"currentPage": 1, "numberPages": max(len(searchResults) // 5, 1)}
+    pagedSearchResults = searchResults[:10]
+    page_data = {"currentPage": 1, "numberPages": max(len(searchResults) // 10, 1)}
 
     context = create_context(0, query=query, numberOfResults=len(searchResults), searchResults=pagedSearchResults, pageData=page_data)
     return render_template('search.html', **context)
@@ -204,16 +183,13 @@ def get_search(**kwargs):
     page = kwargs.get("page")
     page = max(1, page)
 
-    pageStart = (page - 1) * 5
-    pageEnd = page * 5
-
-    array = ["a","b","C","d"]
-    array[2] = "C"
+    pageStart = (page - 1) * 10
+    pageEnd = page * 10
 
     searchResults = getSearchResultData(query)
     pagedSearchResults = searchResults[pageStart:pageEnd]
 
-    page_data = {"currentPage": page, "numberPages": max(len(searchResults) // 5, 1)}
+    page_data = {"currentPage": page, "numberPages": max(len(searchResults) // 10, 1)}
     return json.dumps({"resultsData": pagedSearchResults, "pageData": page_data})
 
 ### End Landing Page ###
