@@ -423,10 +423,10 @@ class House(database.Model):
     @staticmethod
     def getHumanReadableProperties():
         names = ["name", "currentLord_id", "heir_id", "founder_id", "founded", "diedOut", "titles", "coatOfArms",
-                 "words", "seats", "overlord_id", "alliance_id", "name", "swornMember_ids", "region",
+                 "words", "seats", "overlord_id", "alliance_id", "swornMember_ids", "region",
                  "ancestralWeapons"]
         readables = ["Name", "Current Lord", "Heir", "Founder", "Founded", "Died Out", "Titles", "Coat of Arms",
-                     "Words", "Seats", "Overlord", "Alliance This House Belongs To", "Name", "Sworn Members", "Region",
+                     "Words", "Seats", "Overlord", "Alliance This House Belongs To", "Sworn Members", "Region",
                      "Ancestral Weapons"]
 
         return {name: readables[i] for i, name in enumerate(names)}
@@ -501,9 +501,9 @@ class Alliance(database.Model):
 
     @staticmethod
     def getHumanReadableProperties():
-        names = ["name", "currentLord_id", "ancestralWeapons", "seats", "regions", "headHouse_id", "name",
+        names = ["name", "currentLord_id", "ancestralWeapons", "seats", "regions", "headHouse_id",
                  "swornHouse_ids"]
-        readables = ["name", "Current Lord", "Ancestral Weapons", "Seats", "Regions", "Head House", "Name",
+        readables = ["Name", "Current Lord", "Ancestral Weapons", "Seats", "Regions", "Head House",
                      "Sworn Houses"]
 
         return {name: readables[i] for i, name in enumerate(names)}
