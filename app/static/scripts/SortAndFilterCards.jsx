@@ -5,21 +5,34 @@ class FilterCard extends React.Component {
             value: ""
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleChange(event){
         this.setState({
             value: event.target.value
         });
-        ajaxModel.filterData(event.target.value);
+    }
+
+    handleClick(event){
+        event.preventDefault();
+
+        ajaxModel.filterData(this.state.value);
     }
 
     render() {
         return (<div className="card sortAndFilterCard text-center">
-            <h3 className="card-header">Filter By</h3>
-            <div className="card-block">
-                <input type="text" className="form-control form-control-lg" placeholder={this.props.placeholder} value={this.state.value} onChange={this.handleChange}></input>
-            </div>
+                <h3 className="card-header">Filter By</h3>
+                <div className="card-block">
+                    <form className="form-block">
+                        <div className="input-group input-group-lg">
+                            <input id="filterSearchBar" className="form-control form-control-lg" type="text" placeholder={this.props.placeholder} onChange={this.handleChange}></input>
+                            <button id="filterSearchButton" className="input-group-addon btn btn-lg" onClick={this.handleClick}>
+                                <span className="fa fa-search"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
         </div>);
     }
 
@@ -35,7 +48,6 @@ class SortCard extends React.Component {
             selectedSort: 0,
             ascending: 1
         }
-        this
     }
 
     getSortName(selectedSort, ascending){
