@@ -209,7 +209,10 @@ class Book(database.Model):
                  "character_ids"]
         readables = ["Name", "Author", "Publisher", "ISBN", "Number of Pages", "Release Date",
                      "Characters With POV Chapters In This Book", "Characters That Appear In This Book"]
-        return dict({name: readables[i] for i, name in enumerate(names)})
+        result = dict()
+        for i, name in enumerate(names):
+            result[name] = readables[i]
+        return result
 
     @staticmethod
     def getHumanReadableSortableProperties():
@@ -316,7 +319,10 @@ class Character(database.Model):
                      "Books This Character Has POV Chapters In", "Books This Character Appears In",
                      "Played By (in the TV Show)", "TV Seasons This Character Appears In"]
 
-        return {name: readables[i] for i, name in enumerate(names)}
+        result = dict()
+        for i, name in enumerate(names):
+            result[name] = readables[i]
+        return result
 
     @staticmethod
     def getHumanReadableSortableProperties():
@@ -429,7 +435,10 @@ class House(database.Model):
                      "Words", "Seats", "Overlord", "Alliance This House Belongs To", "Name", "Sworn Members", "Region",
                      "Ancestral Weapons"]
 
-        return {name: readables[i] for i, name in enumerate(names)}
+        result = dict()
+        for i, name in enumerate(names):
+            result[name] = readables[i]
+        return result
 
     @staticmethod
     def getHumanReadableSortableProperties():
@@ -506,7 +515,10 @@ class Alliance(database.Model):
         readables = ["name", "Current Lord", "Ancestral Weapons", "Seats", "Regions", "Head House", "Name",
                      "Sworn Houses"]
 
-        return {name: readables[i] for i, name in enumerate(names)}
+        result = dict()
+        for i, name in enumerate(names):
+            result[name] = readables[i]
+        return result
 
     @staticmethod
     def getHumanReadableSortableProperties():
