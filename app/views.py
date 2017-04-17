@@ -89,11 +89,12 @@ def book_links():
 def alliance_links():
     return dict(alliance_links=alliance_links_list)
 
-
 character_listing = dict(model=Character, title="Characters", url="/characters",
                          sorts=Character.getHumanReadableSortableProperties())
-house_listing = dict(model=House, title="Houses", url="/houses", sorts=House.getHumanReadableSortableProperties())
-book_listing = dict(model=Book, title="Books", url="/books", sorts=Book.getHumanReadableSortableProperties())
+house_listing = dict(model=House, title="Houses", url="/houses", 
+                        sorts=House.getHumanReadableSortableProperties())
+book_listing = dict(model=Book, title="Books", url="/books", 
+                        sorts=Book.getHumanReadableSortableProperties())
 alliance_listing = dict(model=Alliance, title="Alliances", url="/alliances",
                         sorts=Alliance.getHumanReadableSortableProperties())
 
@@ -172,12 +173,18 @@ def getSearchResultData(query):
             weightedQueryResults[k]["resultPropertyMatchesLength"] = len(
                 weightedQueryResults[k]["resultPropertyMatches"])
 
+    # Sort by a key that is just the integer made by combining the digits of these
+    # so a model that was matched twice has more relevance than a model that was
+    # matched by 9 different properties but by only one of the words in the query
+    def andOrKey(r):
+        return int(str(r["weight"]) + str(r["resultPropertyMatchesLength"]))
+
     results = list(weightedQueryResults.values())
-    results = sorted(results, key=lambda r: str(r["resultPropertyMatchesLength"]) + str(r["weight"]), reverse=True)
+    results = sorted(results, key=andOrKey, reverse=True)
 
     for w in results[:10]:
         print("[ID: ", w["resultID"], "] [", w["resultModelName"], "]  [SearchRank:",
-              str(w["resultPropertyMatchesLength"]) + str(w["weight"]))
+              andOrKey(w), "]")
 
     return results
 
@@ -317,22 +324,18 @@ def characters():
 
 @application.route('/houses', methods=['GET'])
 def houses():
-    model_links = dict(characters=character_links, houses=house_links, alliances=alliance_links)
-
     context = create_context(HL_HOUSES, listing=house_listing, data=getDataList(house_listing, default_params))
     return render_template('listing.html', **context)
 
 
 @application.route('/alliances', methods=['GET'])
 def alliances():
-    model_links = dict(characters=character_links, houses=house_links)
     context = create_context(HL_ALLIANCES, listing=alliance_listing, data=getDataList(alliance_listing, default_params))
     return render_template('listing.html', **context)
 
 
 @application.route('/books', methods=['GET'])
 def books():
-    model_links = dict(characters=character_links)
     context = create_context(HL_BOOKS, listing=book_listing, data=getDataList(book_listing, default_params))
     return render_template('listing.html', **context)
 

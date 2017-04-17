@@ -9,16 +9,15 @@ class GridCard extends React.Component {
     }
 
     render() {
+        var imageURL = ajaxModel.getImageURL(this.state.modelURL, this.state.modelID);
         return (
                 <div className="card listingCard">
                     <div className="card-header">
                         <h4><a href={this.state.modelURL + '/' + this.state.modelID}>{this.state.modelName}</a>
                         </h4>
                     </div>
-                    <div className="card-block">
-                        <a className="btn btn-block btn-default"
-                           href={this.state.modelURL + '/' + this.state.modelID}>Details</a>
-                    </div>
+                    <img className="card-img-bottom" src={imageURL}></img>
+
                 </div>
         );
     }

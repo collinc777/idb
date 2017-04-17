@@ -166,6 +166,17 @@ var ajaxModel = {
             return modelLink[propertyKey];
         }
         
+    },
+    getImageURL: function(modelURL, modelID){
+        var convert = {
+            characters: ["chars/", ".jpg"],
+            houses: ["houses/", ".png"],
+            books: ["books/", ".jpg"],
+            alliances: ["alliances/", ".png"]
+        };
+
+        imgInfo = convert[modelURL.slice(1)];
+        return "/static/img/" + imgInfo[0] + modelID + imgInfo[1];
     }
 };
 
