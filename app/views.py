@@ -225,7 +225,7 @@ def get_search(**kwargs):
 def getDataList(listing, params):
     cardURL = listing["url"]
     dataListing = list()
-    model = listing["model"]
+    model = listing["model"] 
     page = params["page"]
     page = max(1, page)  # make sure we don't go negative
     dataQuery = model.query
@@ -265,13 +265,10 @@ def getDataList(listing, params):
 
 
 ### Begin "API" Pages ###
-### Note: These also accept POST requests, behavior will be as follows: 
 ### GET /api/modeltype?page=[int]
 ### The following are OPTIONAL parameters
-### GET /api/modeltype?page=[int]&offset=[int]&sortParam=[string]&sortAscending=[bool]&filter=[string]
+### GET /api/modeltype?page=[int]&sortParam=[string]&sortAscending=[bool]&filterTEXT=[string]
 
-### POST /api/modeltype
-### request body contains JSON of model data to ADD to database
 
 @application.route('/api/characters', methods=['GET', 'POST'])
 @returns_json
