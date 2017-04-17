@@ -83,6 +83,7 @@ allegiances_houses_association_table = Table(
     Column('allegiances', Integer, ForeignKey('house.id'))
 )
 
+
 # -------
 # Search Functionality
 # -------
@@ -90,6 +91,7 @@ allegiances_houses_association_table = Table(
 # Query is already a single word, but value could be a sentence
 def checkIfPropertyMatches(query, value):
     return re.search(r"(\b" + query + r"\b)", value, re.I)
+
 
 # Get the list of properties that match the given search query
 # NOTE: this query variable is only a single word a a time. 
@@ -116,7 +118,7 @@ def getPropertyMatches(model, query):
                                 matchingSubValues.append(subValue)
 
                         if len(matchingSubValues):
-                            propertyMatch["propertyValue"] = "<br />" .join(matchingSubValues)
+                            propertyMatch["propertyValue"] = "<br />".join(matchingSubValues)
                     elif checkIfPropertyMatches(query, str(value)):
                         propertyMatch["propertyValue"] = str(value)
                 except ValueError:
@@ -126,6 +128,7 @@ def getPropertyMatches(model, query):
                 if "propertyValue" in propertyMatch:
                     propertyMatches.append(propertyMatch)
     return propertyMatches
+
 
 # If House Stark of Winterfell was searched for "stark winterfell",
 # it would be added twice, so we have to code special logic to combine the propertyMatch arrays
@@ -140,6 +143,7 @@ def combinePropertyMatches(prevPM, newPM):
             print(newPM)
             print("Leaving old property for now.")
     return combined
+
 
 # -------
 # Models
@@ -173,8 +177,8 @@ class Book(database.Model):
     released = Column(String(80))
 
     def __init__(
-        self, id, numberOfPages, isbn, name, publisher, country, povCharacter_ids, author, mediaType, released,
-                 character_ids):
+            self, id, numberOfPages, isbn, name, publisher, country, povCharacter_ids, author, mediaType, released,
+            character_ids):
         assert isinstance(id, int)
         assert isinstance(numberOfPages, int)
         assert numberOfPages > 0
@@ -201,16 +205,17 @@ class Book(database.Model):
 
     @staticmethod
     def getHumanReadableProperties():
-        names = ["name", "author", "publisher", "isbn", "numberOfPages", "released", "povCharacter_ids", "character_ids"]
-        readables = ["Name", "Author", "Publisher", "ISBN", "Number of Pages", "Release Date", "Characters With POV Chapters In This Book", "Characters That Appear In This Book"]
-        return {name:readables[i] for i, name in enumerate(names)}
+        names = ["name", "author", "publisher", "isbn", "numberOfPages", "released", "povCharacter_ids",
+                 "character_ids"]
+        readables = ["Name", "Author", "Publisher", "ISBN", "Number of Pages", "Release Date",
+                     "Characters With POV Chapters In This Book", "Characters That Appear In This Book"]
+        return dict({name: readables[i] for i, name in enumerate(names)})
 
     @staticmethod
     def getHumanReadableSortableProperties():
         lookup = Book.getHumanReadableProperties()
         sortables = ["name", "author", "isbn", "publisher", "country", "released"]
         return [[k, lookup[k]] for k in lookup.keys() if k in sortables]
-
 
     @staticmethod
     def getModelLinks():
@@ -268,8 +273,8 @@ class Character(database.Model):
     imageLink = Column(database.String(300))
 
     def __init__(
-        self, id, culture, titles, spouse_id, died, aliases, name, born, gender, father_id,
-                 allegiances_ids, povBook_ids, playedBy, book_ids, tvSeries, mother_id, imageLink):
+            self, id, culture, titles, spouse_id, died, aliases, name, born, gender, father_id,
+            allegiances_ids, povBook_ids, playedBy, book_ids, tvSeries, mother_id, imageLink):
         assert isinstance(culture, six.string_types)
         assert hasattr(titles, '__iter__')
         # assert isinstance(spouse_id, int)
@@ -305,10 +310,13 @@ class Character(database.Model):
 
     @staticmethod
     def getHumanReadableProperties():
-        names = ["name", "culture", "titles", "spouse_id", "died", "aliases", "born", "gender", "allegiances_ids", "povBook_ids", "book_ids", "playedBy", "tvSeries"]
-        readables = ["Name", "Culture", "Titles", "Spouse", "Died", "Aliases", "Born", "Gender", "Allegiances", "Books This Character Has POV Chapters In", "Books This Character Appears In", "Played By (in the TV Show)", "TV Seasons This Character Appears In"]
+        names = ["name", "culture", "titles", "spouse_id", "died", "aliases", "born", "gender", "allegiances_ids",
+                 "povBook_ids", "book_ids", "playedBy", "tvSeries"]
+        readables = ["Name", "Culture", "Titles", "Spouse", "Died", "Aliases", "Born", "Gender", "Allegiances",
+                     "Books This Character Has POV Chapters In", "Books This Character Appears In",
+                     "Played By (in the TV Show)", "TV Seasons This Character Appears In"]
 
-        return {name:readables[i] for i, name in enumerate(names)}
+        return {name: readables[i] for i, name in enumerate(names)}
 
     @staticmethod
     def getHumanReadableSortableProperties():
@@ -316,10 +324,10 @@ class Character(database.Model):
         sortables = ["name", "region", "culture", "gender", "died"]
         return [[k, lookup[k]] for k in lookup.keys() if k in sortables]
 
-
     @staticmethod
     def getModelLinks():
-        modelLinks = dict(book_ids="book_links", allegiances_ids="house_links", father_id="character_links", mother_id="character_links", spouse_id="character_links", povBook_ids="book_links")
+        modelLinks = dict(book_ids="book_links", allegiances_ids="house_links", father_id="character_links",
+                          mother_id="character_links", spouse_id="character_links", povBook_ids="book_links")
         return modelLinks
 
     def toDict(self):
@@ -374,9 +382,9 @@ class House(database.Model):
     ancestralWeapons = Column(database.ARRAY(String(80)))
 
     def __init__(
-        self, id, currentLord_id, heir_id, founded, founder_id, diedOut, titles, coatOfArms,
-                 words,
-                 seats, overlord_id, name, swornMember_ids, alliance_id, region, ancestralWeapons):
+            self, id, currentLord_id, heir_id, founded, founder_id, diedOut, titles, coatOfArms,
+            words,
+            seats, overlord_id, name, swornMember_ids, alliance_id, region, ancestralWeapons):
         # assert isinstance(founder_id, Integer)
         assert isinstance(diedOut, six.string_types)
         assert isinstance(founded, six.string_types)
@@ -408,15 +416,20 @@ class House(database.Model):
 
     @staticmethod
     def getModelLinks():
-        modelLinks = dict(alliance_id="alliance_links", currentLord_id="character_links", heir_id="character_links", founder_id="character_links", overlord_id="house_links", swornMember_ids="character_links")
+        modelLinks = dict(alliance_id="alliance_links", currentLord_id="character_links", heir_id="character_links",
+                          founder_id="character_links", overlord_id="house_links", swornMember_ids="character_links")
         return modelLinks
 
     @staticmethod
     def getHumanReadableProperties():
-        names = ["name", "currentLord_id", "heir_id", "founder_id", "founded", "diedOut", "titles", "coatOfArms", "words", "seats", "overlord_id", "alliance_id", "name", "swornMember_ids", "region", "ancestralWeapons"]
-        readables = ["Name", "Current Lord", "Heir", "Founder", "Founded", "Died Out", "Titles", "Coat of Arms", "Words", "Seats", "Overlord", "Alliance This House Belongs To", "Name", "Sworn Members", "Region", "Ancestral Weapons"]
+        names = ["name", "currentLord_id", "heir_id", "founder_id", "founded", "diedOut", "titles", "coatOfArms",
+                 "words", "seats", "overlord_id", "alliance_id", "name", "swornMember_ids", "region",
+                 "ancestralWeapons"]
+        readables = ["Name", "Current Lord", "Heir", "Founder", "Founded", "Died Out", "Titles", "Coat of Arms",
+                     "Words", "Seats", "Overlord", "Alliance This House Belongs To", "Name", "Sworn Members", "Region",
+                     "Ancestral Weapons"]
 
-        return {name:readables[i] for i, name in enumerate(names)}
+        return {name: readables[i] for i, name in enumerate(names)}
 
     @staticmethod
     def getHumanReadableSortableProperties():
@@ -458,9 +471,9 @@ class Alliance(database.Model):
     imageLink = Column(database.String(300))
 
     def __init__(
-        self, id, currentLord_id, ancestralWeapons, seats, swornHouse_ids, regions, cultures, headHouse_id,
-                 name,
-                 imageLink):
+            self, id, currentLord_id, ancestralWeapons, seats, swornHouse_ids, regions, cultures, headHouse_id,
+            name,
+            imageLink):
         assert hasattr(ancestralWeapons, "__iter__")
         assert hasattr(seats, "__iter__")
         assert hasattr(regions, "__iter__")
@@ -482,15 +495,18 @@ class Alliance(database.Model):
 
     @staticmethod
     def getModelLinks():
-        modelLinks = dict(headHouse_id="house_links", currentLord_id="character_links", swornHouse_ids="house_links", founder_id="character_links")
+        modelLinks = dict(headHouse_id="house_links", currentLord_id="character_links", swornHouse_ids="house_links",
+                          founder_id="character_links")
         return modelLinks
 
     @staticmethod
     def getHumanReadableProperties():
-        names = ["name", "currentLord_id", "ancestralWeapons", "seats", "regions", "headHouse_id", "name", "swornHouse_ids"]
-        readables = ["name", "Current Lord", "Ancestral Weapons", "Seats", "Regions", "Head House", "Name", "Sworn Houses"]
+        names = ["name", "currentLord_id", "ancestralWeapons", "seats", "regions", "headHouse_id", "name",
+                 "swornHouse_ids"]
+        readables = ["name", "Current Lord", "Ancestral Weapons", "Seats", "Regions", "Head House", "Name",
+                     "Sworn Houses"]
 
-        return {name:readables[i] for i, name in enumerate(names)}
+        return {name: readables[i] for i, name in enumerate(names)}
 
     @staticmethod
     def getHumanReadableSortableProperties():

@@ -25,6 +25,7 @@ HL_BOOKS = 4
 HL_DEVNOTES = 5
 HL_ABOUT = 6
 
+
 def load_listing(filename):
     with open(filename) as data_file:
         return json.load(data_file)
@@ -39,6 +40,8 @@ allHouses = House.query.all()
 allCharacters = Character.query.all()
 allBooks = Book.query.all()
 allAlliances = Alliance.query.all()
+
+
 # pickle.dump(allHouses, open("data/allHouses.pickle", "wb"))
 # pickle.dump(allCharacters, open("data/allCharacters.pickle", "wb"))
 # pickle.dump(allBooks, open("data/allBooks.pickle", "wb"))
@@ -49,7 +52,8 @@ def buildInstanceLinks(models):
     modelLinks = dict()
     for model in models:
         modelDict = model.toDict()
-        modelLinks[modelDict["id"]] = {"url": "/" + modelDict["modelType"] + "s/" + str(modelDict["id"]), "name": modelDict["name"]}
+        modelLinks[modelDict["id"]] = {"url": "/" + modelDict["modelType"] + "s/" + str(modelDict["id"]),
+                                       "name": modelDict["name"]}
     return modelLinks
 
 
@@ -57,6 +61,7 @@ house_links_list = buildInstanceLinks(allHouses)
 character_links_list = buildInstanceLinks(allCharacters)
 book_links_list = buildInstanceLinks(allBooks)
 alliance_links_list = buildInstanceLinks(allAlliances)
+
 
 # character_links, house_links and book_links are used to provide human readable
 # they ARE duplicated data... but they make our lives much easier
@@ -69,23 +74,28 @@ alliance_links_list = buildInstanceLinks(allAlliances)
 def house_links():
     return dict(house_links=house_links_list)
 
+
 @application.context_processor
 def character_links():
     return dict(character_links=character_links_list)
 
+
 @application.context_processor
 def book_links():
     return dict(book_links=book_links_list)
+
 
 @application.context_processor
 def alliance_links():
     return dict(alliance_links=alliance_links_list)
 
 
-character_listing = dict(model=Character, title="Characters", url="/characters", sorts=Character.getHumanReadableSortableProperties())
+character_listing = dict(model=Character, title="Characters", url="/characters",
+                         sorts=Character.getHumanReadableSortableProperties())
 house_listing = dict(model=House, title="Houses", url="/houses", sorts=House.getHumanReadableSortableProperties())
 book_listing = dict(model=Book, title="Books", url="/books", sorts=Book.getHumanReadableSortableProperties())
-alliance_listing = dict(model=Alliance, title="Alliances", url="/alliances", sorts=Alliance.getHumanReadableSortableProperties())
+alliance_listing = dict(model=Alliance, title="Alliances", url="/alliances",
+                        sorts=Alliance.getHumanReadableSortableProperties())
 
 
 # Build a base "context" dictionary for passing to any given template
@@ -93,7 +103,8 @@ def create_context(nav_highlight=-1, **kwargs):
     # nav_highlight tells which navigation item to highlight
     # nocache provides a way to stop the browser from caching our scripts and css files
     # kwargs provides a way to add additional info to the context, per-page
-    return dict(navigation=navigation, nav_highlight=nav_highlight, nocache=randint(1,1000000), **kwargs)
+    return dict(navigation=navigation, nav_highlight=nav_highlight, nocache=randint(1, 1000000), **kwargs)
+
 
 @application.route('/tests', methods=['GET'])
 def runTestsForAboutPage():
@@ -105,12 +116,14 @@ def runTestsForAboutPage():
     print(stderr)
     return stderr
 
+
 ### Begin Landing Page ###
 
 @application.route('/', methods=['GET'])
 def index():
     context = create_context(0)
     return render_template('index.html', **context)
+
 
 ### End Landing Page ###
 
@@ -133,10 +146,11 @@ def getSearchResultData(query):
             propertyMatches = getPropertyMatches(model, word)
             if propertyMatches is not None and len(propertyMatches):
                 modelDict = model.toDict()
-                wordResults.append(dict(resultID=modelDict["id"], resultModelName=modelDict["name"], resultModelType=modelDict["modelType"], resultPropertyMatches=propertyMatches))
+                wordResults.append(dict(resultID=modelDict["id"], resultModelName=modelDict["name"],
+                                        resultModelType=modelDict["modelType"], resultPropertyMatches=propertyMatches))
         fullQueryResults.append(wordResults)
 
-    #print("Total query results: ", sum([len(wordResults) for wordResults in fullQueryResults]))
+    # print("Total query results: ", sum([len(wordResults) for wordResults in fullQueryResults]))
 
     # dictionary with added properties, for sorting based on relevance AND/OR basically
     # so ties can be broken in this order: weight, resultPropertMatchesLength
@@ -149,20 +163,24 @@ def getSearchResultData(query):
             k = (rid, rmn)
             if k in weightedQueryResults:
                 weightedQueryResults[k]["weight"] += 1
-                cpm = combinePropertyMatches(weightedQueryResults[k]["resultPropertyMatches"], wordResult["resultPropertyMatches"])
+                cpm = combinePropertyMatches(weightedQueryResults[k]["resultPropertyMatches"],
+                                             wordResult["resultPropertyMatches"])
                 weightedQueryResults[k]["resultPropertyMatches"] = cpm
             else:
                 weightedQueryResults[k] = wordResult
                 weightedQueryResults[k]["weight"] = 1
-            weightedQueryResults[k]["resultPropertyMatchesLength"] = len(weightedQueryResults[k]["resultPropertyMatches"])
-    
+            weightedQueryResults[k]["resultPropertyMatchesLength"] = len(
+                weightedQueryResults[k]["resultPropertyMatches"])
+
     results = list(weightedQueryResults.values())
-    results = sorted(results, key=lambda r: str(r["resultPropertyMatchesLength"]) + str(r["weight"]) , reverse=True)
+    results = sorted(results, key=lambda r: str(r["resultPropertyMatchesLength"]) + str(r["weight"]), reverse=True)
 
     for w in results[:10]:
-        print("[ID: ", w["resultID"],"] [", w["resultModelName"], "]  [SearchRank:", str(w["resultPropertyMatchesLength"]) + str(w["weight"]))
+        print("[ID: ", w["resultID"], "] [", w["resultModelName"], "]  [SearchRank:",
+              str(w["resultPropertyMatchesLength"]) + str(w["weight"]))
 
     return results
+
 
 @application.route('/search', methods=['GET'])
 @takes_search_params
@@ -172,7 +190,8 @@ def search(query):
     pagedSearchResults = searchResults[:10]
     page_data = {"currentPage": 1, "numberPages": max(len(searchResults) // 10, 1)}
 
-    context = create_context(0, query=query, numberOfResults=len(searchResults), searchResults=pagedSearchResults, pageData=page_data)
+    context = create_context(0, query=query, numberOfResults=len(searchResults), searchResults=pagedSearchResults,
+                             pageData=page_data)
     return render_template('search.html', **context)
 
 
@@ -193,6 +212,7 @@ def get_search(**kwargs):
     page_data = {"currentPage": page, "numberPages": max(len(searchResults) // 10, 1)}
     return json.dumps({"resultsData": pagedSearchResults, "pageData": page_data})
 
+
 ### End Landing Page ###
 
 def getDataList(listing, params):
@@ -200,7 +220,7 @@ def getDataList(listing, params):
     dataListing = list()
     model = listing["model"]
     page = params["page"]
-    page = max(1, page) # make sure we don't go negative
+    page = max(1, page)  # make sure we don't go negative
     dataQuery = model.query
 
     if "sortParam" in params:
@@ -229,12 +249,13 @@ def getDataList(listing, params):
     numberOfResults = len(modelInstances)
     page_data = {"currentPage": page, "numberPages": max(numberOfResults // 21, 1)}
 
-    modelInstances = modelInstances[(page-1)*21:page*21]
+    modelInstances = modelInstances[(page - 1) * 21:page * 21]
 
     dictResults = [c.toDict() for c in modelInstances]
-    
+
     listing_list = dict(pageData=page_data, modelData=dictResults)
     return listing_list
+
 
 ### Begin "API" Pages ###
 ### Note: These also accept POST requests, behavior will be as follows: 
@@ -276,6 +297,7 @@ def get_books(**kwargs):
     json_out = getDataList(book_listing, kwargs)
     return json.dumps(json_out)
 
+
 ### End "API" Pages ###
 
 
@@ -284,10 +306,12 @@ def get_books(**kwargs):
 
 default_params = dict(page=1, sortParam="name", sortAscending=1)
 
+
 @application.route('/characters', methods=['GET'])
 def characters():
     character_data = get_characters()
-    context = create_context(HL_CHARACTERS, listing=character_listing, data=getDataList(character_listing, default_params))
+    context = create_context(HL_CHARACTERS, listing=character_listing,
+                             data=getDataList(character_listing, default_params))
     return render_template('listing.html', **context)
 
 
@@ -318,7 +342,7 @@ def books():
 ### Start "Details page data builder" ###
 def createDetailsWithQuery(model, instance, query=None):
     lookup = model.getHumanReadableProperties()
-    instance = instance.toDict() 
+    instance = instance.toDict()
     modelLinks = model.getModelLinks()
 
     # copied from DetailsCard.jsx
@@ -354,7 +378,7 @@ def createDetailsWithQuery(model, instance, query=None):
             prop["propertyValue"] = value
             if value and len(value):
                 shouldDisplay = True
-        else: 
+        else:
             # default
             prop["propertyType"] = "default"
             prop["propertyValue"] = value
@@ -363,6 +387,7 @@ def createDetailsWithQuery(model, instance, query=None):
         if shouldDisplay:
             properties.append(prop)
     return properties
+
 
 ### End "Details page data builder" ###
 
@@ -386,7 +411,9 @@ def character(charid):
         context = create_context(HL_CHARACTERS, entity="Character", entity_id=charid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_CHARACTERS, details_name=character.name, details_image_link="/static/img/chars/" + str(character.id) + ".jpg", details_data=createDetailsWithQuery(Character, character))
+        context = create_context(HL_CHARACTERS, details_name=character.name,
+                                 details_image_link="/static/img/chars/" + str(character.id) + ".jpg",
+                                 details_data=createDetailsWithQuery(Character, character))
         return render_template('details.html', **context)
 
 
@@ -408,7 +435,9 @@ def house(houseid):
         context = create_context(HL_HOUSES, entity="House", entity_id=houseid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_HOUSES, details_name=house.name, details_image_link= "/static/img/houses/" + str(house.id) + ".png", details_data=createDetailsWithQuery(House, house))
+        context = create_context(HL_HOUSES, details_name=house.name,
+                                 details_image_link="/static/img/houses/" + str(house.id) + ".png",
+                                 details_data=createDetailsWithQuery(House, house))
         return render_template('details.html', **context)
 
 
@@ -430,7 +459,9 @@ def book(bookid):
         context = create_context(HL_BOOKS, entity="Book", entity_id=bookid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_BOOKS, details_name=book.name, details_image_link="/static/img/books/" + str(book.id) + ".jpg", details_data=createDetailsWithQuery(Book, book))
+        context = create_context(HL_BOOKS, details_name=book.name,
+                                 details_image_link="/static/img/books/" + str(book.id) + ".jpg",
+                                 details_data=createDetailsWithQuery(Book, book))
         return render_template('details.html', **context)
 
 
@@ -452,8 +483,11 @@ def alliance(allianceid):
         context = create_context(HL_ALLIANCES, entity="Alliance", entity_id=allianceid)
         return render_template('notfound.html', **context)
     else:
-        context = create_context(HL_ALLIANCES, details_name=alliance.name, details_image_link="/static/img/alliances/" + str(alliance.id) + ".png", details_data=createDetailsWithQuery(Alliance, alliance))
+        context = create_context(HL_ALLIANCES, details_name=alliance.name,
+                                 details_image_link="/static/img/alliances/" + str(alliance.id) + ".png",
+                                 details_data=createDetailsWithQuery(Alliance, alliance))
         return render_template('details.html', **context)
+
 
 ### End "Detail" Pages ###
 
@@ -472,6 +506,4 @@ def about():
     context = create_context(HL_ABOUT)
     return render_template('about.html', **context)
 
-
 ### End "Miscellaneous" Pages ###
-
