@@ -1,16 +1,17 @@
 # We'll define all of our views in this file. 
 
-from flask import render_template, request, render_template_string
+import json
+import os
+from random import randint
+from subprocess import PIPE, Popen
+
+import sys
+from flask import render_template
+from sqlalchemy import desc
+
 from app import application
 from app.decorators import returns_json, takes_api_params, takes_search_params
 from app.models import Book, Character, Alliance, House, getPropertyMatches, combinePropertyMatches
-from sqlalchemy import desc
-import json
-from random import randint
-import pdb
-from operator import attrgetter
-from subprocess import PIPE, check_output, STDOUT
-import pickle
 
 navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"},
               {"url": "/houses", "name": "Houses"}, {"url": "/alliances", "name": "Alliances"},
