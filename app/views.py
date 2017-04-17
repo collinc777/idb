@@ -225,7 +225,7 @@ def get_search(**kwargs):
 def getDataList(listing, params):
     cardURL = listing["url"]
     dataListing = list()
-    model = listing["model"]
+    model = listing["model"] 
     page = params["page"]
     page = max(1, page)  # make sure we don't go negative
     dataQuery = model.query
@@ -265,15 +265,17 @@ def getDataList(listing, params):
 
 
 ### Begin "API" Pages ###
-### Note: These also accept POST requests, behavior will be as follows: 
 ### GET /api/modeltype?page=[int]
 ### The following are OPTIONAL parameters
-### GET /api/modeltype?page=[int]&offset=[int]&sortParam=[string]&sortAscending=[bool]&filter=[string]
+### GET /api/modeltype?page=[int]&sortParam=[string]&sortAscending=[bool]&filterText=[string]
 
-### POST /api/modeltype
-### request body contains JSON of model data to ADD to database
+@application.route('/api')
+@returns_json
+def api_landing():
+    error = {"error": "Please specify a model [characters, houses, alliances, books], example: /api/characters?page=0. page parameter is required. You may also sort and filter via: sortParam=[string], sortAscending=[0 or 1], and filterText=[string]. SortParam must be a valid property of the given model, however."}
+    return json.dumps(error)
 
-@application.route('/api/characters', methods=['GET', 'POST'])
+@application.route('/api/characters', methods=['GET'])
 @returns_json
 @takes_api_params
 def get_characters(**kwargs):
@@ -281,7 +283,7 @@ def get_characters(**kwargs):
     return json.dumps(json_out)
 
 
-@application.route('/api/houses', methods=['GET', 'POST'])
+@application.route('/api/houses', methods=['GET'])
 @returns_json
 @takes_api_params
 def get_houses(**kwargs):
@@ -289,7 +291,7 @@ def get_houses(**kwargs):
     return json.dumps(json_out)
 
 
-@application.route('/api/alliances', methods=['GET', 'POST'])
+@application.route('/api/alliances', methods=['GET'])
 @returns_json
 @takes_api_params
 def get_alliances(**kwargs):
@@ -297,7 +299,7 @@ def get_alliances(**kwargs):
     return json.dumps(json_out)
 
 
-@application.route('/api/books', methods=['GET', 'POST'])
+@application.route('/api/books', methods=['GET'])
 @returns_json
 @takes_api_params
 def get_books(**kwargs):
