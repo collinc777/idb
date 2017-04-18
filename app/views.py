@@ -24,6 +24,7 @@ HL_ALLIANCES = 3
 HL_BOOKS = 4
 HL_DEVNOTES = 5
 HL_ABOUT = 6
+HL_BASKETBALL = 7
 
 
 def load_listing(filename):
@@ -89,12 +90,13 @@ def book_links():
 def alliance_links():
     return dict(alliance_links=alliance_links_list)
 
+
 character_listing = dict(model=Character, title="Characters", url="/characters",
                          sorts=Character.getHumanReadableSortableProperties())
-house_listing = dict(model=House, title="Houses", url="/houses", 
-                        sorts=House.getHumanReadableSortableProperties())
-book_listing = dict(model=Book, title="Books", url="/books", 
-                        sorts=Book.getHumanReadableSortableProperties())
+house_listing = dict(model=House, title="Houses", url="/houses",
+                     sorts=House.getHumanReadableSortableProperties())
+book_listing = dict(model=Book, title="Books", url="/books",
+                    sorts=Book.getHumanReadableSortableProperties())
 alliance_listing = dict(model=Alliance, title="Alliances", url="/alliances",
                         sorts=Alliance.getHumanReadableSortableProperties())
 
@@ -262,6 +264,20 @@ def getDataList(listing, params):
 
     listing_list = dict(pageData=page_data, modelData=dictResults)
     return listing_list
+
+
+def loadBasketballData(dataName):
+    print("in load basketball data")
+    with open('data/basketballmania/' + dataName + '.json') as data_file:
+        return json.load(data_file)
+
+
+def getBasketBallData():
+    games = loadBasketballData('games')
+    players = loadBasketballData('players')
+    teams = loadBasketballData('teams')
+    venues = loadBasketballData('venues')
+    return dict(games=games, players=players, teams=teams, venues=venues)
 
 
 ### Begin "API" Pages ###
@@ -509,4 +525,15 @@ def about():
     context = create_context(HL_ABOUT)
     return render_template('about.html', **context)
 
+
 ### End "Miscellaneous" Pages ###
+
+### Start basketball mania page ###
+
+
+@application.route('/basketballmania')
+def basketballMania():
+    context = create_context(HL_BASKETBALL, data=getBasketBallData())
+    return render_template('basketballmania.html', **context)
+
+    ### End basketball mania page ###

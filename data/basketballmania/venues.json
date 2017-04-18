@@ -1,0 +1,124 @@
+{
+  "venues": [
+    {
+      "Capacity": 19155,
+      "Name": "Pepsi Center"
+    },
+    {
+      "Capacity": 20356,
+      "Name": "Verizon Center"
+    },
+    {
+      "Capacity": 17923,
+      "Name": "Bankers Life Fieldhouse"
+    },
+    {
+      "Capacity": 19049,
+      "Name": "Philips Arena"
+    },
+    {
+      "Capacity": 18717,
+      "Name": "BMO Bradely Center"
+    },
+    {
+      "Capacity": 19812,
+      "Name": "Madison Square Garden"
+    },
+    {
+      "Capacity": 18624,
+      "Name": "TD Garden"
+    },
+    {
+      "Capacity": 17732,
+      "Name": "Barclays Center"
+    },
+    {
+      "Capacity": 19077,
+      "Name": "Spectrum Center"
+    },
+    {
+      "Capacity": 19445,
+      "Name": "Oracle Arena"
+    },
+    {
+      "Capacity": 19600,
+      "Name": "AmericanAirlines Arena"
+    },
+    {
+      "Capacity": 16867,
+      "Name": "Smoothie King Center"
+    },
+    {
+      "Capacity": 21600,
+      "Name": "Wells Fargo Center"
+    },
+    {
+      "Capacity": 18203,
+      "Name": "Chesapeake Energy Arena"
+    },
+    {
+      "Capacity": 19971,
+      "Name": "The Palace of Auburn Hills"
+    },
+    {
+      "Capacity": 20562,
+      "Name": "Quicken Loans Arena"
+    },
+    {
+      "Capacity": 20917,
+      "Name": "United Center"
+    },
+    {
+      "Capacity": 18055,
+      "Name": "Toyota Center"
+    },
+    {
+      "Capacity": 19023,
+      "Name": "Talking Stick Resort Arena"
+    },
+    {
+      "Capacity": 19356,
+      "Name": "Target Center"
+    },
+    {
+      "Capacity": 18846,
+      "Name": "Amway Center"
+    },
+    {
+      "Capacity": 18797,
+      "Name": "AT&T Center"
+    },
+    {
+      "Capacity": 19060,
+      "Name": "Staples Center"
+    },
+    {
+      "Capacity": 19800,
+      "Name": "Air Canada Centre"
+    },
+    {
+      "Capacity": 17608,
+      "Name": "Golden1Center"
+    },
+    {
+      "Capacity": 18119,
+      "Name": "FedExForum"
+    },
+    {
+      "Capacity": 19393,
+      "Name": "Rose Garden"
+    },
+    {
+      "Capacity": 19200,
+      "Name": "American Airlines Center"
+    },
+    {
+      "Capacity": 19911,
+      "Name": "Vivint Smart Home Arena"
+    },
+    {
+      "Capacity": 19980,
+      "Name": "Moda Center"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    <script type="text/javascript">
+        var initialData = {{ data | tojson }}
+            console.log("the data is: " + initialData);
+    </script>
+    <script src="/static/scripts/BasketballLayout.jsx" type="text/jsx"></script>
+    <div id="basketballmaniaContainer">
+        <script type="text/jsx">
+            ReactDOM.render(<BasketballContainer
+                    basketball_data={initialData}/>, document.getElementById("basketballmaniaContainer"));
+        </script>
+
+    </div>
+{% endblock %}

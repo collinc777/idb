@@ -1,0 +1,124 @@
+{
+  "teams": [
+    {
+      "Name": "Grizzlies",
+      "PPG": 100.9
+    },
+    {
+      "Name": "Pelicans",
+      "PPG": 104.1
+    },
+    {
+      "Name": "Rockets",
+      "PPG": 115.4
+    },
+    {
+      "Name": "Clippers",
+      "PPG": 108.5
+    },
+    {
+      "Name": "Raptors",
+      "PPG": 107.3
+    },
+    {
+      "Name": "Bulls",
+      "PPG": 102.6
+    },
+    {
+      "Name": "Kings",
+      "PPG": 102.4
+    },
+    {
+      "Name": "Timberwolves",
+      "PPG": 105.4
+    },
+    {
+      "Name": "Warriors",
+      "PPG": 116.0
+    },
+    {
+      "Name": "Thunder",
+      "PPG": 106.8
+    },
+    {
+      "Name": "Lakers",
+      "PPG": 104.7
+    },
+    {
+      "Name": "Nets",
+      "PPG": 105.7
+    },
+    {
+      "Name": "Jazz",
+      "PPG": 100.5
+    },
+    {
+      "Name": "Magic",
+      "PPG": 100.9
+    },
+    {
+      "Name": "Hawks",
+      "PPG": 102.7
+    },
+    {
+      "Name": "Celtics",
+      "PPG": 107.8
+    },
+    {
+      "Name": "Wizards",
+      "PPG": 109.3
+    },
+    {
+      "Name": "Pacers",
+      "PPG": 104.6
+    },
+    {
+      "Name": "Bucks",
+      "PPG": 104.6
+    },
+    {
+      "Name": "Knicks",
+      "PPG": 104.6
+    },
+    {
+      "Name": "Nuggets",
+      "PPG": 111.5
+    },
+    {
+      "Name": "Pistons",
+      "PPG": 101.0
+    },
+    {
+      "Name": "Cavaliers",
+      "PPG": 110.3
+    },
+    {
+      "Name": "Spurs",
+      "PPG": 106.1
+    },
+    {
+      "Name": "76ers",
+      "PPG": 102.4
+    },
+    {
+      "Name": "Trail Blazers",
+      "PPG": 108.6
+    },
+    {
+      "Name": "Hornets",
+      "PPG": 105.5
+    },
+    {
+      "Name": "Suns",
+      "PPG": 107.3
+    },
+    {
+      "Name": "Heat",
+      "PPG": 102.8
+    },
+    {
+      "Name": "Mavericks",
+      "PPG": 98.0
+    }
+  ]
+}
