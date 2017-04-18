@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+    <script src="//d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
         var initialData = {{ data | tojson }}
             console.log("the data is: " + initialData);

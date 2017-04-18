@@ -364,6 +364,10 @@ h1.cursive {
     color: black;
 }
 
+.bar {
+    fill: steelblue;
+}
+
 .chart div {
     font: 10px sans-serif;
     background-color: steelblue;

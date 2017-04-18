@@ -1,3 +1,4 @@
+//noinspection JSDuplicatedDeclaration
 class TitleLayout extends React.Component {
     render() {
         return (
@@ -26,15 +27,14 @@ class GameLayout extends React.Component {
 }
 
 class Chart extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
-            <div className="chart">
-                <div style={{width: 40}}>4</div>
-                <div style={{width: 80}}>8</div>
-                <div style={{width: 150}}>15</div>
-                <div style={{width: 160}}>16</div>
-                <div style={{width: 230}}>230</div>
-                <div style={{width: 420}}>420</div>
+            <div>
+
             </div>
         )
     }
@@ -48,10 +48,39 @@ class PlayerLayout extends React.Component {
         }
     }
 
+    componentDidMount() {
+        console.log("the egg");
+
+        var myData = [100, 125, 320, 440, 500];
+        var height = 500;
+        var width = 500;
+        var barWidth = 35;
+        var barOffset = 5;
+
+        var myChart = d3.select('#chart').append('svg').attr('width', width)
+            .attr('height', height)
+            .style('background', '#f4f4f4')
+            .selectAll('rect')
+            .data(myData)
+            .enter().append('rect')
+            .style('fill', 'green')
+            .attr('width', barWidth)
+            .attr('height', function (d) {
+                return d;
+            })
+            .attr('x', function (d, i) {
+                return i * (barWidth + barOffset);
+
+            })
+            .attr('y', function (d) {
+                return height - d;
+            })
+    }
+
     render() {
+        console.log("the chicken");
         return (
-            <div>
-                <Chart />
+            <div id="chart">
             </div>
         )
     }
