@@ -82,8 +82,8 @@ class SortCard extends React.Component {
         for(var i = 0; i < this.props.sorts.length; i++){
             (function(sortCardInstance, i){
                 var sort = sortCardInstance.props.sorts[i][1];
-                sortsElements.push(<a key={Math.random(0, 999999)} className="dropdown-item" href="#" onClick onClick={() => sortCardInstance.onSortData(i, 1)}>{sort} Ascending</a>);
-                sortsElements.push(<a key={Math.random(0, 999999)} className="dropdown-item" href="#" onClick onClick={() => sortCardInstance.onSortData(i, 0)}>{sort} Descending</a>);
+                sortsElements.push(<a key={Math.random(0, 999999)} className="dropdown-item" href="#" onClick={() => sortCardInstance.onSortData(i, 1)}>{sort} Ascending</a>);
+                sortsElements.push(<a key={Math.random(0, 999999)} className="dropdown-item" href="#" onClick={() => sortCardInstance.onSortData(i, 0)}>{sort} Descending</a>);
             })(this, i);
         }
         return (<div className="card sortAndFilterCard text-center">
