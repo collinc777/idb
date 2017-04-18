@@ -5,124 +5,213 @@ HOST: http://gotthrones.me/api/
 
 Api to navigate the wonderful world of Westeros
 
-## Character Page [/characters?{page}&{sortParam}&{sortAscending}&{filter}]
+## Character Page [/characters{?page,sortParam,sortAscending,filterText}]
 
 ### Gets information for a page of Characters [GET]
 Gets the characters to display on a certain page of the application
 
 + Parameters
-    + page (number, `page=1`) ... Page number of the characters
-    + sortParam (optional, string, `sortParam=Name`) ... Parameter you are sorting by; can be Name, House, Culture, Gender
-    + sortAscending (optional, number, `sortAscending=1`) ... Whether to sort by ascending
-    + filter (optional, string, `filter=Varys`) ... Word to filter by
+    + page (number, `1`) ... Page number of the characters
+    + sortParam (optional, string, `name`) ... Parameter you are sorting by; can be Name, House, Culture, Gender
+    + sortAscending (optional, number, `1`) ... Whether to sort by ascending
+    + filterText (optional, string, `Varys`) ... Word to filter by
     
     
 + Response 200 (application/json)
-
+        
         {
-            "pageData": 
+          "pageData": {
+            "currentPage": 1,
+            "numberPages": 1
+          },
+          "modelData": [
             {
-                "currentPage": 1, 
-                "numberPages": 1
-            }, 
-            "cardData": 
-            [
-                {
-                    "cardURL": "/characters", 
-                    "cardName": "Varys", 
-                    "cardID": 2069
-                }
-            ]
+              "imageLink": "Varys.jpeg",
+              "name": "Varys",
+              "swornHouses_ids": null,
+              "born": "At Lys",
+              "book_ids": [
+                1,
+                2,
+                3,
+                5,
+                8
+              ],
+              "gender": "Male",
+              "mother_id": null,
+              "povBook_ids": [],
+              "playedBy": [
+                "Conleth Hill"
+              ],
+              "modelType": "character",
+              "culture": "",
+              "father_id": null,
+              "titles": [
+                "Master of Whisperers"
+              ],
+              "spouse_id": null,
+              "allegiances_ids": [],
+              "tvSeries": [
+                "Season 1",
+                "Season 2",
+                "Season 3",
+                "Season 4",
+                "Season 5",
+                "Season 6"
+              ],
+              "id": 2069,
+              "died": "",
+              "aliases": [
+                "The Spider",
+                "The Eunuch",
+                "Rugen",
+                "Varys of Lys"
+              ]
+            }
+          ]
         }
 
-## Book Page [/books?{page}&{sortParam}&{sortAscending}&{filter}]
+## Book Page [/books{?page,sortParam,sortAscending,filterText}]
 
 ### Gets information for a page of Books [GET]
 Gets the books to display on a certain page of the application
 
 + Parameters
-    + page (number, `page=1`) ... Page number of the books
-    + sortParam (optional, string, `sortParam=Name`) ... Parameter you are sorting by; can be Name, Author, Publisher, ISBN, Number%20of%20Pages, Release%20Date
-    + sortAscending (optional, number, `sortAscending=1`) ... Whether to sort by ascending
-    + filter (optional, string, `filter=Clash`) ... Word to filter by
+    + page (number, `1`) ... Page number of the books
+    + sortParam (optional, string, `name`) ... Parameter you are sorting by; can be Name, Author, Publisher, ISBN, Number%20of%20Pages, Release%20Date
+    + sortAscending (optional, number, `1`) ... Whether to sort by ascending
+    + filterText (optional, string, `Clash`) ... Word to filter by
     
     
 + Response 200 (application/json)
 
         {
-            "pageData": 
-            {
-                "currentPage": 1, 
+            "pageData": {
+                "currentPage": 1,
                 "numberPages": 1
-            }, 
-            "cardData": 
-            [
+            },
+            "modelData": [
                 {
-                    "cardURL": "/books", 
-                    "cardName": "A Clash of Kings", 
-                    "cardID": 2
+                    "numberOfPages": 768,
+                    "isbn": "978-0553108033",
+                    "name": "A Clash of Kings",
+                    "author": "George R. R. Martin",
+                    "country": "United States",
+                    "publisher": "Bantam Books",
+                    "mediaType": "Hardcover",
+                    "modelType": "book",
+                    "released": "1999-02-02T00:00:00",
+                    "character_ids": [
+                        2,
+                        12,
+                        13
+                    ],
+                    "povCharacter_ids": [
+                        148,
+                        208
+                    ],
+                    "id": 2
                 }
             ]
         }
         
-## House Page [/houses?{page}&{sortParam}&{sortAscending}&{filter}]
+## House Page [/houses{?page,sortParam,sortAscending,filterText}]
 
 ### Gets information for a page of Houses [GET]
 Gets the houses to display on a certain page of the application
 
 + Parameters
-    + page (number, `page=1`) ... Page number of the houses
-    + sortParam (optional, string, `sortParam=Name`) ... Parameter you are sorting by; can be Name, Region, Coat%20of%20Arms, Words
-    + sortAscending (optional, number, `sortAscending=1`) ... Whether to sort by ascending
-    + filter (optional, string, `filter=Stark`) ... Word to filter by
+    + page (number, `1`) ... Page number of the houses
+    + sortParam (optional, string, `name`) ... Parameter you are sorting by; can be Name, Region, Coat%20of%20Arms, Words
+    + sortAscending (optional, number, `1`) ... Whether to sort by ascending
+    + filterText (optional, string, `Stark`) ... Word to filter by
     
     
 + Response 200 (application/json)
 
         {
-            "pageData": 
+          "pageData": {
+            "currentPage": 1,
+            "numberPages": 1
+          },
+          "modelData": [
             {
-                "currentPage": 1, 
-                "numberPages": 1
-            }, 
-            "cardData": 
-            [
-                [
-                    {
-                        "cardURL": "/houses", 
-                        "cardName": "House Stark of Winterfell", 
-                        "cardID": 362
-                    }
-                ]
-            ]
+              "swornMember_ids": [
+                2,
+                20,
+                97
+              ],
+              "overlord_id": 16,
+              "currentLord_id": null,
+              "ancestralWeapons": [
+                "Ice"
+              ],
+              "region": "The North",
+              "seats": [
+                "Scattered (formerly Winterfell)"
+              ],
+              "modelType": "house",
+              "founded": "Age of Heroes",
+              "diedOut": "",
+              "titles": [
+                "King in the North",
+                "Lord of Winterfell",
+                "Warden of the North",
+                "King of the Trident"
+              ],
+              "coatOfArms": "A running grey direwolf, on an ice-white field",
+              "alliance_id": 1,
+              "heir_id": null,
+              "founder_id": 209,
+              "words": "Winter is Coming",
+              "id": 362,
+              "name": "House Stark of Winterfell"
+            }
+          ]
         }
-        
-## Alliance Page [/alliances?{page}&{sortParam}&{sortAscending}&{filter}]
+
+## Alliance Page [/alliances{?page,sortParam,sortAscending,filterText}]
 
 ### Gets information for a page of Alliances [GET]
 Gets the alliances to display on a certain page of the application
 
 + Parameters
-    + page (number, `page=1`) ... Page number of the alliances
-    + sortParam (optional, string, `sortParam=Name`) ... Parameter you are sorting by; can be Name, Current%20Head%20House, Number%of%20Members
-    + sortAscending (optional, number, `sortAscending=1`) ... Whether to sort by ascending
-    + filter (optional, string, `filter=ruler`) ... Word to filter by
+    + page (number, `1`) ... Page number of the alliances
+    + sortParam (optional, string, `name`) ... Parameter you are sorting by; can be Name, Current%20Head%20House, Number%of%20Members
+    + sortAscending (optional, number, `1`) ... Whether to sort by ascending
+    + filterText (optional, string, `ruler`) ... Word to filter by
     
     
 + Response 200 (application/json)
 
         {
-            "pageData": 
+          "pageData": {
+            "currentPage": 1,
+            "numberPages": 1
+          },
+          "modelData": [
             {
-                "currentPage": 1, 
-                "numberPages": 1
-            }, 
-            "cardData": 
-            [
-                {
-                    "cardURL": "/alliances", 
-                    "cardName": "The Rightful Ruler of the Seven Kingdoms", 
-                    "cardID": 3
-                }
-            ]
+              "currentLord_id": 1303,
+              "modelType": "alliance",
+              "seats": [
+                "Free City of Meereen"
+              ],
+              "id": 3,
+              "regions": [
+                "Free cities"
+              ],
+              "name": "The Rightful Ruler of the Seven Kingdoms",
+              "imageLink": "alliancebanners/SevenKingdoms.png",
+              "swornHouse_ids": [
+                378,
+                95,
+                59
+              ],
+              "weapons": null,
+              "headHouse_id": 378,
+              "cultures": [
+                "Valyrian"
+              ]
+            }
+          ]
         }
