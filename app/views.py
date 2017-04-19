@@ -322,6 +322,24 @@ def get_books(**kwargs):
     json_out = getDataList(book_listing, kwargs)
     return json.dumps(json_out)
 
+#gets the count of the characters in houses
+@application.route('/api/getCharacterCounts', methods=['GET'])
+@returns_json
+@takes_api_params
+def get_character_counts(**kwargs):
+    #get original house json
+    json_original = getDataList(house_listing, kwargs)
+
+    #change it to only include name and count
+    page_data = json_original["pageData"]
+    model_data = json_original["modelData"]
+    model_new = []
+    for house in model_data:
+        new_house = {"name": house["name"], "id": house["id"], "charCount": len(house["swornMember_ids"])}
+        model_new.append(new_house)
+
+    return json.dumps({"pageData": page_data, "modelData": model_new})
+
 
 ### End "API" Pages ###
 
