@@ -12,7 +12,7 @@ Gets the characters to display on a certain page of the application
 
 + Parameters
     + page (number, `1`) ... Page number of the characters
-    + sortParam (optional, string, `name`) ... Parameter you are sorting by; can be Name, House, Culture, Gender
+    + sortParam (optional, string, `name`) ... Parameter you are sorting by; can be name, house, culture, gender
     + sortAscending (optional, number, `1`) ... Whether to sort by ascending
     + filterText (optional, string, `Varys`) ... Word to filter by
     
@@ -78,7 +78,7 @@ Gets the books to display on a certain page of the application
 
 + Parameters
     + page (number, `1`) ... Page number of the books
-    + sortParam (optional, string, `name`) ... Parameter you are sorting by; can be Name, Author, Publisher, ISBN, Number%20of%20Pages, Release%20Date
+    + sortParam (optional, string, `name`) ... Parameter you are sorting by; can be name, author, publisher, isbn, numberOfPages, released
     + sortAscending (optional, number, `1`) ... Whether to sort by ascending
     + filterText (optional, string, `Clash`) ... Word to filter by
     
@@ -122,7 +122,7 @@ Gets the houses to display on a certain page of the application
 
 + Parameters
     + page (number, `1`) ... Page number of the houses
-    + sortParam (optional, string, `name`) ... Parameter you are sorting by; can be Name, Region, Coat%20of%20Arms, Words
+    + sortParam (optional, string, `name`) ... Parameter you are sorting by; can be name, region, coatOfArms, words
     + sortAscending (optional, number, `1`) ... Whether to sort by ascending
     + filterText (optional, string, `Stark`) ... Word to filter by
     
@@ -177,7 +177,7 @@ Gets the alliances to display on a certain page of the application
 
 + Parameters
     + page (number, `1`) ... Page number of the alliances
-    + sortParam (optional, string, `name`) ... Parameter you are sorting by; can be Name, Current%20Head%20House, Number%of%20Members
+    + sortParam (optional, string, `name`) ... Parameter you are sorting by; can be name, headHouse_id, swornHouse_ids
     + sortAscending (optional, number, `1`) ... Whether to sort by ascending
     + filterText (optional, string, `ruler`) ... Word to filter by
     
@@ -214,4 +214,31 @@ Gets the alliances to display on a certain page of the application
               ]
             }
           ]
+        }
+        
+## Character Counts in House [/getCharacterCounts{?page,sortParam,sortAscending,filterText}]
+
+### Gets the number of characters in a House [GET]
+Gets the number of characters in a house for a certain page of the application
+
++ Parameters
+    + page (number, `1`) ... Page number of the house
+    + sortParam (optional, string, `name`) ... Parameter you are sorting by; can be name, region, coatOfArms, words
+    + sortAscending (optional, number, `1`) ... Whether to sort by ascending
+    + filterText (optional, string, `Stark`) ... Word to filter by
+    
++ Response 200 (application/json)
+
+        {  
+           "pageData":{  
+              "numberPages":1,
+              "currentPage":1
+           },
+           "modelData":[  
+              {  
+                 "id":362,
+                 "name":"House Stark of Winterfell",
+                 "charCount":88
+              }
+           ]
         }
