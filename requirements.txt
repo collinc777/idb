@@ -1,6 +1,7 @@
 alembic==0.9.1
 antiorm==1.2.1
 Flask==0.10.1
+Flask-CORS==3.0.2
 Flask-Migrate==2.0.3
 Flask-Script==2.0.5
 Flask-SQLAlchemy==2.2
