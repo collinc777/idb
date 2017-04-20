@@ -144,7 +144,7 @@ class TestModels(TestCase):
 
     def test_Book_toDict(self):
         instance = models.Book(**self.bookParameters)
-        self.assertGreater(len(instance.toDict()), 0)
+        self.assertEqual(len(instance.toDict()), 12)
 
     def test_Book_database_query(self):
         # Assumes existence of at least one element in model table.
@@ -191,7 +191,7 @@ class TestModels(TestCase):
 
     def test_Character_toDict(self):
         instance = models.Character(**self.characterParameters)
-        self.assertGreater(len(instance.toDict()), 0)
+        self.assertEqual(len(instance.toDict()), 19)
 
     def test_Character_database_add(self):
         # Note: Test will fail if a instance already exists with the given id
@@ -234,7 +234,7 @@ class TestModels(TestCase):
 
     def test_House_toDict(self):
         instance = models.House(**self.houseParameters)
-        self.assertGreater(len(instance.toDict()), 0)
+        self.assertEqual(len(instance.toDict()), 17)
 
     def test_House_database_add(self):
         # Note: Test will fail if a instance already exists with the given id
@@ -270,7 +270,7 @@ class TestModels(TestCase):
 
     def test_Alliance_toDict(self):
         instance = models.Alliance(**self.allianceParameters)
-        self.assertGreater(len(instance.toDict()), 0)
+        self.assertEqual(len(instance.toDict()), 11)
 
     def test_Alliance_database_add(self):
         # Note: Test will fail if a instance already exists with the given id
