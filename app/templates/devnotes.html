@@ -72,7 +72,116 @@
 
 	<h3>Embedding-Media Tools:</h3>
 	<p>We have embedded a carousel of images on the home page, populated from prestored images. In our most recent iteration each model has an associated image which is a huge improvement over using default images. In addition to the main page carasoul each model: houses, characters, books and alliances; all have embeddable media on their detail pages. This image is usually the same as that displayed on their card on the grid pages. In the prepopulate step, we have a script that checks for, and downloads, the image associated with the instance. Subsequent scrips link the preloaded images with their model instance so that it is properly linked to the card and detail page. Characters and houses both get their embedded media from the resources hosted on api.got.show, and the books get their embedded media from the cover-art associated with them. The embedded media for each alliance is simply built out of the largest 4 houses' crests that make up that alliance. The cards mentioned above are instance, "branch" pages, Characters, Houses, Books, and Alliances, are broken up into grids of media containers called cards which allows the end user to quickly identify which instance a card is referencing. We organize our pages like this so that we can sort the branch pages easily without having to make AJAX calls. In addition to the page related media we have also added media on this page to illustrate the models and UML. Having images associated with each model is mostly for the end user. It adds a lot of complexity to the application and doesn't provide any additional information for our models. That being said the ascetic of a website is as important as the usefulness of the information because an end user's satisfaction is a function of the quality of our application. </p>
-	
+
+	<h2>Planning</h2>
+	<p>
+		We used <a href="http://www.planitpoker.com"> plan it poker </a> to strategize about how long each part of the project would take. It works by choosing a task or bug, and then everyone makes a guess about how long it will take by choosing a card. When everyone has made a choice, we flip our cards to show other people. This is useful because it prevents our individual opinions from being tainted by one another. That is, if someone thinks a task will take 2 hours but someone else thinks it will take 6 hours, it will often skew the first perception toward a longer amount of time.
+	</p>
+	<h4>Implement Search</h4>
+	<p>
+		Our user interface must have a search bar that allows someone to input relevant keywords pertaining to our model
+		<br />
+		Estimate: 2 days
+		<br />
+		Actual Duration: 2 days
+	</p>
+	<h4>Project Presentation</h4>
+	<p>
+		We must create a 15 minute presentation to show the class
+		<br />
+		Estimate: 3 hours
+		<br />
+		Actual Duration: 4 hours
+	</p>
+	<h4>Complete Tech Report</h4>
+	<p>
+		Needs to be 5000 words
+		<br />
+		Estimate: 5 hours
+		<br />
+		Actual Duration: 4 hours
+	</p>
+	<h4>Improve search</h4>
+	<p>
+		Use the names of the linked models instead of the int id's themselves.
+		<br />
+		Estimate: 3 hours
+		<br />
+		Actual Duration: 3 hours
+	</p>
+	<h4>Refine Tests</h4>
+	<p>
+		Improve and append new tests
+		<br />
+		Estimate: 2 hours
+		<br />
+		Actual Duration: 4 hours
+	</p>
+	<h4>Critique our Project</h4>
+	<p>
+		Evaluate how well our project meets the requirements
+		<br />
+		Estimate: 2 hours
+		<br />
+		Actual Duration: 2 hours
+	</p>
+	<h4>Critique Another Project</h4>
+	<p>
+		Evaluate how well another group's project meets the requirements
+		<br />
+		Estimate: 2 hours
+		<br />
+		Actual Duration: 3 hours
+	</p>
+	<h4>Create a Visualization Page</h4>
+	<p>
+		Use graphics to display information
+		<br />
+		Estimate: 3 hours
+		<br />
+		Actual Duration: 7 hours
+	</p>
+	<h4>Refine yUML</h4>
+	<p>
+		Evaluate how well the meta models represent the data
+		<br />
+		Estimate: 3 hours
+		<br />
+		Actual Duration: 3 hours
+	</p>
+	<h4>Plan</h4>
+	<p>
+		Use PlanItPoker to estimate timeframes, and document them in the project
+		<br />
+		Estimate: 2 hours
+		<br />
+		Actual Duration: 3 hours
+	</p>
+
+	<!-- 
+		Implement Search	
+		Project Presentation	
+		Complete Tech Report	
+		Improve search to use the names of the linked models instead of the int id's themselves.
+		Refine Tests if Necessary	
+		Critique our Project	
+		Critique the Other Group's Project	
+		Create Visualization Page	
+		Refine yUML	
+		Vote on PlanItPoker
+	-->
+
+	<!-- 
+		set up at least 10 user stories
+		user stories must be described in three sentences or less
+		estimate them, include assumptions
+		discuss them
+		refine the estimates
+		implement them
+		track how long each took
+		document them in your technical report 
+	-->
+
 	<h2>Hosting</h2>
 	<p>For hosting we decided to use Amazon Web Service(AWS). We decided AWS’s Elastic Beanstalk was the perfect hosting platform for our project because it supported the flask framework. We used the flask framework to structure our front-end and make sure it was scallable to any number of instances. Elastic Beanstalk (EB for short) does not support everything and that’s why it is key that it supports flask.  Elastic beanstalk not only acts as a host environment, but it adds some nice extra functionality on top of it, such as giving itself a URL right off the start. The next reason we chose to use it is that the applications deployment process across machines can easily be replicated due to the AWS elastic beanstalk cli. Beanstalk also reduces the management complexity for our application by handling capacity provisioning, load balancing, scaling. It also offers application health monitoring.  Beanstalk also has a nice versioning system so that we can easily roll back our application upon failed deployment, or because of deploying bad code. </p>
 	<p>The step by step setup of the project goes as follows. (Prerequisite: you must have Python3.4, pip, virtualenv, and the awsebcli installed to perform the next steps. You must also have the idb repo locally)</p>
