@@ -16,7 +16,7 @@ from app.models import Book, Character, Alliance, House, getPropertyMatches, com
 navigation = [{"url": "/", "name": "Home"}, {"url": "/characters", "name": "Characters"},
               {"url": "/houses", "name": "Houses"}, {"url": "/alliances", "name": "Alliances"},
               {"url": "/books", "name": "Books"}, {"url": "/devnotes", "name": "Dev Notes"},
-              {"url": "/about", "name": "About"}]
+              {"url": "/about", "name": "About"}, {"url": "/basketballmania", "name": "Visualization"}]
 
 HL_CHARACTERS = 1
 HL_HOUSES = 2

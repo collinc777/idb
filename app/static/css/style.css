@@ -22,6 +22,12 @@ body {
     padding-bottom: 40px;
 }
 
+#basketballmaniaContainer {
+    background-color: #f7f7f9;
+    text-align: center;
+
+}
+
 #searchBarContainer {
     margin-bottom: 30px;
 }
