@@ -77,7 +77,7 @@ class GameLayout extends React.Component {
             .attr("y", 6)
             .attr("dy", ".71em")
             .style("text-anchor", "end")
-            .style("fill", "white")
+            .style("fill", "black")
             .style("font-size", 15)
             .text("Games Won");
 
@@ -106,7 +106,7 @@ class GameLayout extends React.Component {
             .attr("dy", ".35em")
             .attr("transform", "rotate(90)")
             .style("text-anchor", "start")
-            .style("fill", "white");
+            .style("fill", "black");
 
         myChart.append("text")
             .attr("x", (width / 2))
@@ -114,7 +114,7 @@ class GameLayout extends React.Component {
             .attr("text-anchor", "middle")
             .style("font-size", "16px")
             .style("text-decoration", "underline")
-            .style("fill", "white")
+            .style("fill", "black")
             .text("Games Won Per Team");
 
         function type(d) {
@@ -295,7 +295,7 @@ class TeamLayout extends React.Component {
             .attr("y", 6)
             .attr("dy", ".71em")
             .style("text-anchor", "end")
-            .style("fill", "white")
+            .style("fill", "black")
             .style("font-size", 15)
             .text("PPG");
 
@@ -324,14 +324,14 @@ class TeamLayout extends React.Component {
             .attr("dy", ".35em")
             .attr("transform", "rotate(90)")
             .style("text-anchor", "start")
-            .style("fill", "white");
+            .style("fill", "black");
         myChart.append("text")
             .attr("x", (width / 2))
             .attr("y", 10 - (margin.top / 2))
             .attr("text-anchor", "middle")
             .style("font-size", "16px")
             .style("text-decoration", "underline")
-            .style("fill", "white")
+            .style("fill", "black")
             .text("Avg Points scored per team");
 
         function type(d) {
